@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">MAD Meditation</string>
+    <string name="appName">MAD Meditation</string>
+    <string name="welcomeTextHeader">Привет</string>
+    <string name="welcomeTextBody">Наслаждайся отборочными. \n Будь внимателен. \n Делай хорошо.</string>
+    <string name="loginAccountText">Войти в аккаунт</string>
+    <string name="noAccountHint">Еще нет аккаунта?</string>
+    <string name="noAccountHintRegistration">Зарегистрируйтесь</string>
 </resources>
