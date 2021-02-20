@@ -5,4 +5,5 @@
     <string name="loginAccountText">Войти в аккаунт</string>
     <string name="noAccountHint">Еще нет аккаунта?</string>
     <string name="noAccountHintRegistration">Зарегистрируйтесь</string>
+    <string name="registrationTextMock">Тут будет \n регистрация</string>
 </resources>
