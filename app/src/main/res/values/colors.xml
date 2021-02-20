@@ -10,4 +10,6 @@
 
   <color name="greenScape">#7C9A92</color>
   <color name="classicGreen">#253334</color>
+
+  <color name="splashscreenStatusBar">#9DB3A2</color>
 </resources>

@@ -15,7 +15,4 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="Theme.MADMeditation.Splashscreen" parent="Theme.MADMeditation">
-        <item name="android:windowBackground">@drawable/splashscreen_image</item>
-    </style>
 </resources>

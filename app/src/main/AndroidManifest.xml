@@ -10,9 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MADMeditation">
         <activity
-            android:name=".SplashscreenActivity"
-            android:theme="@style/Theme.MADMeditation.Splashscreen"
-            >
+            android:name=".SplashscreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
