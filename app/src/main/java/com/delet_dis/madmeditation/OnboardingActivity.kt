@@ -22,13 +22,16 @@ class OnboardingActivity : AppCompatActivity() {
 
     setContentView(view)
 
-    WindowHelper.setWindowTransparent(this)
-
     loginButton = binding.loginButton
     registerTextView = binding.noAccountHintRegistration
 
     registerTextView.setOnClickListener {
       val intent = Intent(this, RegistrationActivity::class.java)
+      startActivity(intent)
+    }
+
+    loginButton.setOnClickListener {
+      val intent = Intent(this, LoginActivity::class.java)
       startActivity(intent)
     }
   }

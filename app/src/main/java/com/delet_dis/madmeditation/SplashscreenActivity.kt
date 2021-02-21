@@ -14,8 +14,6 @@ class SplashscreenActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_splashscreen)
 
-    WindowHelper.setWindowTransparent(this)
-
     val handler = Handler(Looper.getMainLooper())
     handler.postDelayed({
       val intent = Intent(this, OnboardingActivity::class.java)
