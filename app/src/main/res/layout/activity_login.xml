@@ -29,4 +29,113 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/login_leafs" />
+
+    <TextView
+        android:id="@+id/loginText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="31dp"
+        android:fontFamily="@font/alegreya_medium"
+        android:text="@string/loginAccountLogin"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logoImage" />
+
+    <EditText
+        android:id="@+id/emailInputField"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="111dp"
+        android:layout_marginEnd="35dp"
+        android:autofillHints="email"
+        android:backgroundTint="@color/supernova"
+        android:ems="10"
+        android:fontFamily="@font/alegreya_sans"
+        android:hint="@string/loginEmailHint"
+        android:inputType="textEmailAddress"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:paddingBottom="15dp"
+        android:textColor="@color/supernova"
+        android:textColorHint="@color/supernova"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginText" />
+
+    <EditText
+        android:id="@+id/passwordInputField"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="35dp"
+        android:autofillHints="email"
+        android:backgroundTint="@color/supernova"
+        android:ems="10"
+        android:fontFamily="@font/alegreya_sans"
+        android:hint="@string/loginPasswordHint"
+        android:inputType="textPassword"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:paddingBottom="15dp"
+        android:textColor="@color/supernova"
+        android:textColorHint="@color/supernova"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emailInputField" />
+
+    <Button
+        android:id="@+id/loginButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="27dp"
+        android:layout_marginTop="55dp"
+        android:layout_marginEnd="27dp"
+        android:backgroundTint="@color/greenScape"
+        android:fontFamily="@font/alegreya_sans"
+        android:paddingLeft="81dp"
+        android:paddingTop="16dp"
+        android:paddingRight="81dp"
+        android:paddingBottom="15dp"
+        android:text="@string/loginAccountLogin"
+        android:textAllCaps="true"
+        android:textSize="18sp"
+        app:cornerRadius="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordInputField" />
+
+    <TextView
+        android:id="@+id/noAccountHintRegistration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="35dp"
+        android:includeFontPadding="false"
+        android:text="@string/onboardingNoAccountHintRegistration"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/noAccountHintQuestion"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/noAccountHintQuestion"
+        app:layout_constraintTop_toBottomOf="@+id/loginButton" />
+
+    <TextView
+        android:id="@+id/noAccountHintQuestion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="18dp"
+        android:fontFamily="@font/alegreya_sans"
+        android:includeFontPadding="false"
+        android:text="@string/onboardingNoAccountHint"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/noAccountHintRegistration"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginButton" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
-import com.delet_dis.madmeditation.helpers.WindowHelper
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.delet_dis.madmeditation.databinding.ActivityOnboardingBinding
 
 class OnboardingActivity : AppCompatActivity() {
@@ -17,22 +17,38 @@ class OnboardingActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
-    binding = ActivityOnboardingBinding.inflate(layoutInflater)
-    val view = binding.root
+    val view = createViewBinding()
 
     setContentView(view)
 
-    loginButton = binding.loginButton
-    registerTextView = binding.noAccountHintRegistration
+    findViewElements()
 
-    registerTextView.setOnClickListener {
-      val intent = Intent(this, RegistrationActivity::class.java)
-      startActivity(intent)
-    }
+    registerRegisterTextViewOnclick()
 
+    registerLoginButtonOnclick()
+  }
+
+  private fun createViewBinding(): ConstraintLayout {
+    binding = ActivityOnboardingBinding.inflate(layoutInflater)
+    return binding.root
+  }
+
+  private fun registerLoginButtonOnclick() {
     loginButton.setOnClickListener {
       val intent = Intent(this, LoginActivity::class.java)
       startActivity(intent)
     }
+  }
+
+  private fun registerRegisterTextViewOnclick() {
+    registerTextView.setOnClickListener {
+      val intent = Intent(this, RegistrationActivity::class.java)
+      startActivity(intent)
+    }
+  }
+
+  private fun findViewElements() {
+    loginButton = binding.loginButton
+    registerTextView = binding.noAccountHintRegistration
   }
 }

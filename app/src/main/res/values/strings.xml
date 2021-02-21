@@ -1,9 +1,14 @@
 <resources>
     <string name="appName">MAD Meditation</string>
-    <string name="welcomeTextHeader">Привет</string>
-    <string name="welcomeTextBody">Наслаждайся отборочными. \n Будь внимателен. \n Делай хорошо.</string>
-    <string name="loginAccountText">Войти в аккаунт</string>
-    <string name="noAccountHint">Еще нет аккаунта?</string>
-    <string name="noAccountHintRegistration">Зарегистрируйтесь</string>
+    <string name="onboardingWelcomeTextHeader">Привет</string>
+    <string name="onboardingWelcomeTextBody">Наслаждайся отборочными. \n Будь внимателен. \n Делай хорошо.</string>
+    <string name="onboardingNoAccountHint">Еще нет аккаунта?</string>
+    <string name="onboardingNoAccountHintRegistration">Зарегистрируйтесь</string>
     <string name="registrationTextMock">Тут будет \n регистрация</string>
+    <string name="onboardingLoginAccount">Войти в аккаунт</string>
+    <string name="loginEmailHint">Email</string>
+    <string name="loginPasswordHint">Пароль</string>
+    <string name="loginAccountLogin">Войти</string>
+    <string name="alertDialogLoginFailedTitle">Login failed</string>
+    <string name="alertDialogLoginFailedMessage">Email or password is empty. Check correctness</string>
 </resources>
