@@ -11,8 +11,15 @@ import androidx.appcompat.app.AppCompatActivity
 import com.delet_dis.madmeditation.databinding.ActivityLoginBinding
 import com.delet_dis.madmeditation.helpers.PatternHelper
 import com.delet_dis.madmeditation.helpers.WindowHelper
+import com.delet_dis.madmeditation.model.LoginRequest
+import com.delet_dis.madmeditation.model.LoginResponse
+import com.delet_dis.madmeditation.http.common.Common
+import com.google.gson.Gson
+import retrofit2.Call
+import retrofit2.Response
 import java.util.regex.Matcher
 import java.util.regex.Pattern
+import javax.security.auth.callback.Callback
 
 class LoginActivity : AppCompatActivity() {
   private lateinit var binding: ActivityLoginBinding
@@ -22,6 +29,8 @@ class LoginActivity : AppCompatActivity() {
 
   private lateinit var loginButton: Button
   private lateinit var registerTextView: TextView
+
+  private var gson: Gson = Gson()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -39,6 +48,10 @@ class LoginActivity : AppCompatActivity() {
     loginButton = binding.loginButton
     registerTextView = binding.noAccountHintRegistration
 
+    loginButton.setOnClickListener {
+      checkCorrectnessOfFields()
+    }
+
     registerTextView.setOnClickListener {
       val intent = Intent(this, RegistrationActivity::class.java)
       startActivity(intent)
@@ -46,10 +59,32 @@ class LoginActivity : AppCompatActivity() {
 
   }
 
-  fun checkCorrectnessOfFields(){
+  private fun checkCorrectnessOfFields() {
     if (isEmailCorrect(emailEditText.text.toString()) &&
       passwordEditText.text.toString().isNotBlank()
     ) {
+      val loginRequest = LoginRequest(
+        emailEditText.text.toString(),
+        passwordEditText.text.toString()
+      )
+
+      val retrofitService = Common.retrofitService
+
+      retrofitService.postLoginData(loginRequest.email, loginRequest.password)
+        .enqueue(object : retrofit2.Callback<LoginResponse> {
+          override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+            AlertDialog.Builder(applicationContext)
+              .setTitle("result")
+              .setMessage(response.toString())
+              .setPositiveButton("OK") { dialog: DialogInterface, _: Int -> dialog.dismiss() }
+              .show()
+          }
+
+          override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+
+          }
+        })
+
 
     } else {
       AlertDialog.Builder(this)
