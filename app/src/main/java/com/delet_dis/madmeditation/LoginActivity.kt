@@ -11,11 +11,13 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.delet_dis.madmeditation.databinding.ActivityLoginBinding
+import com.delet_dis.madmeditation.helpers.ConstantsHelper
 import com.delet_dis.madmeditation.helpers.SharedPrefsHelper
 import com.delet_dis.madmeditation.helpers.WindowHelper
 import com.delet_dis.madmeditation.http.common.Common
 import com.delet_dis.madmeditation.model.LoginRequest
 import com.delet_dis.madmeditation.model.LoginResponse
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -98,6 +100,7 @@ class LoginActivity : AppCompatActivity() {
             SharedPrefsHelper.setLoginState(applicationContext, true)
 
             val processingIntent = Intent(this@LoginActivity, MainActivity::class.java)
+            intent.putExtra(ConstantsHelper.loginResponseParcelableName, response.body())
             startActivity(processingIntent)
             finish()
           }
@@ -121,7 +124,7 @@ class LoginActivity : AppCompatActivity() {
   }
 
   private fun buildAlertDialog(stringResourceId: Int) {
-    AlertDialog.Builder(this)
+    MaterialAlertDialogBuilder(this)
       .setTitle(getString(R.string.alertDialogLoginFailedTitle))
       .setMessage(getString(stringResourceId))
       .setPositiveButton("OK") { dialog: DialogInterface, _: Int -> dialog.dismiss() }

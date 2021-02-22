@@ -5,4 +5,5 @@ object ConstantsHelper {
   const val loginState = "LOGIN_STATE"
   const val userEmail = "USER_EMAIL"
   const val userPassword = "USER_PASSWORD"
+  const val loginResponseParcelableName = "LOGIN_RESPONSE_PARCELABLE"
 }
