@@ -3,6 +3,7 @@ package com.delet_dis.madmeditation
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
@@ -10,16 +11,13 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.delet_dis.madmeditation.databinding.ActivityLoginBinding
-import com.delet_dis.madmeditation.helpers.PatternHelper
 import com.delet_dis.madmeditation.helpers.WindowHelper
+import com.delet_dis.madmeditation.http.common.Common
 import com.delet_dis.madmeditation.model.LoginRequest
 import com.delet_dis.madmeditation.model.LoginResponse
-import com.delet_dis.madmeditation.http.common.Common
 import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Response
-import java.util.regex.Matcher
-import java.util.regex.Pattern
 
 class LoginActivity : AppCompatActivity() {
   private lateinit var binding: ActivityLoginBinding
@@ -93,9 +91,6 @@ class LoginActivity : AppCompatActivity() {
   }
 
   private fun isEmailCorrect(processingEmail: String): Boolean {
-    val pattern: Pattern = Pattern.compile(PatternHelper.emailRegex)
-
-    val matcher: Matcher = pattern.matcher(processingEmail)
-    return matcher.find()
+    return !TextUtils.isEmpty(processingEmail) && android.util.Patterns.EMAIL_ADDRESS.matcher(processingEmail).matches()
   }
 }
