@@ -49,8 +49,7 @@ class LoginActivity : AppCompatActivity() {
 
   private fun createViewBinding(): ConstraintLayout {
     binding = ActivityLoginBinding.inflate(layoutInflater)
-    val view = binding.root
-    return view
+    return binding.root
   }
 
   private fun registerRegisterTextViewOnclick() {
@@ -97,6 +96,10 @@ class LoginActivity : AppCompatActivity() {
             buildAlertDialog(R.string.alertDialogLoginFailedMessage)
           } else {
             SharedPrefsHelper.setLoginState(applicationContext, true)
+
+            val processingIntent = Intent(this@LoginActivity, MainActivity::class.java)
+            startActivity(processingIntent)
+            finish()
           }
         }
 
