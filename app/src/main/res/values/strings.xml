@@ -9,6 +9,8 @@
     <string name="loginEmailHint">Email</string>
     <string name="loginPasswordHint">Пароль</string>
     <string name="loginAccountLogin">Войти</string>
-    <string name="alertDialogLoginFailedTitle">Login failed</string>
-    <string name="alertDialogLoginFailedMessage">Email or password is empty. Check correctness</string>
+    <string name="alertDialogLoginFailedTitle">Ошибка входа</string>
+    <string name="alertDialogDataIncorrectMessage">Email или парль пусты. Проверьте заполненность</string>
+    <string name="alertDialogLoginFailedMessage">Введенные данные некорректны. Проверьте правильность</string>
+    <string name="alertDialogNetworkErrorMessage">Ошибка сети. Попробуйте еще раз</string>
 </resources>
