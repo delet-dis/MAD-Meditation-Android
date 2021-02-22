@@ -4,7 +4,6 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -12,13 +11,11 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.delet_dis.madmeditation.databinding.ActivityLoginBinding
-import com.delet_dis.madmeditation.helpers.ConstantsHelper
 import com.delet_dis.madmeditation.helpers.SharedPrefsHelper
 import com.delet_dis.madmeditation.helpers.WindowHelper
 import com.delet_dis.madmeditation.http.common.Common
 import com.delet_dis.madmeditation.model.LoginRequest
 import com.delet_dis.madmeditation.model.LoginResponse
-import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
