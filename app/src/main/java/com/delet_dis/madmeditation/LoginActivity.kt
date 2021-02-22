@@ -3,6 +3,7 @@ package com.delet_dis.madmeditation
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -19,7 +20,6 @@ import retrofit2.Call
 import retrofit2.Response
 import java.util.regex.Matcher
 import java.util.regex.Pattern
-import javax.security.auth.callback.Callback
 
 class LoginActivity : AppCompatActivity() {
   private lateinit var binding: ActivityLoginBinding
@@ -63,6 +63,7 @@ class LoginActivity : AppCompatActivity() {
     if (isEmailCorrect(emailEditText.text.toString()) &&
       passwordEditText.text.toString().isNotBlank()
     ) {
+
       val loginRequest = LoginRequest(
         emailEditText.text.toString(),
         passwordEditText.text.toString()
@@ -70,18 +71,14 @@ class LoginActivity : AppCompatActivity() {
 
       val retrofitService = Common.retrofitService
 
-      retrofitService.postLoginData(loginRequest.email, loginRequest.password)
+      retrofitService.postLoginData(loginRequest)
         .enqueue(object : retrofit2.Callback<LoginResponse> {
           override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
-            AlertDialog.Builder(applicationContext)
-              .setTitle("result")
-              .setMessage(response.toString())
-              .setPositiveButton("OK") { dialog: DialogInterface, _: Int -> dialog.dismiss() }
-              .show()
+            Log.d("test", response.body()?.error.toString())
           }
 
           override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-
+            Log.d("test", "test")
           }
         })
 
