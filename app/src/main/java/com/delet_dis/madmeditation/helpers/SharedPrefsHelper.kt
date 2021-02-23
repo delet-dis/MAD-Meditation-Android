@@ -2,6 +2,7 @@ package com.delet_dis.madmeditation.helpers
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.delet_dis.madmeditation.model.LoginRequest
 
 object SharedPrefsHelper {
 
@@ -36,5 +37,12 @@ object SharedPrefsHelper {
   fun setLoginData(context: Context, email: String, password: String) {
     getSharedPreferences(context).edit().putString(ConstantsHelper.userEmail, email).apply()
     getSharedPreferences(context).edit().putString(ConstantsHelper.userPassword, password).apply()
+  }
+
+  fun getLoginData(context: Context): LoginRequest {
+    return LoginRequest(
+      getSharedPreferences(context).getString(ConstantsHelper.userEmail, "null")?:"null",
+      getSharedPreferences(context).getString(ConstantsHelper.userPassword, "null")?:"null"
+    )
   }
 }

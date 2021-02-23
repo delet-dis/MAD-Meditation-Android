@@ -10,7 +10,7 @@
     <string name="loginPasswordHint">Пароль</string>
     <string name="loginAccountLogin">Войти</string>
     <string name="alertDialogLoginFailedTitle">Ошибка входа</string>
-    <string name="alertDialogDataIncorrectMessage">Email или парль пусты. Проверьте заполненность</string>
+    <string name="alertDialogDataIncorrectMessage">Поле email или парль не заполнено. Проверьте заполненность</string>
     <string name="alertDialogLoginFailedMessage">Введенные данные некорректны. Проверьте правильность</string>
-    <string name="alertDialogNetworkErrorMessage">Ошибка сети. Попробуйте еще раз</string>
+    <string name="networkErrorMessage">Ошибка сети. Попробуйте еще раз</string>
 </resources>

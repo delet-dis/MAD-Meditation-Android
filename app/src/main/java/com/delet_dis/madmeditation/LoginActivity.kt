@@ -7,7 +7,6 @@ import android.text.TextUtils
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.delet_dis.madmeditation.databinding.ActivityLoginBinding
@@ -99,15 +98,21 @@ class LoginActivity : AppCompatActivity() {
           } else {
             SharedPrefsHelper.setLoginState(applicationContext, true)
 
+            SharedPrefsHelper.setLoginData(
+              applicationContext,
+              loginRequest.email,
+              loginRequest.password
+            )
+
             val processingIntent = Intent(this@LoginActivity, MainActivity::class.java)
-            intent.putExtra(ConstantsHelper.loginResponseParcelableName, response.body())
+            processingIntent.putExtra(ConstantsHelper.loginResponseParcelableName, response.body())
             startActivity(processingIntent)
             finish()
           }
         }
 
         override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-          buildAlertDialog(R.string.alertDialogNetworkErrorMessage)
+          buildAlertDialog(R.string.networkErrorMessage)
         }
       })
   }
