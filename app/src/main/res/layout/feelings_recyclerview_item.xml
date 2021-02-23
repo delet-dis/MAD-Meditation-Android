@@ -9,7 +9,7 @@
     tools:ignore="ContentDescription">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/feelingImageBackgound"
+        android:id="@+id/feelingImageBackground"
         android:layout_width="62dp"
         android:layout_height="65dp"
         app:cardCornerRadius="20dp"
@@ -47,9 +47,12 @@
         android:layout_marginTop="5dp"
         android:ellipsize="end"
         android:fontFamily="@font/alegreya_sans_regular_400"
+        android:maxLines="1"
+        android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/feelingImageBackgound" />
+        app:layout_constraintTop_toBottomOf="@+id/feelingImageBackground" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
