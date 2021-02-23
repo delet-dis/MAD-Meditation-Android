@@ -13,6 +13,7 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <item name="android:navigationBarColor">@color/classicGreen</item>
         <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowBackground">@color/classicGreen</item>
     </style>
 
     <style name="Theme.MADMeditation.LoginActivity" parent="Theme.MADMeditation">

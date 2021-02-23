@@ -4,6 +4,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    tools:ignore="ContentDescription">
 
+    <ImageView
+        android:id="@+id/logoImage"
+        android:layout_width="43.41dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="59dp"
+        android:scaleX="1.8"
+        android:scaleY="1.8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/app_logo" />
+
+    <ImageView
+        android:id="@+id/hamgurgerImage"
+        android:layout_width="22dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="75dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/menu_hamburger" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/userImageCard"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="66dp"
+        android:layout_marginEnd="24dp"
+        app:cardCornerRadius="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/userImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
