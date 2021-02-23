@@ -15,4 +15,7 @@
   <color name="splashscreenStatusBar">#9DB3A2</color>
 
   <color name="halfTranslucent">#6F000000</color>
+
+  <color name="seventyPercentWhiteTextColor">#B3FFFFFF</color>
+  <color name="ninetyPercentWhiteCardColor">#E6FFFFFF</color>
 </resources>

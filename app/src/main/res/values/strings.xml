@@ -13,4 +13,6 @@
     <string name="alertDialogDataIncorrectMessage">Поле email или парль не заполнено. Проверьте заполненность</string>
     <string name="alertDialogLoginFailedMessage">Введенные данные некорректны. Проверьте правильность</string>
     <string name="networkErrorMessage">Ошибка сети. Попробуйте еще раз</string>
+    <string name="welcomeTextText">С возвращением, %1$s!</string>
+    <string name="afterwelcomeTextFeelingQuestion">Каким ты себя ощущешь сегодня?</string>
 </resources>
