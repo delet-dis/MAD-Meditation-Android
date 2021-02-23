@@ -20,6 +20,8 @@ import com.delet_dis.madmeditation.model.LoginResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
+import kotlin.Comparator
 
 class MainActivity : AppCompatActivity() {
   private lateinit var binding: ActivityMainBinding
@@ -46,7 +48,7 @@ class MainActivity : AppCompatActivity() {
     val loginResponse =
       intent.extras?.getParcelable<LoginResponse>(ConstantsHelper.loginResponseParcelableName)
 
-    var processingLoginResponse: LoginResponse? = null
+    var processingLoginResponse: LoginResponse?
 
     if (loginResponse == null) {
       val loginRequest = SharedPrefsHelper.getLoginData(applicationContext)
@@ -82,12 +84,18 @@ class MainActivity : AppCompatActivity() {
           call: Call<FeelingsResponse>,
           response: Response<FeelingsResponse>
         ) {
-          val processingFeelingsList: List<Feeling> = response.body()!!.data
+          val processingFeelingsList: List<Feeling> =
+            response.body()!!.data.sortedWith(compareBy { it.position })
+
           feelingsView.adapter = FeelingsAdapter(processingFeelingsList)
         }
 
         override fun onFailure(call: Call<FeelingsResponse>, t: Throwable) {
-          TODO("Not yet implemented")
+          Toast.makeText(
+            applicationContext,
+            getString(R.string.networkErrorMessage),
+            Toast.LENGTH_SHORT
+          ).show()
         }
 
       })
