@@ -10,18 +10,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.delet_dis.madmeditation.databinding.ActivityMainBinding
-import com.delet_dis.madmeditation.feelingsRecyclerView.FeelingsAdapter
+import com.delet_dis.madmeditation.recyclerView.FeelingsAdapter
 import com.delet_dis.madmeditation.helpers.ConstantsHelper
 import com.delet_dis.madmeditation.helpers.SharedPrefsHelper
 import com.delet_dis.madmeditation.http.common.Common
-import com.delet_dis.madmeditation.model.Feeling
-import com.delet_dis.madmeditation.model.FeelingsResponse
-import com.delet_dis.madmeditation.model.LoginResponse
+import com.delet_dis.madmeditation.model.*
+import com.delet_dis.madmeditation.recyclerView.QuotesAdapter
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.*
-import kotlin.Comparator
 
 class MainActivity : AppCompatActivity() {
   private lateinit var binding: ActivityMainBinding
@@ -30,6 +27,8 @@ class MainActivity : AppCompatActivity() {
   private lateinit var userNickName: TextView
 
   private lateinit var feelingsView: RecyclerView
+
+  private lateinit var quotesView: RecyclerView
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -44,6 +43,9 @@ class MainActivity : AppCompatActivity() {
 
     feelingsView = binding.feelingsRecycler
     feelingsView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+
+    quotesView = binding.quotesRecycler
+    quotesView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
     val loginResponse =
       intent.extras?.getParcelable<LoginResponse>(ConstantsHelper.loginResponseParcelableName)
@@ -91,6 +93,23 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun onFailure(call: Call<FeelingsResponse>, t: Throwable) {
+          Toast.makeText(
+            applicationContext,
+            getString(R.string.networkErrorMessage),
+            Toast.LENGTH_SHORT
+          ).show()
+        }
+
+      })
+
+    Common.retrofitService.getQuotesData()
+      .enqueue(object : Callback<QuotesResponse> {
+        override fun onResponse(call: Call<QuotesResponse>, response: Response<QuotesResponse>) {
+          val processingQuotesList: List<Quote> = response.body()!!.data
+          quotesView.adapter = QuotesAdapter(processingQuotesList)
+        }
+
+        override fun onFailure(call: Call<QuotesResponse>, t: Throwable) {
           Toast.makeText(
             applicationContext,
             getString(R.string.networkErrorMessage),

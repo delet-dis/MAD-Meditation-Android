@@ -3,6 +3,7 @@ package com.delet_dis.madmeditation.http.retrofit
 import com.delet_dis.madmeditation.model.FeelingsResponse
 import com.delet_dis.madmeditation.model.LoginRequest
 import com.delet_dis.madmeditation.model.LoginResponse
+import com.delet_dis.madmeditation.model.QuotesResponse
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -18,4 +19,7 @@ interface RetrofitServices {
 
   @GET("feelings")
   fun getFeelingsData(): Call<FeelingsResponse>
+
+  @GET("quotes")
+  fun getQuotesData(): Call<QuotesResponse>
 }

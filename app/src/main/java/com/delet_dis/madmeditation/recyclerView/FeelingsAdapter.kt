@@ -1,4 +1,4 @@
-package com.delet_dis.madmeditation.feelingsRecyclerView
+package com.delet_dis.madmeditation.recyclerView
 
 import android.view.LayoutInflater
 import android.view.View
@@ -20,6 +20,7 @@ class FeelingsAdapter(private val values: List<Feeling>) :
   ): FeelingsHolder {
     val itemView = LayoutInflater.from(parent.context)
       .inflate(R.layout.feelings_recyclerview_item, parent, false)
+
     return FeelingsHolder(itemView)
   }
 
@@ -42,6 +43,7 @@ class FeelingsAdapter(private val values: List<Feeling>) :
 
     init {
       feelingImage = itemView.findViewById(R.id.feelingImage)
+
       feelingName = itemView.findViewById(R.id.feelingName)
     }
   }
