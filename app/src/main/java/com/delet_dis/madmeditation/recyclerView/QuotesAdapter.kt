@@ -47,10 +47,10 @@ class QuotesAdapter(private val values: List<Quote>) :
     var quoteImage: ImageView? = null
 
     init {
-      quoteTitle = itemView.findViewById(R.id.quoteTitleText)
-      quoteDescription = itemView.findViewById(R.id.quoteDesctiptionText)
+      quoteTitle = itemView.findViewById(R.id.quoteTitle)
+      quoteDescription = itemView.findViewById(R.id.quoteDesctiption)
 
-      quoteImage = itemView.findViewById(R.id.quoteImageView)
+      quoteImage = itemView.findViewById(R.id.quoteImage)
     }
   }
 

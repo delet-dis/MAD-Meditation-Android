@@ -30,7 +30,7 @@
         app:srcCompat="@drawable/login_leafs" />
 
     <TextView
-        android:id="@+id/loginText"
+        android:id="@+id/loginHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="35dp"
@@ -62,7 +62,7 @@
         android:textColorHint="@color/supernova"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginText" />
+        app:layout_constraintTop_toBottomOf="@+id/loginHeader" />
 
     <EditText
         android:id="@+id/passwordInputField"

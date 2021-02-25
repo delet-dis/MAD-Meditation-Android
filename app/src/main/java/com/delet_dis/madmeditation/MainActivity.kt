@@ -3,6 +3,7 @@ package com.delet_dis.madmeditation
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.commit
@@ -24,15 +25,14 @@ class MainActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
-    binding = ActivityMainBinding.inflate(layoutInflater)
-    val view = binding.root
+    val view = createViewBinding()
 
     setContentView(view)
 
     fragmentContainerView = binding.screenFragmentContainerView
 
     val loginResponse =
-      intent.extras?.getParcelable<LoginResponse>(ConstantsHelper.loginResponseParcelableName)
+      getParceledLoginResponse()
 
     var processingLoginResponse: LoginResponse?
 
@@ -65,6 +65,14 @@ class MainActivity : AppCompatActivity() {
 
       createMainFragment(processingLoginResponse)
     }
+  }
+
+  private fun getParceledLoginResponse() =
+    intent.extras?.getParcelable<LoginResponse>(ConstantsHelper.loginResponseParcelableName)
+
+  private fun createViewBinding(): ConstraintLayout {
+    binding = ActivityMainBinding.inflate(layoutInflater)
+    return binding.root
   }
 
   private fun createMainFragment(processingLoginResponse: LoginResponse?) {

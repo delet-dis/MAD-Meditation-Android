@@ -24,7 +24,7 @@
             android:background="@color/hopscotch">
 
             <TextView
-                android:id="@+id/quoteTitleText"
+                android:id="@+id/quoteTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
@@ -36,16 +36,16 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/quoteDesctiptionText"
+                android:id="@+id/quoteDesctiption"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:fontFamily="@font/alegreya_sans_medium"
                 android:textColor="@color/classicGreen"
                 android:textSize="18sp"
-                app:layout_constraintEnd_toStartOf="@+id/quoteImageView"
+                app:layout_constraintEnd_toStartOf="@+id/quoteImage"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/quoteTitleText" />
+                app:layout_constraintTop_toBottomOf="@+id/quoteTitle" />
 
             <Button
                 android:id="@+id/quoteMoreButton"
@@ -64,10 +64,10 @@
                 android:textSize="15sp"
                 app:cornerRadius="10dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/quoteDesctiptionText" />
+                app:layout_constraintTop_toBottomOf="@+id/quoteDesctiption" />
 
             <ImageView
-                android:id="@+id/quoteImageView"
+                android:id="@+id/quoteImage"
                 android:layout_width="166dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"

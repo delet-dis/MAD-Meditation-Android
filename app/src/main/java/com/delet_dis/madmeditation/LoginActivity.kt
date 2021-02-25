@@ -24,8 +24,8 @@ import retrofit2.Response
 class LoginActivity : AppCompatActivity() {
   private lateinit var binding: ActivityLoginBinding
 
-  private lateinit var emailEditText: EditText
-  private lateinit var passwordEditText: EditText
+  private lateinit var emailInputField: EditText
+  private lateinit var passwordInputField: EditText
 
   private lateinit var loginButton: Button
   private lateinit var registerTextView: TextView
@@ -67,16 +67,16 @@ class LoginActivity : AppCompatActivity() {
   }
 
   private fun findViewElements() {
-    emailEditText = binding.emailInputField
-    passwordEditText = binding.passwordInputField
+    emailInputField = binding.emailInputField
+    passwordInputField = binding.passwordInputField
 
     loginButton = binding.loginButton
     registerTextView = binding.noAccountHintRegistration
   }
 
   private fun checkCorrectnessOfFields() {
-    if (isEmailCorrect(emailEditText.text.toString()) &&
-      passwordEditText.text.toString().isNotBlank()
+    if (isEmailCorrect(emailInputField.text.toString()) &&
+      passwordInputField.text.toString().isNotBlank()
     ) {
 
       val loginRequest = makeLoginRequest()
@@ -118,8 +118,8 @@ class LoginActivity : AppCompatActivity() {
   }
 
   private fun makeLoginRequest() = LoginRequest(
-    emailEditText.text.toString(),
-    passwordEditText.text.toString()
+    emailInputField.text.toString(),
+    passwordInputField.text.toString()
   )
 
   private fun isEmailCorrect(processingEmail: String): Boolean {

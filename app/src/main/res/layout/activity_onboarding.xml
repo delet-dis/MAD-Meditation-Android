@@ -34,7 +34,7 @@
         app:srcCompat="@drawable/app_logo" />
 
     <TextView
-        android:id="@+id/welcomeTextHeader"
+        android:id="@+id/welcometHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="45dp"
@@ -48,7 +48,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageLogo" />
 
     <TextView
-        android:id="@+id/welcomeTextBody"
+        android:id="@+id/welcomeBody"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/alegreya_sans_regular_400"
@@ -58,7 +58,7 @@
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/welcomeTextHeader" />
+        app:layout_constraintTop_toBottomOf="@+id/welcometHeader" />
 
     <Button
         android:id="@+id/loginButton"
@@ -77,7 +77,7 @@
         app:cornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/welcomeTextBody" />
+        app:layout_constraintTop_toBottomOf="@+id/welcomeBody" />
 
     <TextView
         android:id="@+id/noAccountHintQuestion"

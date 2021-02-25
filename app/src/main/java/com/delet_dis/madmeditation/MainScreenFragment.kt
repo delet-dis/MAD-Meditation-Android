@@ -26,11 +26,11 @@ import retrofit2.Response
 class MainScreenFragment : Fragment() {
 
   private lateinit var userAvatar: ImageView
-  private lateinit var userNickName: TextView
+  private lateinit var welcomeTextWithUserName: TextView
 
-  private lateinit var feelingsView: RecyclerView
+  private lateinit var feelingsRecycler: RecyclerView
 
-  private lateinit var quotesView: RecyclerView
+  private lateinit var quotesRecycler: RecyclerView
 
   private lateinit var binding: FragmentMainScreenBinding
 
@@ -53,18 +53,18 @@ class MainScreenFragment : Fragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
 
-    userAvatar = binding.userImage
-    userNickName = binding.welcomeText
+    userAvatar = binding.userAvatar
+    welcomeTextWithUserName = binding.welcomeHeaderWithUserName
 
-    feelingsView = binding.feelingsRecycler
-    feelingsView.layoutManager = LinearLayoutManager(
+    feelingsRecycler = binding.feelingsRecycler
+    feelingsRecycler.layoutManager = LinearLayoutManager(
       activity,
       LinearLayoutManager.HORIZONTAL,
       false
     )
 
-    quotesView = binding.quotesRecycler
-    quotesView.layoutManager = LinearLayoutManager(
+    quotesRecycler = binding.quotesRecycler
+    quotesRecycler.layoutManager = LinearLayoutManager(
       activity,
       LinearLayoutManager.VERTICAL,
       false
@@ -81,7 +81,7 @@ class MainScreenFragment : Fragment() {
           val processingFeelingsList: List<Feeling> =
             response.body()!!.data.sortedWith(compareBy { it.position })
 
-          feelingsView.adapter = FeelingsAdapter(processingFeelingsList)
+          feelingsRecycler.adapter = FeelingsAdapter(processingFeelingsList)
         }
 
         override fun onFailure(call: Call<FeelingsResponse>, t: Throwable) {
@@ -98,7 +98,7 @@ class MainScreenFragment : Fragment() {
       .enqueue(object : Callback<QuotesResponse> {
         override fun onResponse(call: Call<QuotesResponse>, response: Response<QuotesResponse>) {
           val processingQuotesList: List<Quote> = response.body()!!.data
-          quotesView.adapter = QuotesAdapter(processingQuotesList)
+          quotesRecycler.adapter = QuotesAdapter(processingQuotesList)
         }
 
         override fun onFailure(call: Call<QuotesResponse>, t: Throwable) {
@@ -120,7 +120,7 @@ class MainScreenFragment : Fragment() {
         .into(userAvatar)
     }
 
-    userNickName.text =
+    welcomeTextWithUserName.text =
       String.format(getString(R.string.welcomeTextText, processingLoginResponse?.nickName))
   }
 

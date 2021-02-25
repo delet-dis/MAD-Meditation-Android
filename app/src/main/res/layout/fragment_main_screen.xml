@@ -50,13 +50,13 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/userImage"
+                android:id="@+id/userAvatar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </androidx.cardview.widget.CardView>
 
         <TextView
-            android:id="@+id/welcomeText"
+            android:id="@+id/welcomeHeaderWithUserName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
@@ -69,7 +69,7 @@
             app:layout_constraintTop_toBottomOf="@+id/logoImage" />
 
         <TextView
-            android:id="@+id/afterwelcomeText"
+            android:id="@+id/welcomeBody"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
@@ -79,7 +79,7 @@
             android:textColor="@color/seventyPercentWhiteTextColor"
             android:textSize="22sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/welcomeText" />
+            app:layout_constraintTop_toBottomOf="@+id/welcomeHeaderWithUserName" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/feelingsRecycler"
@@ -90,7 +90,7 @@
             android:orientation="horizontal"
             android:overScrollMode="never"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/afterwelcomeText" />
+            app:layout_constraintTop_toBottomOf="@+id/welcomeBody" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/quotesRecycler"
