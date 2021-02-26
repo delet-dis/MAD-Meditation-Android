@@ -27,8 +27,8 @@ class MainActivity : AppCompatActivity() {
   private lateinit var fragmentContainerView: FragmentContainerView
 
   private lateinit var footerMainImageView: ImageView
-  private lateinit var footerListenImageView: ImageView
-  private lateinit var footerUserImageView: ImageView
+  private lateinit var footerPlayerImageView: ImageView
+  private lateinit var footerProfileImageView: ImageView
 
   private var processingLoginResponse: LoginResponse? = null
 
@@ -71,14 +71,18 @@ class MainActivity : AppCompatActivity() {
       createMainFragment(processingLoginResponse)
     }
 
-    footerListenImageView.setOnClickListener {
+    footerPlayerImageView.setOnClickListener {
+      setPlayerButtonActive()
       supportFragmentManager.commit {
         setReorderingAllowed(true)
         replace<PlayerScreenFragment>(R.id.screenFragmentContainerView)
       }
     }
 
+    setLogoButtonActive()
+
     footerMainImageView.setOnClickListener {
+      setLogoButtonActive()
       supportFragmentManager.commit {
         setReorderingAllowed(true)
         replace(
@@ -89,7 +93,8 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    footerUserImageView.setOnClickListener {
+    footerProfileImageView.setOnClickListener {
+      setProfileButtonActive()
       supportFragmentManager.commit {
         setReorderingAllowed(true)
         replace<ProfileFragment>(R.id.screenFragmentContainerView)
@@ -101,8 +106,8 @@ class MainActivity : AppCompatActivity() {
     fragmentContainerView = binding.screenFragmentContainerView
 
     footerMainImageView = binding.footerLogoImageViewAsButton
-    footerListenImageView = binding.footerListenImageViewAsButton
-    footerUserImageView = binding.footerProfileImageViewAsButton
+    footerPlayerImageView = binding.footerPlayerImageViewAsButton
+    footerProfileImageView = binding.footerProfileImageViewAsButton
   }
 
   private fun getParceledLoginResponse() =
@@ -122,6 +127,54 @@ class MainActivity : AppCompatActivity() {
         bundleOf(Pair(ConstantsHelper.loginResponseParcelableName, processingLoginResponse))
       )
     }
+  }
+
+  private fun setProfileButtonActive() {
+    footerPlayerImageView.setImageResource(R.drawable.footer_player_non_active)
+    footerMainImageView.setImageResource(R.drawable.footer_menu_non_active)
+
+    footerProfileImageView.setImageResource(R.drawable.footer_profile_active)
+
+    footerMainImageView.scaleX = ConstantsHelper.scaleMainCoefficientNonActive
+    footerMainImageView.scaleY = ConstantsHelper.scaleMainCoefficientNonActive
+
+    footerPlayerImageView.scaleX = ConstantsHelper.scaleCoefficientNonActive
+    footerPlayerImageView.scaleY = ConstantsHelper.scaleCoefficientNonActive
+
+    footerProfileImageView.scaleX = ConstantsHelper.scaleCoefficientActive
+    footerProfileImageView.scaleY = ConstantsHelper.scaleCoefficientActive
+  }
+
+  private fun setPlayerButtonActive() {
+    footerProfileImageView.setImageResource(R.drawable.footer_profile_non_active)
+    footerMainImageView.setImageResource(R.drawable.footer_menu_non_active)
+
+    footerPlayerImageView.setImageResource(R.drawable.footer_player_active)
+
+    footerMainImageView.scaleX = ConstantsHelper.scaleMainCoefficientNonActive
+    footerMainImageView.scaleY = ConstantsHelper.scaleMainCoefficientNonActive
+
+    footerProfileImageView.scaleX = ConstantsHelper.scaleCoefficientNonActive
+    footerProfileImageView.scaleY = ConstantsHelper.scaleCoefficientNonActive
+
+    footerPlayerImageView.scaleX = ConstantsHelper.scaleCoefficientActive
+    footerPlayerImageView.scaleY = ConstantsHelper.scaleCoefficientActive
+  }
+
+  private fun setLogoButtonActive() {
+    footerProfileImageView.setImageResource(R.drawable.footer_profile_non_active)
+    footerPlayerImageView.setImageResource(R.drawable.footer_player_non_active)
+
+    footerMainImageView.setImageResource(R.drawable.footer_menu_active)
+
+    footerPlayerImageView.scaleX = ConstantsHelper.scaleCoefficientNonActive
+    footerPlayerImageView.scaleY = ConstantsHelper.scaleCoefficientNonActive
+
+    footerProfileImageView.scaleX = ConstantsHelper.scaleCoefficientNonActive
+    footerProfileImageView.scaleY = ConstantsHelper.scaleCoefficientNonActive
+
+    footerMainImageView.scaleX = ConstantsHelper.scaleMainCoefficientActive
+    footerMainImageView.scaleY = ConstantsHelper.scaleMainCoefficientActive
   }
 
 }

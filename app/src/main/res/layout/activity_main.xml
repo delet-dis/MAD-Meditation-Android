@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/footerListenImageViewAsButton"
+        app:layout_constraintBottom_toTopOf="@+id/footerPlayerImageViewAsButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -29,19 +29,17 @@
         android:scaleY="2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/app_logo"
-        tools:srcCompat="@drawable/app_logo" />
+        app:srcCompat="@drawable/footer_menu_non_active" />
 
     <ImageView
-        android:id="@+id/footerListenImageViewAsButton"
+        android:id="@+id/footerPlayerImageViewAsButton"
         android:layout_width="28.78dp"
         android:layout_height="30dp"
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/menu_sounds_non_active"
-        tools:srcCompat="@drawable/menu_sounds_non_active" />
+        app:srcCompat="@drawable/footer_player_non_active" />
 
     <ImageView
         android:id="@+id/footerProfileImageViewAsButton"
@@ -51,8 +49,7 @@
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/menu_profile_non_active"
-        tools:srcCompat="@drawable/menu_profile_non_active" />
+        app:srcCompat="@drawable/footer_profile_non_active" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
