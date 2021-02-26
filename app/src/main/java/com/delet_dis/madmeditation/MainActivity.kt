@@ -1,6 +1,8 @@
 package com.delet_dis.madmeditation
 
 import android.os.Bundle
+import android.widget.Button
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -10,6 +12,7 @@ import androidx.fragment.app.commit
 import com.delet_dis.madmeditation.databinding.ActivityMainBinding
 import com.delet_dis.madmeditation.helpers.ConstantsHelper
 import com.delet_dis.madmeditation.helpers.SharedPrefsHelper
+import com.delet_dis.madmeditation.helpers.ToastHelper
 import com.delet_dis.madmeditation.http.common.Common
 import com.delet_dis.madmeditation.model.LoginResponse
 import retrofit2.Call
@@ -21,6 +24,10 @@ class MainActivity : AppCompatActivity() {
 
   private lateinit var fragmentContainerView: FragmentContainerView
 
+  private lateinit var footerMainImageView: ImageView
+  private lateinit var footerListenImageView: ImageView
+  private lateinit var footerUserImageView: ImageView
+
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -29,7 +36,7 @@ class MainActivity : AppCompatActivity() {
 
     setContentView(view)
 
-    fragmentContainerView = binding.screenFragmentContainerView
+    findViewElements()
 
     val loginResponse =
       getParceledLoginResponse()
@@ -52,11 +59,7 @@ class MainActivity : AppCompatActivity() {
           }
 
           override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-            Toast.makeText(
-              applicationContext,
-              getString(R.string.networkErrorMessage),
-              Toast.LENGTH_SHORT
-            ).show()
+            ToastHelper.createErrorToast(applicationContext, R.string.networkErrorMessage)
           }
 
         })
@@ -65,6 +68,14 @@ class MainActivity : AppCompatActivity() {
 
       createMainFragment(processingLoginResponse)
     }
+  }
+
+  private fun findViewElements() {
+    fragmentContainerView = binding.screenFragmentContainerView
+
+    footerMainImageView = binding.footerLogoImageViewAsButton
+    footerListenImageView = binding.footerListenImageViewAsButton
+    footerUserImageView = binding.footerUserImageViewAsButton
   }
 
   private fun getParceledLoginResponse() =

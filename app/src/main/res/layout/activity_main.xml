@@ -14,13 +14,13 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/footerListenButton"
+        app:layout_constraintBottom_toTopOf="@+id/footerListenImageViewAsButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/footerLogoButton"
+        android:id="@+id/footerLogoImageViewAsButton"
         android:layout_width="28.78dp"
         android:layout_height="30dp"
         android:layout_marginStart="74dp"
@@ -33,7 +33,7 @@
         tools:srcCompat="@drawable/app_logo" />
 
     <ImageView
-        android:id="@+id/footerListenButton"
+        android:id="@+id/footerListenImageViewAsButton"
         android:layout_width="28.78dp"
         android:layout_height="30dp"
         android:layout_marginBottom="16dp"
@@ -44,7 +44,7 @@
         tools:srcCompat="@drawable/menu_sounds_non_active" />
 
     <ImageView
-        android:id="@+id/footerUserButton"
+        android:id="@+id/footerUserImageViewAsButton"
         android:layout_width="28.78dp"
         android:layout_height="30dp"
         android:layout_marginEnd="74dp"

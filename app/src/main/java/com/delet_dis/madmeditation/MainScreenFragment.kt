@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.delet_dis.madmeditation.databinding.FragmentMainScreenBinding
 import com.delet_dis.madmeditation.helpers.ConstantsHelper
+import com.delet_dis.madmeditation.helpers.ToastHelper
 import com.delet_dis.madmeditation.http.common.Common
 import com.delet_dis.madmeditation.model.*
 import com.delet_dis.madmeditation.recyclerView.FeelingsAdapter
@@ -85,11 +86,12 @@ class MainScreenFragment : Fragment() {
         }
 
         override fun onFailure(call: Call<FeelingsResponse>, t: Throwable) {
-          Toast.makeText(
-            activity,
-            getString(R.string.networkErrorMessage),
-            Toast.LENGTH_SHORT
-          ).show()
+          activity?.let {
+            ToastHelper.createErrorToast(
+              it.applicationContext,
+              R.string.networkErrorMessage
+            )
+          }
         }
 
       })
@@ -102,11 +104,12 @@ class MainScreenFragment : Fragment() {
         }
 
         override fun onFailure(call: Call<QuotesResponse>, t: Throwable) {
-          Toast.makeText(
-            activity,
-            getString(R.string.networkErrorMessage),
-            Toast.LENGTH_SHORT
-          ).show()
+          activity?.let {
+            ToastHelper.createErrorToast(
+              it.applicationContext,
+              R.string.networkErrorMessage
+            )
+          }
         }
 
       })
