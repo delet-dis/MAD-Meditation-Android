@@ -34,7 +34,7 @@ class MainScreenFragment : Fragment() {
 
   private lateinit var binding: FragmentMainScreenBinding
 
-  private lateinit var loginResponse: LoginResponse
+  private var loginResponse: LoginResponse? = null
 
   override fun onCreateView(
     inflater: LayoutInflater,
@@ -44,7 +44,7 @@ class MainScreenFragment : Fragment() {
     binding = FragmentMainScreenBinding.inflate(layoutInflater)
 
     loginResponse = requireArguments()
-      .getParcelable(ConstantsHelper.loginResponseParcelableName)!!
+      .getParcelable(ConstantsHelper.loginResponseParcelableName)
 
     return binding.root
 

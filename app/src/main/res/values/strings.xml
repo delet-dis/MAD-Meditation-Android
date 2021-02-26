@@ -16,4 +16,5 @@
     <string name="welcomeTextText">С возвращением, %1$s!</string>
     <string name="afterwelcomeTextFeelingQuestion">Каким ты себя ощущешь сегодня?</string>
     <string name="moreButtonText">подробнее</string>
+    <string name="playerTextMock">Тут будет \n прослушивание</string>
 </resources>
