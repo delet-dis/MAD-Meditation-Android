@@ -1,4 +1,4 @@
-package com.delet_dis.madmeditation
+package com.delet_dis.madmeditation.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,9 +15,15 @@ class PlayerScreenFragment : Fragment() {
     inflater: LayoutInflater,
     container: ViewGroup?,
     savedInstanceState: Bundle?
-  ): View {
-    binding = FragmentPlayerScreenBinding.inflate(layoutInflater)
+  ): View? {
 
-    return binding.root
+    return if (savedInstanceState == null) {
+      binding = FragmentPlayerScreenBinding.inflate(layoutInflater)
+
+      binding.root
+    } else {
+      view
+    }
+
   }
 }

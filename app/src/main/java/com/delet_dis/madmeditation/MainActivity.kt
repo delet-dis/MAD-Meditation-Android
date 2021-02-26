@@ -9,6 +9,8 @@ import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.delet_dis.madmeditation.databinding.ActivityMainBinding
+import com.delet_dis.madmeditation.fragments.MainScreenFragment
+import com.delet_dis.madmeditation.fragments.PlayerScreenFragment
 import com.delet_dis.madmeditation.helpers.ConstantsHelper
 import com.delet_dis.madmeditation.helpers.SharedPrefsHelper
 import com.delet_dis.madmeditation.helpers.ToastHelper

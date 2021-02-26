@@ -1,4 +1,4 @@
-package com.delet_dis.madmeditation.recyclerView
+package com.delet_dis.madmeditation.recyclerViewAdapters
 
 import android.view.LayoutInflater
 import android.view.View

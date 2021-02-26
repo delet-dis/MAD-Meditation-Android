@@ -13,7 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MADMeditation"
         android:usesCleartextTraffic="true">
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MenuActivity"></activity>
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="orientation|screenSize" />
         <activity
             android:name=".LoginActivity"
             android:theme="@style/Theme.MADMeditation.LoginActivity" />
