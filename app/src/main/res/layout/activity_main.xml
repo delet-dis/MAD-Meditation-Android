@@ -44,7 +44,7 @@
         tools:srcCompat="@drawable/menu_sounds_non_active" />
 
     <ImageView
-        android:id="@+id/footerUserImageViewAsButton"
+        android:id="@+id/footerProfileImageViewAsButton"
         android:layout_width="28.78dp"
         android:layout_height="30dp"
         android:layout_marginEnd="74dp"

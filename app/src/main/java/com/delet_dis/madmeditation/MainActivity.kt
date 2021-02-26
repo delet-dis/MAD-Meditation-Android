@@ -11,6 +11,7 @@ import androidx.fragment.app.replace
 import com.delet_dis.madmeditation.databinding.ActivityMainBinding
 import com.delet_dis.madmeditation.fragments.MainScreenFragment
 import com.delet_dis.madmeditation.fragments.PlayerScreenFragment
+import com.delet_dis.madmeditation.fragments.ProfileFragment
 import com.delet_dis.madmeditation.helpers.ConstantsHelper
 import com.delet_dis.madmeditation.helpers.SharedPrefsHelper
 import com.delet_dis.madmeditation.helpers.ToastHelper
@@ -87,6 +88,13 @@ class MainActivity : AppCompatActivity() {
         )
       }
     }
+
+    footerUserImageView.setOnClickListener {
+      supportFragmentManager.commit {
+        setReorderingAllowed(true)
+        replace<ProfileFragment>(R.id.screenFragmentContainerView)
+      }
+    }
   }
 
   private fun findViewElements() {
@@ -94,7 +102,7 @@ class MainActivity : AppCompatActivity() {
 
     footerMainImageView = binding.footerLogoImageViewAsButton
     footerListenImageView = binding.footerListenImageViewAsButton
-    footerUserImageView = binding.footerUserImageViewAsButton
+    footerUserImageView = binding.footerProfileImageViewAsButton
   }
 
   private fun getParceledLoginResponse() =
