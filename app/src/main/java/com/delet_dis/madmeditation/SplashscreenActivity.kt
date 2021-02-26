@@ -1,15 +1,11 @@
 package com.delet_dis.madmeditation
 
-import android.app.Activity
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.delet_dis.madmeditation.helpers.SharedPrefsHelper
-import com.delet_dis.madmeditation.helpers.WindowHelper
 
 class SplashscreenActivity : AppCompatActivity() {
 
