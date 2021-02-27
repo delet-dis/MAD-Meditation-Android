@@ -128,18 +128,18 @@ class MainScreenFragment : Fragment() {
   private fun findViewElements() {
     userAvatar = binding.userAvatar
     welcomeTextWithUserName = binding.welcomeHeaderWithUserName
-    hamburgerImage = binding.hamgurgerImage
+    hamburgerImage = binding.hamburgerImage
 
     feelingsRecycler = binding.feelingsRecycler
     feelingsRecycler.layoutManager = LinearLayoutManager(
-      activity,
+      this.context,
       LinearLayoutManager.HORIZONTAL,
       false
     )
 
     quotesRecycler = binding.quotesRecycler
     quotesRecycler.layoutManager = LinearLayoutManager(
-      activity,
+      this.context,
       LinearLayoutManager.VERTICAL,
       false
     )

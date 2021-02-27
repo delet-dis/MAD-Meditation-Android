@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.delet_dis.madmeditation.databinding.ActivityLoginBinding
 import com.delet_dis.madmeditation.helpers.ConstantsHelper
-import com.delet_dis.madmeditation.helpers.SharedPrefsHelper
+import com.delet_dis.madmeditation.helpers.SharedPreferencesHelper
 import com.delet_dis.madmeditation.helpers.WindowHelper
 import com.delet_dis.madmeditation.http.common.Common
 import com.delet_dis.madmeditation.model.LoginRequest
@@ -42,10 +42,18 @@ class LoginActivity : AppCompatActivity() {
 
     findViewElements()
 
+    fillEmailFieldIfEmailIsNotNull()
+
     registerLoginButtonOnclick()
 
     registerRegisterTextViewOnclick()
 
+  }
+
+  private fun fillEmailFieldIfEmailIsNotNull() {
+    if (SharedPreferencesHelper.getEmail(applicationContext) != null) {
+      emailInputField.setText(SharedPreferencesHelper.getEmail(applicationContext))
+    }
   }
 
   private fun createViewBinding(): ConstraintLayout {
@@ -96,9 +104,9 @@ class LoginActivity : AppCompatActivity() {
           if (response.errorBody() !== null) {
             buildAlertDialog(R.string.alertDialogLoginFailedMessage)
           } else {
-            SharedPrefsHelper.setLoginState(applicationContext, true)
+            SharedPreferencesHelper.setLoginState(applicationContext, true)
 
-            SharedPrefsHelper.setLoginData(
+            SharedPreferencesHelper.setLoginData(
               applicationContext,
               loginRequest.email,
               loginRequest.password

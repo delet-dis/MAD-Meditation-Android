@@ -13,7 +13,7 @@ import com.delet_dis.madmeditation.fragments.MainScreenFragment
 import com.delet_dis.madmeditation.fragments.PlayerScreenFragment
 import com.delet_dis.madmeditation.fragments.ProfileFragment
 import com.delet_dis.madmeditation.helpers.ConstantsHelper
-import com.delet_dis.madmeditation.helpers.SharedPrefsHelper
+import com.delet_dis.madmeditation.helpers.SharedPreferencesHelper
 import com.delet_dis.madmeditation.helpers.ToastHelper
 import com.delet_dis.madmeditation.http.common.Common
 import com.delet_dis.madmeditation.model.LoginRequest
@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
       getParceledLoginResponse()
 
     if (loginResponse == null) {
-      val loginRequest = SharedPrefsHelper.getLoginData(applicationContext)
+      val loginRequest = SharedPreferencesHelper.getLoginData(applicationContext)
 
       postLoginData(loginRequest)
     } else {

@@ -18,4 +18,5 @@
     <string name="moreButtonText">подробнее</string>
     <string name="playerTextMock">Тут будет \n прослушивание</string>
     <string name="menuTextMock">Тут будет \n меню</string>
+    <string name="exitTextText">выход</string>
 </resources>

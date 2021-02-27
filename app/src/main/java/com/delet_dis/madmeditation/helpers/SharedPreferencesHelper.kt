@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.delet_dis.madmeditation.model.LoginRequest
 
-object SharedPrefsHelper {
+object SharedPreferencesHelper {
 
   private fun getSharedPreferences(context: Context): SharedPreferences {
     return context.getSharedPreferences(ConstantsHelper.appSettings, Context.MODE_PRIVATE)
@@ -12,12 +12,6 @@ object SharedPrefsHelper {
 
   fun getValue(context: Context, setting: String): String? {
     return getSharedPreferences(context).getString(setting, null)
-  }
-
-  fun clearValues(context: Context) {
-    val editor = getSharedPreferences(context).edit()
-    editor.clear()
-    editor.apply()
   }
 
   fun setValue(context: Context, setting: String, newValue: String?) {
@@ -41,8 +35,17 @@ object SharedPrefsHelper {
 
   fun getLoginData(context: Context): LoginRequest {
     return LoginRequest(
-      getSharedPreferences(context).getString(ConstantsHelper.userEmail, "null")?:"null",
-      getSharedPreferences(context).getString(ConstantsHelper.userPassword, "null")?:"null"
+      getSharedPreferences(context).getString(ConstantsHelper.userEmail, "null") ?: "null",
+      getSharedPreferences(context).getString(ConstantsHelper.userPassword, "null") ?: "null"
     )
+  }
+
+  fun getEmail(context: Context): String? {
+    return getSharedPreferences(context).getString(ConstantsHelper.userEmail, null)
+  }
+
+  fun clearLoginData(context: Context) {
+    setLoginState(context, false)
+    getSharedPreferences(context).edit().remove(ConstantsHelper.userPassword).apply()
   }
 }
