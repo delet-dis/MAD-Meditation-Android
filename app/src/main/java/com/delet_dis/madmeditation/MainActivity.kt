@@ -16,6 +16,7 @@ import com.delet_dis.madmeditation.helpers.ConstantsHelper
 import com.delet_dis.madmeditation.helpers.SharedPrefsHelper
 import com.delet_dis.madmeditation.helpers.ToastHelper
 import com.delet_dis.madmeditation.http.common.Common
+import com.delet_dis.madmeditation.model.LoginRequest
 import com.delet_dis.madmeditation.model.LoginResponse
 import retrofit2.Call
 import retrofit2.Callback
@@ -48,23 +49,7 @@ class MainActivity : AppCompatActivity() {
     if (loginResponse == null) {
       val loginRequest = SharedPrefsHelper.getLoginData(applicationContext)
 
-      Common.retrofitService.postLoginData(loginRequest)
-        .enqueue(object : Callback<LoginResponse> {
-
-          override fun onResponse(
-            call: Call<LoginResponse>,
-            response: Response<LoginResponse>
-          ) {
-            processingLoginResponse = response.body()
-
-            createMainFragment(processingLoginResponse)
-          }
-
-          override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-            ToastHelper.createErrorToast(applicationContext, R.string.networkErrorMessage)
-          }
-
-        })
+      postLoginData(loginRequest)
     } else {
       processingLoginResponse = loginResponse
 
@@ -102,6 +87,26 @@ class MainActivity : AppCompatActivity() {
     }
   }
 
+  private fun postLoginData(loginRequest: LoginRequest) {
+    Common.retrofitService.postLoginData(loginRequest)
+      .enqueue(object : Callback<LoginResponse> {
+
+        override fun onResponse(
+          call: Call<LoginResponse>,
+          response: Response<LoginResponse>
+        ) {
+          processingLoginResponse = response.body()
+
+          createMainFragment(processingLoginResponse)
+        }
+
+        override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+          ToastHelper.createErrorToast(applicationContext, R.string.networkErrorMessage)
+        }
+
+      })
+  }
+
   private fun findViewElements() {
     fragmentContainerView = binding.screenFragmentContainerView
 
@@ -135,14 +140,17 @@ class MainActivity : AppCompatActivity() {
 
     footerProfileImageView.setImageResource(R.drawable.footer_profile_active)
 
-    footerMainImageView.scaleX = ConstantsHelper.scaleMainCoefficientNonActive
-    footerMainImageView.scaleY = ConstantsHelper.scaleMainCoefficientNonActive
+    setLogoButtonNonActive()
 
-    footerPlayerImageView.scaleX = ConstantsHelper.scaleCoefficientNonActive
-    footerPlayerImageView.scaleY = ConstantsHelper.scaleCoefficientNonActive
+    setPlayerButtonNonActive()
 
     footerProfileImageView.scaleX = ConstantsHelper.scaleCoefficientActive
     footerProfileImageView.scaleY = ConstantsHelper.scaleCoefficientActive
+  }
+
+  private fun setProfileButtonNonActive() {
+    footerProfileImageView.scaleX = ConstantsHelper.scaleCoefficientNonActive
+    footerProfileImageView.scaleY = ConstantsHelper.scaleCoefficientNonActive
   }
 
   private fun setPlayerButtonActive() {
@@ -151,14 +159,17 @@ class MainActivity : AppCompatActivity() {
 
     footerPlayerImageView.setImageResource(R.drawable.footer_player_active)
 
-    footerMainImageView.scaleX = ConstantsHelper.scaleMainCoefficientNonActive
-    footerMainImageView.scaleY = ConstantsHelper.scaleMainCoefficientNonActive
+    setLogoButtonNonActive()
 
-    footerProfileImageView.scaleX = ConstantsHelper.scaleCoefficientNonActive
-    footerProfileImageView.scaleY = ConstantsHelper.scaleCoefficientNonActive
+    setProfileButtonNonActive()
 
     footerPlayerImageView.scaleX = ConstantsHelper.scaleCoefficientActive
     footerPlayerImageView.scaleY = ConstantsHelper.scaleCoefficientActive
+  }
+
+  private fun setPlayerButtonNonActive() {
+    footerPlayerImageView.scaleX = ConstantsHelper.scaleCoefficientNonActive
+    footerPlayerImageView.scaleY = ConstantsHelper.scaleCoefficientNonActive
   }
 
   private fun setLogoButtonActive() {
@@ -167,14 +178,17 @@ class MainActivity : AppCompatActivity() {
 
     footerMainImageView.setImageResource(R.drawable.footer_menu_active)
 
-    footerPlayerImageView.scaleX = ConstantsHelper.scaleCoefficientNonActive
-    footerPlayerImageView.scaleY = ConstantsHelper.scaleCoefficientNonActive
+    setPlayerButtonNonActive()
 
-    footerProfileImageView.scaleX = ConstantsHelper.scaleCoefficientNonActive
-    footerProfileImageView.scaleY = ConstantsHelper.scaleCoefficientNonActive
+    setProfileButtonNonActive()
 
     footerMainImageView.scaleX = ConstantsHelper.scaleMainCoefficientActive
     footerMainImageView.scaleY = ConstantsHelper.scaleMainCoefficientActive
+  }
+
+  private fun setLogoButtonNonActive() {
+    footerMainImageView.scaleX = ConstantsHelper.scaleMainCoefficientNonActive
+    footerMainImageView.scaleY = ConstantsHelper.scaleMainCoefficientNonActive
   }
 
 }

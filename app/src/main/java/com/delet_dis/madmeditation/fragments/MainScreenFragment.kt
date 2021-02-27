@@ -65,23 +65,7 @@ class MainScreenFragment : Fragment() {
 
     if (savedInstanceState == null) {
 
-      userAvatar = binding.userAvatar
-      welcomeTextWithUserName = binding.welcomeHeaderWithUserName
-      hamburgerImage = binding.hamgurgerImage
-
-      feelingsRecycler = binding.feelingsRecycler
-      feelingsRecycler.layoutManager = LinearLayoutManager(
-        activity,
-        LinearLayoutManager.HORIZONTAL,
-        false
-      )
-
-      quotesRecycler = binding.quotesRecycler
-      quotesRecycler.layoutManager = LinearLayoutManager(
-        activity,
-        LinearLayoutManager.VERTICAL,
-        false
-      )
+      findViewElements()
 
       hamburgerImage.setOnClickListener {
         this.context?.let { it1 -> IntentHelper.startMenuActivity(it1) }
@@ -89,48 +73,76 @@ class MainScreenFragment : Fragment() {
 
       displayUserInfo(loginResponse)
 
-      Common.retrofitService.getFeelingsData()
-        .enqueue(object : Callback<FeelingsResponse> {
-          override fun onResponse(
-            call: Call<FeelingsResponse>,
-            response: Response<FeelingsResponse>
-          ) {
-            val processingFeelingsList: List<Feeling> =
-              response.body()!!.data.sortedWith(compareBy { it.position })
+      getFeelingsData()
 
-            feelingsRecycler.adapter = FeelingsAdapter(processingFeelingsList)
-          }
-
-          override fun onFailure(call: Call<FeelingsResponse>, t: Throwable) {
-            activity?.let {
-              ToastHelper.createErrorToast(
-                it.applicationContext,
-                R.string.networkErrorMessage
-              )
-            }
-          }
-
-        })
-
-      Common.retrofitService.getQuotesData()
-        .enqueue(object : Callback<QuotesResponse> {
-          override fun onResponse(call: Call<QuotesResponse>, response: Response<QuotesResponse>) {
-            val processingQuotesList: List<Quote> = response.body()!!.data
-            quotesRecycler.adapter = QuotesAdapter(processingQuotesList)
-          }
-
-          override fun onFailure(call: Call<QuotesResponse>, t: Throwable) {
-            activity?.let {
-              ToastHelper.createErrorToast(
-                it.applicationContext,
-                R.string.networkErrorMessage
-              )
-            }
-          }
-
-        })
+      getQuotesData()
     }
 
+  }
+
+  private fun getQuotesData() {
+    Common.retrofitService.getQuotesData()
+      .enqueue(object : Callback<QuotesResponse> {
+        override fun onResponse(call: Call<QuotesResponse>, response: Response<QuotesResponse>) {
+          val processingQuotesList: List<Quote> = response.body()!!.data
+          quotesRecycler.adapter = QuotesAdapter(processingQuotesList)
+        }
+
+        override fun onFailure(call: Call<QuotesResponse>, t: Throwable) {
+          activity?.let {
+            ToastHelper.createErrorToast(
+              it.applicationContext,
+              R.string.networkErrorMessage
+            )
+          }
+        }
+
+      })
+  }
+
+  private fun getFeelingsData() {
+    Common.retrofitService.getFeelingsData()
+      .enqueue(object : Callback<FeelingsResponse> {
+        override fun onResponse(
+          call: Call<FeelingsResponse>,
+          response: Response<FeelingsResponse>
+        ) {
+          val processingFeelingsList: List<Feeling> =
+            response.body()!!.data.sortedWith(compareBy { it.position })
+
+          feelingsRecycler.adapter = FeelingsAdapter(processingFeelingsList)
+        }
+
+        override fun onFailure(call: Call<FeelingsResponse>, t: Throwable) {
+          activity?.let {
+            ToastHelper.createErrorToast(
+              it.applicationContext,
+              R.string.networkErrorMessage
+            )
+          }
+        }
+
+      })
+  }
+
+  private fun findViewElements() {
+    userAvatar = binding.userAvatar
+    welcomeTextWithUserName = binding.welcomeHeaderWithUserName
+    hamburgerImage = binding.hamgurgerImage
+
+    feelingsRecycler = binding.feelingsRecycler
+    feelingsRecycler.layoutManager = LinearLayoutManager(
+      activity,
+      LinearLayoutManager.HORIZONTAL,
+      false
+    )
+
+    quotesRecycler = binding.quotesRecycler
+    quotesRecycler.layoutManager = LinearLayoutManager(
+      activity,
+      LinearLayoutManager.VERTICAL,
+      false
+    )
   }
 
   private fun displayUserInfo(processingLoginResponse: LoginResponse?) {

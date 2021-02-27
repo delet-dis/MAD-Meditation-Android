@@ -4,10 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import com.delet_dis.madmeditation.databinding.FragmentProfileScreenBinding
 
 class ProfileFragment : Fragment() {
+
+  private lateinit var hamburgerImage: ImageView
 
   private lateinit var binding: FragmentProfileScreenBinding
 
@@ -25,5 +28,13 @@ class ProfileFragment : Fragment() {
       view
     }
 
+  }
+
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+
+    if(savedInstanceState == null){
+      hamburgerImage = binding.hamgurgerImage
+    }
   }
 }
