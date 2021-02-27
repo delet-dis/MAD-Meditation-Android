@@ -7,16 +7,25 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.delet_dis.madmeditation.databinding.FragmentProfileScreenBinding
+import com.delet_dis.madmeditation.helpers.ConstantsHelper
 import com.delet_dis.madmeditation.helpers.IntentHelper
 import com.delet_dis.madmeditation.helpers.SharedPreferencesHelper
+import com.delet_dis.madmeditation.model.LoginResponse
 
 class ProfileFragment : Fragment() {
 
   private lateinit var hamburgerImage: ImageView
   private lateinit var exitText: TextView
 
+  private lateinit var userAvatar: ImageView
+  private lateinit var userNameText: TextView
+
   private lateinit var binding: FragmentProfileScreenBinding
+
+  private var loginResponse: LoginResponse? = null
 
   override fun onCreateView(
     inflater: LayoutInflater,
@@ -26,6 +35,9 @@ class ProfileFragment : Fragment() {
 
     return if (savedInstanceState == null) {
       binding = FragmentProfileScreenBinding.inflate(layoutInflater)
+
+      loginResponse = requireArguments()
+        .getParcelable(ConstantsHelper.loginResponseParcelableName)
 
       binding.root
     } else {
@@ -40,6 +52,11 @@ class ProfileFragment : Fragment() {
       hamburgerImage = binding.hamburgerImage
       exitText = binding.exitText
 
+      userAvatar = binding.userAvatar
+      userNameText = binding.userNameText
+
+      displayUserInfo(loginResponse)
+
       hamburgerImage.setOnClickListener {
         this.context?.let { it1 -> IntentHelper.startMenuActivity(it1) }
       }
@@ -50,5 +67,17 @@ class ProfileFragment : Fragment() {
         activity?.finish()
       }
     }
+  }
+
+  private fun displayUserInfo(processingLoginResponse: LoginResponse?) {
+    activity?.let {
+      Glide.with(it)
+        .load(processingLoginResponse?.avatar)
+        .transition(DrawableTransitionOptions.withCrossFade())
+        .into(userAvatar)
+    }
+
+    userNameText.text =
+      processingLoginResponse?.nickName
   }
 }

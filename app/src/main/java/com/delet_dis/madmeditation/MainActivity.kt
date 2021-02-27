@@ -82,7 +82,12 @@ class MainActivity : AppCompatActivity() {
       setProfileButtonActive()
       supportFragmentManager.commit {
         setReorderingAllowed(true)
-        replace<ProfileFragment>(R.id.screenFragmentContainerView)
+        replace(
+          R.id.screenFragmentContainerView,
+          ProfileFragment::class.java,
+          bundleOf(Pair(ConstantsHelper.loginResponseParcelableName, processingLoginResponse))
+        )
+
       }
     }
   }
