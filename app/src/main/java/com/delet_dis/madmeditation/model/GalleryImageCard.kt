@@ -3,7 +3,8 @@ package com.delet_dis.madmeditation.model
 import android.graphics.Bitmap
 
 data class GalleryImageCard(
-  var backgroundColor: String? = null,
+  var backgroundColorResource: Int? = null,
+  var isFillingParent: Boolean?,
   var image: Bitmap,
-  var time: String
+  var time: String?
 )

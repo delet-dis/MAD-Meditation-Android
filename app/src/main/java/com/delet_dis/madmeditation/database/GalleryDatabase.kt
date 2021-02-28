@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase
 
 @Database(entities = [ImageCard::class], version = 1)
 abstract class GalleryDatabase : RoomDatabase() {
-  abstract fun employeeDao(): GalleryDAO
+  abstract fun galleryDao(): GalleryDAO
 
   companion object {
     private var INSTANCE: GalleryDatabase? = null

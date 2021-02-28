@@ -6,8 +6,8 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class ImageCard(
-  @PrimaryKey
-  var id: Long,
+  @PrimaryKey(autoGenerate = true)
+  var id: Long?,
 
   @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
   var image: ByteArray,

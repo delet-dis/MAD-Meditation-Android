@@ -1,17 +1,16 @@
 package com.delet_dis.madmeditation.recyclerViewAdapters
 
-import android.graphics.Color
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.delet_dis.madmeditation.R
-import com.delet_dis.madmeditation.model.GalleryImageCard
+import com.delet_dis.madmeditation.database.ImageCard
 
-class GalleryAdapter(private val values: List<GalleryImageCard>) :
+class GalleryAdapter(private val values: List<ImageCard>) :
   RecyclerView.Adapter<GalleryAdapter.GalleryHolder>() {
 
   override fun onCreateViewHolder(
@@ -24,8 +23,13 @@ class GalleryAdapter(private val values: List<GalleryImageCard>) :
   }
 
   override fun onBindViewHolder(holder: GalleryHolder, position: Int) {
-    holder.galleryLayout?.setBackgroundColor(Color.parseColor(values[position].backgroundColor))
-    holder.galleryImageView?.setImageBitmap(values[position].image)
+    holder.galleryImageView?.setImageBitmap(
+      BitmapFactory.decodeByteArray(
+        values[position].image,
+        0,
+        values[position].image.size
+      )
+    )
     holder.galleryImageTime?.text = values[position].time
   }
 
@@ -34,11 +38,8 @@ class GalleryAdapter(private val values: List<GalleryImageCard>) :
   class GalleryHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     var galleryImageView: ImageView? = null
     var galleryImageTime: TextView? = null
-    var galleryLayout: ConstraintLayout? = null
 
     init {
-      galleryLayout = itemView.findViewById(R.id.cardLayout)
-
       galleryImageView = itemView.findViewById(R.id.cardImage)
 
       galleryImageTime = itemView.findViewById(R.id.cardTimeText)
