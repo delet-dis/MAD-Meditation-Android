@@ -1,5 +1,6 @@
 package com.delet_dis.madmeditation.database
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 
 
@@ -7,17 +8,17 @@ import androidx.room.*
 interface GalleryDAO {
 
   @Query("SELECT * FROM imagecard")
-  fun getAll(): List<ImageCard>
+  fun getAll(): LiveData<List<ImageCard>>
 
   @Query("SELECT * FROM imagecard WHERE id = :id")
-  fun getById(id: Long): ImageCard?
+  suspend fun getById(id: Long): ImageCard?
 
   @Insert
-  fun insert(imageCard: ImageCard)
+  suspend fun insert(imageCard: ImageCard)
 
   @Update
-  fun update(imageCard: ImageCard)
+  suspend fun update(imageCard: ImageCard)
 
   @Delete
-  fun delete(imageCard: ImageCard)
+  suspend fun delete(imageCard: ImageCard)
 }

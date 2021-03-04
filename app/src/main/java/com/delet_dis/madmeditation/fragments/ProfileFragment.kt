@@ -1,10 +1,10 @@
 package com.delet_dis.madmeditation.fragments
 
 import android.Manifest
-import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,19 +14,23 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.delet_dis.madmeditation.database.GalleryDatabase
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
+import com.delet_dis.madmeditation.database.GalleryViewModel
 import com.delet_dis.madmeditation.database.ImageCard
 import com.delet_dis.madmeditation.databinding.FragmentProfileScreenBinding
 import com.delet_dis.madmeditation.helpers.ConstantsHelper
+import com.delet_dis.madmeditation.helpers.FilesHelper
 import com.delet_dis.madmeditation.helpers.IntentHelper
 import com.delet_dis.madmeditation.helpers.SharedPreferencesHelper
 import com.delet_dis.madmeditation.model.LoginResponse
+import com.delet_dis.madmeditation.recyclerViewAdapters.GalleryAdapter
 import java.util.*
 
 
@@ -45,6 +49,8 @@ class ProfileFragment : Fragment() {
   private lateinit var binding: FragmentProfileScreenBinding
 
   private var loginResponse: LoginResponse? = null
+
+  private lateinit var galleryViewModel: GalleryViewModel
 
   override fun onCreateView(
     inflater: LayoutInflater,
@@ -67,23 +73,38 @@ class ProfileFragment : Fragment() {
 
   private var getContent: ActivityResultLauncher<String>? =
 
-    activity?.registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-      GalleryDatabase.getAppDataBase(requireContext())?.galleryDao()?.insert(
-        ImageCard(
-          null,
+    registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
 
-          requireContext().contentResolver.openInputStream(uri!!)?.buffered()
-            ?.use { it.readBytes() }!!,
+      Glide.with(requireContext())
+        .asBitmap()
+        .load(uri)
+        .into(object : CustomTarget<Bitmap>() {
+          override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+            FilesHelper.saveToInternalStorage(requireContext(), resource, uri!!.lastPathSegment!!)
+          }
 
-          Calendar.getInstance().time.toString()
+          override fun onLoadCleared(placeholder: Drawable?) = Unit
+        })
+
+      galleryViewModel.allImages.observe(this, {
+        galleryViewModel.insert(
+          ImageCard(
+            null,
+            uri!!.lastPathSegment!!,
+            "${Calendar.getInstance().get(Calendar.HOUR_OF_DAY)}:${
+              Calendar.getInstance().get(Calendar.MINUTE)
+            }"
+          )
         )
-      )
+      })
     }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
 
     if (savedInstanceState == null) {
+      galleryViewModel = ViewModelProvider(this).get(GalleryViewModel::class.java)
+
       hamburgerImage = binding.hamburgerImage
       exitText = binding.exitText
 
@@ -107,7 +128,7 @@ class ProfileFragment : Fragment() {
       }
     }
 
-    galleryRecycler.layoutManager = GridLayoutManager(this.context, 2)
+    galleryRecycler.layoutManager = GridLayoutManager(requireContext(), 2)
 
 
     galleryAddCard.setOnClickListener {
@@ -117,10 +138,16 @@ class ProfileFragment : Fragment() {
         arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
         101
       )
-
-
-      Log.d("test", "calling image picking")
       getContent?.launch("image/*")
+
+      galleryViewModel.allImages.observe(viewLifecycleOwner, {
+        galleryRecycler.adapter = GalleryAdapter(it)
+      })
+
+//      val arrayOfCards = GalleryDatabase.getAppDataBase(requireContext())!!.galleryDao().getAll()
+
+//      galleryRecycler.adapter = GalleryAdapter(arrayOfCards)
+
     }
 
   }

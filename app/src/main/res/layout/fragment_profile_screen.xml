@@ -73,7 +73,9 @@
         android:id="@+id/galleryRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="26dp"
         android:layout_marginTop="17dp"
+        android:layout_marginEnd="26dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userNameText">
@@ -84,6 +86,7 @@
         android:id="@+id/galleryCardAddButton"
         android:layout_width="153dp"
         android:layout_height="115dp"
+        android:layout_marginStart="26dp"
         app:cardCornerRadius="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/galleryRecyclerView">

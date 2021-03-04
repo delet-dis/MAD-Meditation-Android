@@ -19,4 +19,5 @@
     <string name="playerTextMock">Тут будет \n прослушивание</string>
     <string name="menuTextMock">Тут будет \n меню</string>
     <string name="exitTextText">выход</string>
+    <string name="imageLoadingErrorMessage">Ошибка загрузки картинки</string>
 </resources>
