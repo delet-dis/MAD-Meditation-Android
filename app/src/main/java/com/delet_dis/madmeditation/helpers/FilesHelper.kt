@@ -9,7 +9,6 @@ import java.io.IOException
 
 object FilesHelper {
 
-  @Synchronized
   fun saveToInternalStorage(
     context: Context,
     bitmapImage: Bitmap,

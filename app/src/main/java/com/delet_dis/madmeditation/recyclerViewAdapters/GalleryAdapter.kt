@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.delet_dis.madmeditation.R
 import com.delet_dis.madmeditation.database.ImageCard
 import com.delet_dis.madmeditation.helpers.ConstantsHelper
@@ -31,25 +32,11 @@ class GalleryAdapter(private val values: List<ImageCard>) :
   }
 
   override fun onBindViewHolder(holder: GalleryHolder, position: Int) {
-    try {
-      val directory = ContextWrapper(holder.itemView.context).getDir(
-        ConstantsHelper.imagesDir,
-        Context.MODE_PRIVATE
-      )
 
-      val processingImageBitmap =
-        BitmapFactory.decodeStream(
-          FileInputStream(
-            File(
-              directory, values[position].imagePath
-            )
-          )
-        )
-
-      holder.galleryImageView?.setImageBitmap(processingImageBitmap)
-    } catch (e: FileNotFoundException) {
-      ToastHelper.createErrorToast(holder.itemView.context, R.string.imageLoadingErrorMessage)
-    }
+    Glide.with(ContextWrapper(holder.itemView.context))
+      .asBitmap()
+      .load(values[position].imagePath)
+      .into(holder.galleryImageView!!)
 
     holder.galleryImageTime?.text = values[position].time
   }
