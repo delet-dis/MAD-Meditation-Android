@@ -13,7 +13,11 @@ class GalleryViewModel(application: Application) : AndroidViewModel(application)
   val allImages: LiveData<List<ImageCard>> =
     GalleryDatabase.getAppDataBase(application)!!.galleryDao().getAll()
 
-  fun clearTables(application: Application) = GalleryDatabase.getAppDataBase(application)!!.clearAllTables()
+  fun clearTables(application: Application, afterCallFunction:()-> Unit)  = viewModelScope.launch {
+    GalleryDatabase.getAppDataBase(application)!!.galleryDao().nukeTable()
+
+    afterCallFunction()
+  }
 
   fun insert(galleryImageCard: ImageCard) = viewModelScope.launch {
     galleryDao.insert(galleryImageCard)
