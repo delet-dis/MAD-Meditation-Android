@@ -141,7 +141,6 @@ class ProfileFragment : Fragment() {
           Manifest.permission.READ_EXTERNAL_STORAGE
         ) == PackageManager.PERMISSION_GRANTED
       ) {
-        Log.d("test", "its working")
         getContent!!.launch("image/*")
         refreshGalleryRecyclerData()
       } else {

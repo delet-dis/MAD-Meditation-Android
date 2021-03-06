@@ -9,7 +9,7 @@ data class ImageCard(
   @PrimaryKey(autoGenerate = true)
   var id: Long?,
 
-  var imagePath: String,
+  var imageFilename: String,
 
   var time: String
 )
