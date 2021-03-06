@@ -1,6 +1,9 @@
 package com.delet_dis.madmeditation.fragments
 
 import android.Manifest
+import android.app.Application
+import android.content.Context
+import android.content.ContextWrapper
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
@@ -123,8 +126,19 @@ class ProfileFragment : Fragment() {
       }
 
       exitText.setOnClickListener {
-        this.context?.let { it1 -> SharedPreferencesHelper.clearLoginData(it1.applicationContext) }
-        this.context?.let { it1 -> IntentHelper.startLoginActivity(it1) }
+        SharedPreferencesHelper.clearLoginData(requireContext().applicationContext)
+
+        galleryViewModel.clearTables(requireContext().applicationContext as Application)
+
+        val directory = ContextWrapper(requireContext()).getDir(
+          ConstantsHelper.imagesDir,
+          Context.MODE_PRIVATE
+        )
+
+        directory.delete()
+
+        IntentHelper.startLoginActivity(requireContext())
+
         activity?.finish()
       }
     }
