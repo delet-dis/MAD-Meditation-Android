@@ -46,7 +46,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:ellipsize="end"
-        android:fontFamily="@font/alegreya_sans_regular_400"
+        android:fontFamily="@font/alegreya_sans_regular"
         android:maxLines="1"
         android:textAlignment="center"
         android:textColor="@color/white"

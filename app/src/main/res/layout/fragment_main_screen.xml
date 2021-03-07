@@ -74,7 +74,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
             android:layout_marginTop="2dp"
-            android:fontFamily="@font/alegreya_sans_regular_400"
+            android:fontFamily="@font/alegreya_sans_regular"
             android:text="@string/afterwelcomeTextFeelingQuestion"
             android:textColor="@color/seventyPercentWhiteTextColor"
             android:textSize="22sp"

@@ -9,6 +9,7 @@ import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -147,7 +148,12 @@ class ProfileFragment : Fragment() {
     }
 
     galleryRecycler.layoutManager =
-      GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
+      GridLayoutManager(
+        requireContext(),
+        2,
+        GridLayoutManager.VERTICAL,
+        false
+      )
 
     refreshGalleryRecyclerData()
 
@@ -176,9 +182,11 @@ class ProfileFragment : Fragment() {
   }
 
   private fun refreshGalleryRecyclerData() {
-    galleryViewModel.allImages.observe(viewLifecycleOwner, {
-      if (it != null) {
-        galleryRecycler.adapter = GalleryAdapter(it)
+    galleryViewModel.allImages.observe(viewLifecycleOwner, { list ->
+      if (list != null) {
+        galleryRecycler.adapter = GalleryAdapter(list) {
+          Log.d("test", "clicked on $it")
+        }
       }
     })
   }

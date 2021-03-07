@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="74dp"
             android:layout_marginEnd="30dp"
-            android:fontFamily="@font/alegreya_sans_regular_400"
+            android:fontFamily="@font/alegreya_sans_regular"
             android:text="@string/exitTextText"
             android:textColor="@color/white"
             android:textSize="15sp"

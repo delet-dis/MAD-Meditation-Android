@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="17dp"
                 android:layout_marginBottom="23dp"
-                android:fontFamily="@font/alegreya_sans_regular_400"
+                android:fontFamily="@font/alegreya_sans_regular"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />

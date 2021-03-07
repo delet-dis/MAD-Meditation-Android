@@ -15,7 +15,7 @@ import com.delet_dis.madmeditation.database.ImageCard
 import com.delet_dis.madmeditation.helpers.ConstantsHelper
 
 
-class GalleryAdapter(private val values: List<ImageCard>) :
+class GalleryAdapter(private val values: List<ImageCard>, val clickListener: (Int) -> Unit) :
   RecyclerView.Adapter<GalleryAdapter.GalleryHolder>() {
 
   override fun onCreateViewHolder(
@@ -40,17 +40,20 @@ class GalleryAdapter(private val values: List<ImageCard>) :
       .into(holder.galleryImageView!!)
 
     holder.galleryImageTime?.text = values[position].time
+
+    holder.itemView.setOnClickListener {
+      clickListener(position)
+    }
   }
 
   override fun getItemCount(): Int = values.size
 
-  class GalleryHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+  inner class GalleryHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     var galleryImageView: ImageView? = null
     var galleryImageTime: TextView? = null
 
     init {
       galleryImageView = itemView.findViewById(R.id.cardImage)
-
       galleryImageTime = itemView.findViewById(R.id.cardTimeText)
     }
 
