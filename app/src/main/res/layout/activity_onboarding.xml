@@ -34,7 +34,7 @@
         app:srcCompat="@drawable/app_logo" />
 
     <TextView
-        android:id="@+id/welcometHeader"
+        android:id="@+id/welcomeHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="45dp"
@@ -58,7 +58,7 @@
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/welcometHeader" />
+        app:layout_constraintTop_toBottomOf="@+id/welcomeHeader" />
 
     <Button
         android:id="@+id/loginButton"
@@ -66,7 +66,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="45dp"
         android:backgroundTint="@color/greenScape"
-        android:fontFamily="@font/alegreya_sans_regular"
+        android:fontFamily="@font/alegreya_sans_medium"
+        android:letterSpacing="0"
         android:paddingLeft="81dp"
         android:paddingTop="16dp"
         android:paddingRight="81dp"
@@ -79,30 +80,42 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/welcomeBody" />
 
-    <TextView
+    <Button
         android:id="@+id/noAccountHintQuestion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="35dp"
         android:layout_marginTop="18dp"
+        android:background="@android:color/transparent"
         android:fontFamily="@font/alegreya_sans_regular"
         android:includeFontPadding="false"
+        android:letterSpacing="0"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:padding="0dp"
         android:text="@string/onboardingNoAccountHint"
+        android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@+id/noAccountHintRegistration"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loginButton" />
 
-    <TextView
+    <Button
         android:id="@+id/noAccountHintRegistration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="18dp"
         android:layout_marginEnd="35dp"
+        android:background="@android:color/transparent"
         android:fontFamily="@font/alegreya_sans_medium"
         android:includeFontPadding="false"
+        android:letterSpacing="0"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:padding="0dp"
         android:text="@string/onboardingNoAccountHintRegistration"
+        android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/noAccountHintQuestion"

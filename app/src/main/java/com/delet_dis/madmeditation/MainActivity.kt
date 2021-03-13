@@ -13,6 +13,7 @@ import com.delet_dis.madmeditation.fragments.MainScreenFragment
 import com.delet_dis.madmeditation.fragments.PlayerScreenFragment
 import com.delet_dis.madmeditation.fragments.ProfileFragment
 import com.delet_dis.madmeditation.helpers.ConstantsHelper
+import com.delet_dis.madmeditation.helpers.MainFragmentFooterButtonsHelper
 import com.delet_dis.madmeditation.helpers.SharedPreferencesHelper
 import com.delet_dis.madmeditation.helpers.ToastHelper
 import com.delet_dis.madmeditation.http.common.Common
@@ -22,14 +23,14 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MainScreenFragment.ToMainActivityCallback {
   private lateinit var binding: ActivityMainBinding
 
   private lateinit var fragmentContainerView: FragmentContainerView
 
-  private lateinit var footerMainImageView: ImageView
-  private lateinit var footerPlayerImageView: ImageView
-  private lateinit var footerProfileImageView: ImageView
+  private lateinit var footerMainImageButton: ImageView
+  private lateinit var footerPlayerImageButton: ImageView
+  private lateinit var footerProfileImageButton: ImageView
 
   private var processingLoginResponse: LoginResponse? = null
 
@@ -56,18 +57,18 @@ class MainActivity : AppCompatActivity() {
       createMainFragment(processingLoginResponse)
     }
 
-    footerPlayerImageView.setOnClickListener {
-      setPlayerButtonActive()
+    footerPlayerImageButton.setOnClickListener {
+      manageFooterButtons(MainFragmentFooterButtonsHelper.PLAYER_SCREEN)
       supportFragmentManager.commit {
         setReorderingAllowed(true)
         replace<PlayerScreenFragment>(R.id.screenFragmentContainerView)
       }
     }
 
-    setLogoButtonActive()
+    manageFooterButtons(MainFragmentFooterButtonsHelper.MAIN_SCREEN)
 
-    footerMainImageView.setOnClickListener {
-      setLogoButtonActive()
+    footerMainImageButton.setOnClickListener {
+      manageFooterButtons(MainFragmentFooterButtonsHelper.MAIN_SCREEN)
       supportFragmentManager.commit {
         setReorderingAllowed(true)
         replace(
@@ -78,8 +79,8 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    footerProfileImageView.setOnClickListener {
-      setProfileButtonActive()
+    footerProfileImageButton.setOnClickListener {
+      manageFooterButtons(MainFragmentFooterButtonsHelper.PROFILE_SCREEN)
       supportFragmentManager.commit {
         setReorderingAllowed(true)
         replace(
@@ -115,9 +116,9 @@ class MainActivity : AppCompatActivity() {
   private fun findViewElements() {
     fragmentContainerView = binding.screenFragmentContainerView
 
-    footerMainImageView = binding.footerLogoImageViewAsButton
-    footerPlayerImageView = binding.footerPlayerImageViewAsButton
-    footerProfileImageView = binding.footerProfileImageViewAsButton
+    footerMainImageButton = binding.footerLogoImageButton
+    footerPlayerImageButton = binding.footerPlayerImageButton
+    footerProfileImageButton = binding.footerProfileImageButton
   }
 
   private fun getParceledLoginResponse() =
@@ -134,66 +135,75 @@ class MainActivity : AppCompatActivity() {
       add(
         R.id.screenFragmentContainerView,
         MainScreenFragment::class.java,
-        bundleOf(Pair(ConstantsHelper.loginResponseParcelableName, processingLoginResponse))
+        bundleOf(Pair(ConstantsHelper.loginResponseParcelableName, processingLoginResponse)),
+        ConstantsHelper.mainFragmentTag
       )
     }
   }
 
-  private fun setProfileButtonActive() {
-    footerPlayerImageView.setImageResource(R.drawable.footer_player_non_active)
-    footerMainImageView.setImageResource(R.drawable.footer_menu_non_active)
+  private fun manageFooterButtons(activeButton: MainFragmentFooterButtonsHelper) {
+    when (activeButton) {
+      MainFragmentFooterButtonsHelper.MAIN_SCREEN -> {
+        footerProfileImageButton.setImageResource(R.drawable.footer_profile_non_active)
+        footerPlayerImageButton.setImageResource(R.drawable.footer_player_non_active)
 
-    footerProfileImageView.setImageResource(R.drawable.footer_profile_active)
+        footerMainImageButton.setImageResource(R.drawable.footer_menu_active)
 
-    setLogoButtonNonActive()
+        setPlayerButtonNonActive()
 
-    setPlayerButtonNonActive()
+        setProfileButtonNonActive()
 
-    footerProfileImageView.scaleX = ConstantsHelper.scaleCoefficientActive
-    footerProfileImageView.scaleY = ConstantsHelper.scaleCoefficientActive
+        footerMainImageButton.scaleX = ConstantsHelper.scaleMainCoefficientActive
+        footerMainImageButton.scaleY = ConstantsHelper.scaleMainCoefficientActive
+      }
+
+      MainFragmentFooterButtonsHelper.PLAYER_SCREEN -> {
+        footerProfileImageButton.setImageResource(R.drawable.footer_profile_non_active)
+        footerMainImageButton.setImageResource(R.drawable.footer_menu_non_active)
+
+        footerPlayerImageButton.setImageResource(R.drawable.footer_player_active)
+
+        setLogoButtonNonActive()
+
+        setProfileButtonNonActive()
+
+        footerPlayerImageButton.scaleX = ConstantsHelper.scaleCoefficientActive
+        footerPlayerImageButton.scaleY = ConstantsHelper.scaleCoefficientActive
+      }
+
+      MainFragmentFooterButtonsHelper.PROFILE_SCREEN -> {
+        footerPlayerImageButton.setImageResource(R.drawable.footer_player_non_active)
+        footerMainImageButton.setImageResource(R.drawable.footer_menu_non_active)
+
+        footerProfileImageButton.setImageResource(R.drawable.footer_profile_active)
+
+        setLogoButtonNonActive()
+
+        setPlayerButtonNonActive()
+
+        footerProfileImageButton.scaleX = ConstantsHelper.scaleCoefficientActive
+        footerProfileImageButton.scaleY = ConstantsHelper.scaleCoefficientActive
+      }
+    }
   }
 
   private fun setProfileButtonNonActive() {
-    footerProfileImageView.scaleX = ConstantsHelper.scaleCoefficientNonActive
-    footerProfileImageView.scaleY = ConstantsHelper.scaleCoefficientNonActive
-  }
-
-  private fun setPlayerButtonActive() {
-    footerProfileImageView.setImageResource(R.drawable.footer_profile_non_active)
-    footerMainImageView.setImageResource(R.drawable.footer_menu_non_active)
-
-    footerPlayerImageView.setImageResource(R.drawable.footer_player_active)
-
-    setLogoButtonNonActive()
-
-    setProfileButtonNonActive()
-
-    footerPlayerImageView.scaleX = ConstantsHelper.scaleCoefficientActive
-    footerPlayerImageView.scaleY = ConstantsHelper.scaleCoefficientActive
+    footerProfileImageButton.scaleX = ConstantsHelper.scaleCoefficientNonActive
+    footerProfileImageButton.scaleY = ConstantsHelper.scaleCoefficientNonActive
   }
 
   private fun setPlayerButtonNonActive() {
-    footerPlayerImageView.scaleX = ConstantsHelper.scaleCoefficientNonActive
-    footerPlayerImageView.scaleY = ConstantsHelper.scaleCoefficientNonActive
-  }
-
-  private fun setLogoButtonActive() {
-    footerProfileImageView.setImageResource(R.drawable.footer_profile_non_active)
-    footerPlayerImageView.setImageResource(R.drawable.footer_player_non_active)
-
-    footerMainImageView.setImageResource(R.drawable.footer_menu_active)
-
-    setPlayerButtonNonActive()
-
-    setProfileButtonNonActive()
-
-    footerMainImageView.scaleX = ConstantsHelper.scaleMainCoefficientActive
-    footerMainImageView.scaleY = ConstantsHelper.scaleMainCoefficientActive
+    footerPlayerImageButton.scaleX = ConstantsHelper.scaleCoefficientNonActive
+    footerPlayerImageButton.scaleY = ConstantsHelper.scaleCoefficientNonActive
   }
 
   private fun setLogoButtonNonActive() {
-    footerMainImageView.scaleX = ConstantsHelper.scaleMainCoefficientNonActive
-    footerMainImageView.scaleY = ConstantsHelper.scaleMainCoefficientNonActive
+    footerMainImageButton.scaleX = ConstantsHelper.scaleMainCoefficientNonActive
+    footerMainImageButton.scaleY = ConstantsHelper.scaleMainCoefficientNonActive
+  }
+
+  override fun setProfileButtonActive() {
+    manageFooterButtons(MainFragmentFooterButtonsHelper.PROFILE_SCREEN)
   }
 
 }

@@ -9,10 +9,11 @@ import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
@@ -43,8 +44,8 @@ import java.util.*
 
 class ProfileFragment : Fragment() {
 
-  private lateinit var hamburgerImage: ImageView
-  private lateinit var exitText: TextView
+  private lateinit var hamburgerImageButton: ImageButton
+  private lateinit var exitButton: Button
 
   private lateinit var userAvatar: ImageView
   private lateinit var userNameText: TextView
@@ -109,8 +110,8 @@ class ProfileFragment : Fragment() {
     if (savedInstanceState == null) {
       galleryViewModel = ViewModelProvider(this).get(GalleryViewModel::class.java)
 
-      hamburgerImage = binding.hamburgerImage
-      exitText = binding.exitText
+      hamburgerImageButton = binding.hamburgerImage
+      exitButton = binding.exitText
 
       userAvatar = binding.userAvatar
       userNameText = binding.userNameText
@@ -121,11 +122,11 @@ class ProfileFragment : Fragment() {
 
       displayUserInfo(loginResponse)
 
-      hamburgerImage.setOnClickListener {
+      hamburgerImageButton.setOnClickListener {
         this.context?.let { it1 -> IntentHelper.startMenuActivity(it1) }
       }
 
-      exitText.setOnClickListener {
+      exitButton.setOnClickListener {
         SharedPreferencesHelper.clearLoginData(requireContext().applicationContext)
 
         fun clearGalleryImagesAndStartLoginActivity() {
@@ -185,11 +186,12 @@ class ProfileFragment : Fragment() {
     galleryViewModel.allImages.observe(viewLifecycleOwner, { list ->
       if (list != null) {
         galleryRecycler.adapter = GalleryAdapter(list) {
-          Log.d("test", "clicked on $it")
+          IntentHelper.startGalleryActivity(requireContext(), it)
         }
       }
     })
   }
+
 
   private fun displayUserInfo(processingLoginResponse: LoginResponse?) {
     activity?.let {

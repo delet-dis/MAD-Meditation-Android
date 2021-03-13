@@ -7,7 +7,11 @@ object ConstantsHelper {
   const val userPassword = "USER_PASSWORD"
   const val loginResponseParcelableName = "LOGIN_RESPONSE_PARCELABLE"
 
+  const val mainFragmentTag = "MAIN_FRAGMENT"
+
   const val imagesDir = "MADMeditaion-images"
+
+  const val idOfParceledImage = "ID_OF_PARCELED_IMAGE"
 
   const val scaleMainCoefficientActive = 2.4f
   const val scaleMainCoefficientNonActive = 1.9f

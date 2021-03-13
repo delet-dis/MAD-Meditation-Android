@@ -2,7 +2,5 @@
 <resources>
     <array name="preloaded_fonts" translatable="false">
         <item>@font/alegreya_bold</item>
-        <item>@font/alegreya_sans_regular</item>
-        <item>@font/alegreya_sans_medium</item>
     </array>
 </resources>

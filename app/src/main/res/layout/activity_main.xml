@@ -14,39 +14,57 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/footerPlayerImageViewAsButton"
+        app:layout_constraintBottom_toTopOf="@+id/footerPlayerImageButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/footerLogoImageViewAsButton"
+    <ImageButton
+        android:id="@+id/footerLogoImageButton"
         android:layout_width="28.78dp"
         android:layout_height="30dp"
         android:layout_marginStart="74dp"
         android:layout_marginBottom="16dp"
+        android:background="@android:color/transparent"
+        android:letterSpacing="0"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:padding="0dp"
+        android:scaleType="centerInside"
         android:scaleX="2"
         android:scaleY="2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/footer_menu_non_active" />
 
-    <ImageView
-        android:id="@+id/footerPlayerImageViewAsButton"
+    <ImageButton
+        android:id="@+id/footerPlayerImageButton"
         android:layout_width="28.78dp"
         android:layout_height="30dp"
         android:layout_marginBottom="16dp"
+        android:background="@android:color/transparent"
+        android:letterSpacing="0"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:padding="0dp"
+        android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/footer_player_non_active" />
 
-    <ImageView
-        android:id="@+id/footerProfileImageViewAsButton"
+    <ImageButton
+        android:id="@+id/footerProfileImageButton"
         android:layout_width="28.78dp"
         android:layout_height="30dp"
         android:layout_marginEnd="74dp"
         android:layout_marginBottom="16dp"
+        android:background="@android:color/transparent"
+        android:letterSpacing="0"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:padding="0dp"
+        android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/footer_profile_non_active" />

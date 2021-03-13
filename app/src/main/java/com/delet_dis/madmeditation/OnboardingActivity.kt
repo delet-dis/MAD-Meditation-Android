@@ -4,7 +4,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.delet_dis.madmeditation.databinding.ActivityOnboardingBinding
 
@@ -12,7 +11,7 @@ class OnboardingActivity : AppCompatActivity() {
   private lateinit var binding: ActivityOnboardingBinding
 
   private lateinit var loginButton: Button
-  private lateinit var registerTextView: TextView
+  private lateinit var registerButton: Button
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -23,7 +22,7 @@ class OnboardingActivity : AppCompatActivity() {
 
     findViewElements()
 
-    registerRegisterTextViewOnclick()
+    registerRegisterButtonOnclick()
 
     registerLoginButtonOnclick()
   }
@@ -40,8 +39,8 @@ class OnboardingActivity : AppCompatActivity() {
     }
   }
 
-  private fun registerRegisterTextViewOnclick() {
-    registerTextView.setOnClickListener {
+  private fun registerRegisterButtonOnclick() {
+    registerButton.setOnClickListener {
       val intent = Intent(this, RegistrationActivity::class.java)
       startActivity(intent)
     }
@@ -49,6 +48,6 @@ class OnboardingActivity : AppCompatActivity() {
 
   private fun findViewElements() {
     loginButton = binding.loginButton
-    registerTextView = binding.noAccountHintRegistration
+    registerButton = binding.noAccountHintRegistration
   }
 }

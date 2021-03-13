@@ -2,6 +2,7 @@ package com.delet_dis.madmeditation.recyclerViewAdapters
 
 import android.content.Context
 import android.content.ContextWrapper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,7 +43,7 @@ class GalleryAdapter(private val values: List<ImageCard>, val clickListener: (In
     holder.galleryImageTime?.text = values[position].time
 
     holder.itemView.setOnClickListener {
-      clickListener(position)
+      clickListener(position + 1)
     }
   }
 

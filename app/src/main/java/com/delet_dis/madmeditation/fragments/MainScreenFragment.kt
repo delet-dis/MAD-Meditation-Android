@@ -4,9 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -30,7 +34,9 @@ class MainScreenFragment : Fragment() {
   private lateinit var userAvatar: ImageView
   private lateinit var welcomeTextWithUserName: TextView
 
-  private lateinit var hamburgerImage: ImageView
+  private lateinit var hamburgerImageButton: ImageButton
+
+  private lateinit var profileCard: CardView
 
   private lateinit var feelingsRecycler: RecyclerView
 
@@ -67,8 +73,19 @@ class MainScreenFragment : Fragment() {
 
       findViewElements()
 
-      hamburgerImage.setOnClickListener {
+      hamburgerImageButton.setOnClickListener {
         this.context?.let { it1 -> IntentHelper.startMenuActivity(it1) }
+      }
+
+      profileCard.setOnClickListener {
+        parentFragmentManager.commit {
+          setReorderingAllowed(true)
+          replace(
+            R.id.screenFragmentContainerView,
+            ProfileFragment::class.java,
+            bundleOf(Pair(ConstantsHelper.loginResponseParcelableName, loginResponse))
+          )
+        }
       }
 
       displayUserInfo(loginResponse)
@@ -128,7 +145,9 @@ class MainScreenFragment : Fragment() {
   private fun findViewElements() {
     userAvatar = binding.userAvatar
     welcomeTextWithUserName = binding.welcomeHeaderWithUserName
-    hamburgerImage = binding.hamburgerImage
+    hamburgerImageButton = binding.hamburgerImage
+
+    profileCard = binding.userImageCard
 
     feelingsRecycler = binding.feelingsRecycler
     feelingsRecycler.layoutManager = LinearLayoutManager(
@@ -152,9 +171,14 @@ class MainScreenFragment : Fragment() {
         .transition(DrawableTransitionOptions.withCrossFade())
         .into(userAvatar)
     }
+    
 
     welcomeTextWithUserName.text =
       String.format(getString(R.string.welcomeTextText, processingLoginResponse?.nickName))
   }
 
+
+  interface ToMainActivityCallback{
+    fun setProfileButtonActive()
+  }
 }

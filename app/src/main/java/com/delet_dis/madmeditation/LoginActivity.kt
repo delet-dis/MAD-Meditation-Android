@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.delet_dis.madmeditation.databinding.ActivityLoginBinding
@@ -28,7 +27,7 @@ class LoginActivity : AppCompatActivity() {
   private lateinit var passwordInputField: EditText
 
   private lateinit var loginButton: Button
-  private lateinit var registerTextView: TextView
+  private lateinit var registerButton: Button
 
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,7 +45,7 @@ class LoginActivity : AppCompatActivity() {
 
     registerLoginButtonOnclick()
 
-    registerRegisterTextViewOnclick()
+    registerRegisterButtonOnclick()
 
   }
 
@@ -61,8 +60,8 @@ class LoginActivity : AppCompatActivity() {
     return binding.root
   }
 
-  private fun registerRegisterTextViewOnclick() {
-    registerTextView.setOnClickListener {
+  private fun registerRegisterButtonOnclick() {
+    registerButton.setOnClickListener {
       val intent = Intent(this, RegistrationActivity::class.java)
       startActivity(intent)
     }
@@ -79,7 +78,7 @@ class LoginActivity : AppCompatActivity() {
     passwordInputField = binding.passwordInputField
 
     loginButton = binding.loginButton
-    registerTextView = binding.noAccountHintRegistration
+    registerButton = binding.noAccountHintRegistration
   }
 
   private fun checkCorrectnessOfFields() {
