@@ -35,6 +35,13 @@ class GalleryViewModel(application: Application) : AndroidViewModel(application)
     afterCallFunction()
   }
 
+  fun removeImageById(application: Application, id: Int, afterCallFunction: () -> Unit) =
+    viewModelScope.launch {
+      GalleryDatabase.getAppDataBase(application)!!.galleryDao().removeById(id.toLong())
+
+      afterCallFunction()
+    }
+
   fun insert(galleryImageCard: ImageCard) = viewModelScope.launch {
     galleryDao.insert(galleryImageCard)
   }

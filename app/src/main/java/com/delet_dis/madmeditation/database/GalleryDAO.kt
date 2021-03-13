@@ -14,6 +14,9 @@ interface GalleryDAO {
   @Query("SELECT * FROM imagecard WHERE id = :id")
   fun getById(id: Long): Flow<ImageCard>
 
+  @Query("DELETE FROM imagecard WHERE id = :id")
+  suspend fun removeById(id: Long)
+
   @Query("DELETE FROM imagecard")
   suspend fun nukeTable()
 

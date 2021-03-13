@@ -16,9 +16,7 @@ class OnboardingActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
-    val view = createViewBinding()
-
-    setContentView(view)
+    setContentView(createViewBinding())
 
     findViewElements()
 

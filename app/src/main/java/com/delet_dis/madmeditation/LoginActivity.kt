@@ -35,9 +35,7 @@ class LoginActivity : AppCompatActivity() {
 
     WindowHelper.setWindowNoLimits(this)
 
-    val view = createViewBinding()
-
-    setContentView(view)
+    setContentView(createViewBinding())
 
     findViewElements()
 

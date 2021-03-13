@@ -33,6 +33,7 @@
         android:text="@string/galleryDeleteText"
         android:textAllCaps="false"
         android:textColor="@color/white"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -51,6 +52,7 @@
         android:text="@string/galleryCloseText"
         android:textAllCaps="false"
         android:textColor="@color/white"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

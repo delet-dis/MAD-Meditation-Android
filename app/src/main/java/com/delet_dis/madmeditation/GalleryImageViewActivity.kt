@@ -5,6 +5,7 @@ import android.content.ContextWrapper
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.delet_dis.madmeditation.database.GalleryViewModel
@@ -31,22 +32,45 @@ class GalleryImageViewActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    binding = ActivityGalleryImageViewBinding.inflate(layoutInflater)
-    setContentView(binding.root)
 
-    imageId = intent?.extras?.getInt(ConstantsHelper.idOfParceledImage)
+    setContentView(createViewBinding())
 
-    image = binding.galleryImage
+    findViewElements()
 
-    deleteButton = binding.deleteButton
-    closeButton = binding.closeButton
+    loadImageFromDatabase()
 
+    registerDeleteButtonOnclick()
+
+    registerCloseButtonOnclick()
+  }
+
+  private fun registerCloseButtonOnclick() {
+    closeButton.setOnClickListener {
+      finishActivity()
+    }
+  }
+
+  private fun finishActivity() {
+    finish()
+  }
+
+  private fun registerDeleteButtonOnclick() {
+    deleteButton.setOnClickListener {
+
+      GalleryViewModel(application).removeImageById(
+        application,
+        imageId!!
+      ) { finishActivity() }
+    }
+  }
+
+  private fun loadImageFromDatabase() {
     uiScope.launch {
       val imageCard = GalleryViewModel(application).getImageById(application, imageId!!)
 
       val directory = ContextWrapper(applicationContext).getDir(
         ConstantsHelper.imagesDir,
-        Context.MODE_PRIVATE
+        MODE_PRIVATE
       ).toString()
 
 
@@ -55,5 +79,19 @@ class GalleryImageViewActivity : AppCompatActivity() {
         .transition(DrawableTransitionOptions.withCrossFade())
         .into(image)
     }
+  }
+
+  private fun findViewElements() {
+    imageId = intent?.extras?.getInt(ConstantsHelper.idOfParceledImage)
+
+    image = binding.galleryImage
+
+    deleteButton = binding.deleteButton
+    closeButton = binding.closeButton
+  }
+
+  private fun createViewBinding(): ConstraintLayout {
+    binding = ActivityGalleryImageViewBinding.inflate(layoutInflater)
+    return binding.root
   }
 }
