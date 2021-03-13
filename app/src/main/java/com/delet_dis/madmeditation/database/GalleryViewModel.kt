@@ -4,7 +4,6 @@ import android.app.Application
 import android.database.sqlite.SQLiteDatabase
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -29,7 +28,6 @@ class GalleryViewModel(application: Application) : AndroidViewModel(application)
     )
 
     val deleteSQLiteSequence = "DELETE FROM sqlite_sequence WHERE name = 'ImageCard'"
-
     sqLiteDatabase.execSQL(deleteSQLiteSequence)
 
     afterCallFunction()

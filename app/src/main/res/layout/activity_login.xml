@@ -13,8 +13,8 @@
         android:layout_height="49dp"
         android:layout_marginStart="35dp"
         android:layout_marginTop="101dp"
-        android:scaleX="1.8"
-        android:scaleY="1.8"
+        android:scaleX="1.2"
+        android:scaleY="1.2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/app_logo" />

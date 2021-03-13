@@ -110,54 +110,22 @@ class ProfileFragment : Fragment() {
     if (savedInstanceState == null) {
       galleryViewModel = ViewModelProvider(this).get(GalleryViewModel::class.java)
 
-      hamburgerImageButton = binding.hamburgerImage
-      exitButton = binding.exitText
-
-      userAvatar = binding.userAvatar
-      userNameText = binding.userNameText
-
-      galleryRecycler = binding.galleryRecyclerView
-
-      galleryAddCard = binding.galleryCardAddButton
+      findViewElements()
 
       displayUserInfo(loginResponse)
 
-      hamburgerImageButton.setOnClickListener {
-        this.context?.let { it1 -> IntentHelper.startMenuActivity(it1) }
-      }
+      setHamburgerImageButtonOnclick()
 
-      exitButton.setOnClickListener {
-        SharedPreferencesHelper.clearLoginData(requireContext().applicationContext)
+      setExitButtonOnclick()
 
-        fun clearGalleryImagesAndStartLoginActivity() {
-          val directory = ContextWrapper(requireContext()).getDir(
-            ConstantsHelper.imagesDir,
-            Context.MODE_PRIVATE
-          )
-
-          directory.deleteRecursively()
-
-          IntentHelper.startLoginActivity(requireContext())
-
-          activity?.finish()
-        }
-
-        galleryViewModel.clearTables(
-          requireContext().applicationContext as Application
-        ) { clearGalleryImagesAndStartLoginActivity() }
-      }
+      setGalleryAddCardOnclick()
     }
-
-    galleryRecycler.layoutManager =
-      GridLayoutManager(
-        requireContext(),
-        2,
-        GridLayoutManager.VERTICAL,
-        false
-      )
 
     refreshGalleryRecyclerData()
 
+  }
+
+  private fun setGalleryAddCardOnclick() {
     galleryAddCard.setOnClickListener {
 
       if (ContextCompat.checkSelfPermission(
@@ -179,7 +147,55 @@ class ProfileFragment : Fragment() {
       refreshGalleryRecyclerData()
 
     }
+  }
 
+  private fun setExitButtonOnclick() {
+    exitButton.setOnClickListener {
+      SharedPreferencesHelper.clearLoginData(requireContext().applicationContext)
+
+      fun clearGalleryImagesAndStartLoginActivity() {
+        val directory = ContextWrapper(requireContext()).getDir(
+          ConstantsHelper.imagesDir,
+          Context.MODE_PRIVATE
+        )
+
+        directory.deleteRecursively()
+
+        IntentHelper.startLoginActivity(requireContext())
+
+        activity?.finish()
+      }
+
+      galleryViewModel.clearTables(
+        requireContext().applicationContext as Application
+      ) { clearGalleryImagesAndStartLoginActivity() }
+    }
+  }
+
+  private fun setHamburgerImageButtonOnclick() {
+    hamburgerImageButton.setOnClickListener {
+      this.context?.let { it1 -> IntentHelper.startMenuActivity(it1) }
+    }
+  }
+
+  private fun findViewElements() {
+    hamburgerImageButton = binding.hamburgerImage
+    exitButton = binding.exitText
+
+    userAvatar = binding.userAvatar
+    userNameText = binding.userNameText
+
+    galleryRecycler = binding.galleryRecyclerView
+
+    galleryAddCard = binding.galleryCardAddButton
+
+    galleryRecycler.layoutManager =
+      GridLayoutManager(
+        requireContext(),
+        2,
+        GridLayoutManager.VERTICAL,
+        false
+      )
   }
 
   private fun refreshGalleryRecyclerData() {

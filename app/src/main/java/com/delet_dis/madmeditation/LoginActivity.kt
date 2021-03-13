@@ -44,7 +44,6 @@ class LoginActivity : AppCompatActivity() {
     registerLoginButtonOnclick()
 
     registerRegisterButtonOnclick()
-
   }
 
   private fun fillEmailFieldIfEmailIsNotNull() {

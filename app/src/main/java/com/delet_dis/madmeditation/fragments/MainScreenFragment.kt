@@ -1,5 +1,6 @@
 package com.delet_dis.madmeditation.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -44,6 +45,8 @@ class MainScreenFragment : Fragment() {
 
   private lateinit var binding: FragmentMainScreenBinding
 
+  private lateinit var parentActivityCallback: ActivityCallback
+
   private var loginResponse: LoginResponse? = null
 
   override fun onCreateView(
@@ -66,6 +69,12 @@ class MainScreenFragment : Fragment() {
 
   }
 
+  override fun onAttach(context: Context) {
+    super.onAttach(context)
+
+    parentActivityCallback = context as ActivityCallback
+  }
+
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
 
@@ -73,20 +82,9 @@ class MainScreenFragment : Fragment() {
 
       findViewElements()
 
-      hamburgerImageButton.setOnClickListener {
-        this.context?.let { it1 -> IntentHelper.startMenuActivity(it1) }
-      }
+      setHamburgerImageButtonOnclick()
 
-      profileCard.setOnClickListener {
-        parentFragmentManager.commit {
-          setReorderingAllowed(true)
-          replace(
-            R.id.screenFragmentContainerView,
-            ProfileFragment::class.java,
-            bundleOf(Pair(ConstantsHelper.loginResponseParcelableName, loginResponse))
-          )
-        }
-      }
+      setProfileCardOnclick()
 
       displayUserInfo(loginResponse)
 
@@ -95,6 +93,27 @@ class MainScreenFragment : Fragment() {
       getQuotesData()
     }
 
+  }
+
+  private fun setProfileCardOnclick() {
+    profileCard.setOnClickListener {
+      parentActivityCallback.setInActivityProfileButtonActive()
+
+      parentFragmentManager.commit {
+        setReorderingAllowed(true)
+        replace(
+          R.id.screenFragmentContainerView,
+          ProfileFragment::class.java,
+          bundleOf(Pair(ConstantsHelper.loginResponseParcelableName, loginResponse))
+        )
+      }
+    }
+  }
+
+  private fun setHamburgerImageButtonOnclick() {
+    hamburgerImageButton.setOnClickListener {
+      this.context?.let { it1 -> IntentHelper.startMenuActivity(it1) }
+    }
   }
 
   private fun getQuotesData() {
@@ -171,14 +190,14 @@ class MainScreenFragment : Fragment() {
         .transition(DrawableTransitionOptions.withCrossFade())
         .into(userAvatar)
     }
-    
+
 
     welcomeTextWithUserName.text =
       String.format(getString(R.string.welcomeTextText, processingLoginResponse?.nickName))
   }
 
-
-  interface ToMainActivityCallback{
-    fun setProfileButtonActive()
+  interface ActivityCallback {
+    fun setInActivityProfileButtonActive()
   }
+
 }

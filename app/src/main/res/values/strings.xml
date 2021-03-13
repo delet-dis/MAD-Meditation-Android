@@ -22,4 +22,7 @@
     <string name="imageLoadingErrorMessage">Ошибка загрузки картинки</string>
     <string name="galleryDeleteText">удалить</string>
     <string name="galleryCloseText">закрыть</string>
+    <string name="mainFragmentTitle">Main screen</string>
+    <string name="playerFragmentTitle">Player screen</string>
+    <string name="profileFragmentTitle">Profile screen</string>
 </resources>

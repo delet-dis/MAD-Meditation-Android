@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/mainFragmentButton"
+        android:icon="@drawable/app_logo"
+        android:title="@string/mainFragmentTitle" />
+
+    <item
+        android:id="@+id/playerFragmentButton"
+        android:icon="@drawable/footer_player_scaled"
+        android:title="@string/playerFragmentTitle" />
+
+    <item
+        android:id="@+id/profileFragmentButton"
+        android:icon="@drawable/footer_profile_scaled"
+        android:title="@string/profileFragmentTitle" />
+</menu>

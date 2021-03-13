@@ -1,7 +1,6 @@
 package com.delet_dis.madmeditation
 
 import android.os.Bundle
-import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.os.bundleOf
@@ -13,24 +12,22 @@ import com.delet_dis.madmeditation.fragments.MainScreenFragment
 import com.delet_dis.madmeditation.fragments.PlayerScreenFragment
 import com.delet_dis.madmeditation.fragments.ProfileFragment
 import com.delet_dis.madmeditation.helpers.ConstantsHelper
-import com.delet_dis.madmeditation.helpers.MainFragmentFooterButtonsHelper
 import com.delet_dis.madmeditation.helpers.SharedPreferencesHelper
 import com.delet_dis.madmeditation.helpers.ToastHelper
 import com.delet_dis.madmeditation.http.common.Common
 import com.delet_dis.madmeditation.model.LoginRequest
 import com.delet_dis.madmeditation.model.LoginResponse
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainActivity : AppCompatActivity(), MainScreenFragment.ToMainActivityCallback {
+class MainActivity : AppCompatActivity(), MainScreenFragment.ActivityCallback {
   private lateinit var binding: ActivityMainBinding
 
   private lateinit var fragmentContainerView: FragmentContainerView
 
-  private lateinit var footerMainImageButton: ImageView
-  private lateinit var footerPlayerImageButton: ImageView
-  private lateinit var footerProfileImageButton: ImageView
+  private lateinit var bottomNavigationView: BottomNavigationView
 
   private var processingLoginResponse: LoginResponse? = null
 
@@ -42,52 +39,71 @@ class MainActivity : AppCompatActivity(), MainScreenFragment.ToMainActivityCallb
 
     findViewElements()
 
-    val loginResponse =
-      getParceledLoginResponse()
+    val loginResponse = getParceledLoginResponse()
 
     if (loginResponse == null) {
       val loginRequest = SharedPreferencesHelper.getLoginData(applicationContext)
-
       postLoginData(loginRequest)
     } else {
       processingLoginResponse = loginResponse
-
       createMainFragment(processingLoginResponse)
     }
 
-    footerPlayerImageButton.setOnClickListener {
-      manageFooterButtons(MainFragmentFooterButtonsHelper.PLAYER_SCREEN)
-      supportFragmentManager.commit {
-        setReorderingAllowed(true)
-        replace<PlayerScreenFragment>(R.id.screenFragmentContainerView)
+    setBottomNavigationViewOnclick()
+  }
+
+  private fun setBottomNavigationViewOnclick() {
+    bottomNavigationView.setOnNavigationItemSelectedListener {
+      when (it.itemId) {
+        R.id.mainFragmentButton -> {
+          footerMainButtonOnclick()
+          return@setOnNavigationItemSelectedListener true
+        }
+
+        R.id.playerFragmentButton -> {
+          footerPlayerButtonOnclick()
+          return@setOnNavigationItemSelectedListener true
+        }
+
+        R.id.profileFragmentButton -> {
+          footerProfileButtonOnclick()
+          return@setOnNavigationItemSelectedListener true
+        }
+
+        else -> {
+          return@setOnNavigationItemSelectedListener false
+        }
       }
     }
+  }
 
-    manageFooterButtons(MainFragmentFooterButtonsHelper.MAIN_SCREEN)
+  private fun footerProfileButtonOnclick() {
+    supportFragmentManager.commit {
+      setReorderingAllowed(true)
+      replace(
+        R.id.screenFragmentContainerView,
+        ProfileFragment::class.java,
+        bundleOf(Pair(ConstantsHelper.loginResponseParcelableName, processingLoginResponse))
+      )
 
-    footerMainImageButton.setOnClickListener {
-      manageFooterButtons(MainFragmentFooterButtonsHelper.MAIN_SCREEN)
-      supportFragmentManager.commit {
-        setReorderingAllowed(true)
-        replace(
-          R.id.screenFragmentContainerView,
-          MainScreenFragment::class.java,
-          bundleOf(Pair(ConstantsHelper.loginResponseParcelableName, processingLoginResponse))
-        )
-      }
     }
+  }
 
-    footerProfileImageButton.setOnClickListener {
-      manageFooterButtons(MainFragmentFooterButtonsHelper.PROFILE_SCREEN)
-      supportFragmentManager.commit {
-        setReorderingAllowed(true)
-        replace(
-          R.id.screenFragmentContainerView,
-          ProfileFragment::class.java,
-          bundleOf(Pair(ConstantsHelper.loginResponseParcelableName, processingLoginResponse))
-        )
+  private fun footerMainButtonOnclick() {
+    supportFragmentManager.commit {
+      setReorderingAllowed(true)
+      replace(
+        R.id.screenFragmentContainerView,
+        MainScreenFragment::class.java,
+        bundleOf(Pair(ConstantsHelper.loginResponseParcelableName, processingLoginResponse))
+      )
+    }
+  }
 
-      }
+  private fun footerPlayerButtonOnclick() {
+    supportFragmentManager.commit {
+      setReorderingAllowed(true)
+      replace<PlayerScreenFragment>(R.id.screenFragmentContainerView)
     }
   }
 
@@ -114,9 +130,7 @@ class MainActivity : AppCompatActivity(), MainScreenFragment.ToMainActivityCallb
   private fun findViewElements() {
     fragmentContainerView = binding.screenFragmentContainerView
 
-    footerMainImageButton = binding.footerLogoImageButton
-    footerPlayerImageButton = binding.footerPlayerImageButton
-    footerProfileImageButton = binding.footerProfileImageButton
+    bottomNavigationView = binding.bottomNavigationView
   }
 
   private fun getParceledLoginResponse() =
@@ -139,69 +153,7 @@ class MainActivity : AppCompatActivity(), MainScreenFragment.ToMainActivityCallb
     }
   }
 
-  private fun manageFooterButtons(activeButton: MainFragmentFooterButtonsHelper) {
-    when (activeButton) {
-      MainFragmentFooterButtonsHelper.MAIN_SCREEN -> {
-        footerProfileImageButton.setImageResource(R.drawable.footer_profile_non_active)
-        footerPlayerImageButton.setImageResource(R.drawable.footer_player_non_active)
-
-        footerMainImageButton.setImageResource(R.drawable.footer_menu_active)
-
-        setPlayerButtonNonActive()
-
-        setProfileButtonNonActive()
-
-        footerMainImageButton.scaleX = ConstantsHelper.scaleMainCoefficientActive
-        footerMainImageButton.scaleY = ConstantsHelper.scaleMainCoefficientActive
-      }
-
-      MainFragmentFooterButtonsHelper.PLAYER_SCREEN -> {
-        footerProfileImageButton.setImageResource(R.drawable.footer_profile_non_active)
-        footerMainImageButton.setImageResource(R.drawable.footer_menu_non_active)
-
-        footerPlayerImageButton.setImageResource(R.drawable.footer_player_active)
-
-        setLogoButtonNonActive()
-
-        setProfileButtonNonActive()
-
-        footerPlayerImageButton.scaleX = ConstantsHelper.scaleCoefficientActive
-        footerPlayerImageButton.scaleY = ConstantsHelper.scaleCoefficientActive
-      }
-
-      MainFragmentFooterButtonsHelper.PROFILE_SCREEN -> {
-        footerPlayerImageButton.setImageResource(R.drawable.footer_player_non_active)
-        footerMainImageButton.setImageResource(R.drawable.footer_menu_non_active)
-
-        footerProfileImageButton.setImageResource(R.drawable.footer_profile_active)
-
-        setLogoButtonNonActive()
-
-        setPlayerButtonNonActive()
-
-        footerProfileImageButton.scaleX = ConstantsHelper.scaleCoefficientActive
-        footerProfileImageButton.scaleY = ConstantsHelper.scaleCoefficientActive
-      }
-    }
+  override fun setInActivityProfileButtonActive() {
+    bottomNavigationView.selectedItemId = R.id.profileFragmentButton
   }
-
-  private fun setProfileButtonNonActive() {
-    footerProfileImageButton.scaleX = ConstantsHelper.scaleCoefficientNonActive
-    footerProfileImageButton.scaleY = ConstantsHelper.scaleCoefficientNonActive
-  }
-
-  private fun setPlayerButtonNonActive() {
-    footerPlayerImageButton.scaleX = ConstantsHelper.scaleCoefficientNonActive
-    footerPlayerImageButton.scaleY = ConstantsHelper.scaleCoefficientNonActive
-  }
-
-  private fun setLogoButtonNonActive() {
-    footerMainImageButton.scaleX = ConstantsHelper.scaleMainCoefficientNonActive
-    footerMainImageButton.scaleY = ConstantsHelper.scaleMainCoefficientNonActive
-  }
-
-  override fun setProfileButtonActive() {
-    manageFooterButtons(MainFragmentFooterButtonsHelper.PROFILE_SCREEN)
-  }
-
 }

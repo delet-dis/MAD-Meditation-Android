@@ -12,10 +12,4 @@ object ConstantsHelper {
   const val imagesDir = "MADMeditaion-images"
 
   const val idOfParceledImage = "ID_OF_PARCELED_IMAGE"
-
-  const val scaleMainCoefficientActive = 2.4f
-  const val scaleMainCoefficientNonActive = 1.9f
-
-  const val scaleCoefficientActive = 1.1f
-  const val scaleCoefficientNonActive = 1f
 }
