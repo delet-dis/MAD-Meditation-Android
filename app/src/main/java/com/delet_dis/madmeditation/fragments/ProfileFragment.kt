@@ -18,8 +18,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
 import androidx.cardview.widget.CardView
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -29,13 +29,11 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
+import com.delet_dis.madmeditation.R
 import com.delet_dis.madmeditation.database.GalleryViewModel
 import com.delet_dis.madmeditation.database.ImageCard
 import com.delet_dis.madmeditation.databinding.FragmentProfileScreenBinding
-import com.delet_dis.madmeditation.helpers.ConstantsHelper
-import com.delet_dis.madmeditation.helpers.FilesHelper
-import com.delet_dis.madmeditation.helpers.IntentHelper
-import com.delet_dis.madmeditation.helpers.SharedPreferencesHelper
+import com.delet_dis.madmeditation.helpers.*
 import com.delet_dis.madmeditation.model.LoginResponse
 import com.delet_dis.madmeditation.recyclerViewAdapters.GalleryAdapter
 import java.text.SimpleDateFormat
@@ -59,6 +57,14 @@ class ProfileFragment : Fragment() {
   private var loginResponse: LoginResponse? = null
 
   private lateinit var galleryViewModel: GalleryViewModel
+
+  val requestPermissionLauncher = registerForActivityResult(
+    RequestPermission()
+  ) { isGranted: Boolean ->
+    if (!isGranted) {
+      ToastHelper.createErrorToast(requireContext(), R.string.noInternalStorageAccess)
+    }
+  }
 
   override fun onCreateView(
     inflater: LayoutInflater,
@@ -136,11 +142,7 @@ class ProfileFragment : Fragment() {
         getContent!!.launch("image/*")
         refreshGalleryRecyclerData()
       } else {
-        ActivityCompat.requestPermissions(
-          requireActivity(),
-          arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-          101
-        )
+        requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
         getContent!!.launch("image/*")
       }
 
