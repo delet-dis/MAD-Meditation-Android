@@ -1,24 +1,18 @@
 package com.delet_dis.madmeditation
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.delet_dis.madmeditation.databinding.ActivityOnboardingBinding
 
 class OnboardingActivity : AppCompatActivity() {
   private lateinit var binding: ActivityOnboardingBinding
 
-  private lateinit var loginButton: Button
-  private lateinit var registerButton: Button
-
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
     setContentView(createViewBinding())
-
-    findViewElements()
 
     registerRegisterButtonOnclick()
 
@@ -31,21 +25,16 @@ class OnboardingActivity : AppCompatActivity() {
   }
 
   private fun registerLoginButtonOnclick() {
-    loginButton.setOnClickListener {
+    binding.loginButton.setOnClickListener {
       val intent = Intent(this, LoginActivity::class.java)
       startActivity(intent)
     }
   }
 
   private fun registerRegisterButtonOnclick() {
-    registerButton.setOnClickListener {
+    binding.noAccountHintRegistration.setOnClickListener {
       val intent = Intent(this, RegistrationActivity::class.java)
       startActivity(intent)
     }
-  }
-
-  private fun findViewElements() {
-    loginButton = binding.loginButton
-    registerButton = binding.noAccountHintRegistration
   }
 }

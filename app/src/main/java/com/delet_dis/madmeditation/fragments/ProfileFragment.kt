@@ -12,19 +12,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
-import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.target.CustomTarget
@@ -42,23 +36,13 @@ import java.util.*
 
 class ProfileFragment : Fragment() {
 
-  private lateinit var hamburgerImageButton: ImageButton
-  private lateinit var exitButton: Button
-
-  private lateinit var userAvatar: ImageView
-  private lateinit var userNameText: TextView
-
-  private lateinit var galleryRecycler: RecyclerView
-
-  private lateinit var galleryAddCard: CardView
-
   private lateinit var binding: FragmentProfileScreenBinding
 
   private var loginResponse: LoginResponse? = null
 
   private lateinit var galleryViewModel: GalleryViewModel
 
-  val requestPermissionLauncher = registerForActivityResult(
+  private val requestPermissionLauncher = registerForActivityResult(
     RequestPermission()
   ) { isGranted: Boolean ->
     if (!isGranted) {
@@ -116,7 +100,7 @@ class ProfileFragment : Fragment() {
     if (savedInstanceState == null) {
       galleryViewModel = ViewModelProvider(this).get(GalleryViewModel::class.java)
 
-      findViewElements()
+      setGalleryRecyclerLayoutManager()
 
       displayUserInfo(loginResponse)
 
@@ -131,8 +115,18 @@ class ProfileFragment : Fragment() {
 
   }
 
+  private fun setGalleryRecyclerLayoutManager() {
+    binding.galleryRecyclerView.layoutManager =
+      GridLayoutManager(
+        requireContext(),
+        2,
+        GridLayoutManager.VERTICAL,
+        false
+      )
+  }
+
   private fun setGalleryAddCardOnclick() {
-    galleryAddCard.setOnClickListener {
+    binding.galleryCardAddButton.setOnClickListener {
 
       if (ContextCompat.checkSelfPermission(
           requireContext(),
@@ -152,7 +146,7 @@ class ProfileFragment : Fragment() {
   }
 
   private fun setExitButtonOnclick() {
-    exitButton.setOnClickListener {
+    binding.exitText.setOnClickListener {
       SharedPreferencesHelper.clearLoginData(requireContext().applicationContext)
 
       fun clearGalleryImagesAndStartLoginActivity() {
@@ -175,35 +169,15 @@ class ProfileFragment : Fragment() {
   }
 
   private fun setHamburgerImageButtonOnclick() {
-    hamburgerImageButton.setOnClickListener {
+    binding.hamburgerImage.setOnClickListener {
       this.context?.let { it1 -> IntentHelper.startMenuActivity(it1) }
     }
-  }
-
-  private fun findViewElements() {
-    hamburgerImageButton = binding.hamburgerImage
-    exitButton = binding.exitText
-
-    userAvatar = binding.userAvatar
-    userNameText = binding.userNameText
-
-    galleryRecycler = binding.galleryRecyclerView
-
-    galleryAddCard = binding.galleryCardAddButton
-
-    galleryRecycler.layoutManager =
-      GridLayoutManager(
-        requireContext(),
-        2,
-        GridLayoutManager.VERTICAL,
-        false
-      )
   }
 
   private fun refreshGalleryRecyclerData() {
     galleryViewModel.allImages.observe(viewLifecycleOwner, { list ->
       if (list != null) {
-        galleryRecycler.adapter = GalleryAdapter(list) {
+        binding.galleryRecyclerView.adapter = GalleryAdapter(list) {
           IntentHelper.startGalleryActivity(requireContext(), it)
         }
       }
@@ -216,10 +190,10 @@ class ProfileFragment : Fragment() {
       Glide.with(it)
         .load(processingLoginResponse?.avatar)
         .transition(DrawableTransitionOptions.withCrossFade())
-        .into(userAvatar)
+        .into(binding.userAvatar)
     }
 
-    userNameText.text =
+    binding.userNameText.text =
       processingLoginResponse?.nickName
   }
 

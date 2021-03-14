@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.os.bundleOf
-import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.delet_dis.madmeditation.databinding.ActivityMainBinding
@@ -17,17 +16,12 @@ import com.delet_dis.madmeditation.helpers.ToastHelper
 import com.delet_dis.madmeditation.http.common.Common
 import com.delet_dis.madmeditation.model.LoginRequest
 import com.delet_dis.madmeditation.model.LoginResponse
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class MainActivity : AppCompatActivity(), MainScreenFragment.ActivityCallback {
   private lateinit var binding: ActivityMainBinding
-
-  private lateinit var fragmentContainerView: FragmentContainerView
-
-  private lateinit var bottomNavigationView: BottomNavigationView
 
   private var processingLoginResponse: LoginResponse? = null
 
@@ -36,8 +30,6 @@ class MainActivity : AppCompatActivity(), MainScreenFragment.ActivityCallback {
     super.onCreate(savedInstanceState)
 
     setContentView(createViewBinding())
-
-    findViewElements()
 
     val loginResponse = getParceledLoginResponse()
 
@@ -53,7 +45,7 @@ class MainActivity : AppCompatActivity(), MainScreenFragment.ActivityCallback {
   }
 
   private fun setBottomNavigationViewOnclick() {
-    bottomNavigationView.setOnNavigationItemSelectedListener {
+    binding.bottomNavigationView.setOnNavigationItemSelectedListener {
       when (it.itemId) {
         R.id.mainFragmentButton -> {
           footerMainButtonOnclick()
@@ -127,12 +119,6 @@ class MainActivity : AppCompatActivity(), MainScreenFragment.ActivityCallback {
       })
   }
 
-  private fun findViewElements() {
-    fragmentContainerView = binding.screenFragmentContainerView
-
-    bottomNavigationView = binding.bottomNavigationView
-  }
-
   private fun getParceledLoginResponse() =
     intent.extras?.getParcelable<LoginResponse>(ConstantsHelper.loginResponseParcelableName)
 
@@ -154,6 +140,6 @@ class MainActivity : AppCompatActivity(), MainScreenFragment.ActivityCallback {
   }
 
   override fun setInActivityProfileButtonActive() {
-    bottomNavigationView.selectedItemId = R.id.profileFragmentButton
+    binding.bottomNavigationView.selectedItemId = R.id.profileFragmentButton
   }
 }

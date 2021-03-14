@@ -5,15 +5,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.delet_dis.madmeditation.R
@@ -31,17 +25,6 @@ import retrofit2.Response
 
 
 class MainScreenFragment : Fragment() {
-
-  private lateinit var userAvatar: ImageView
-  private lateinit var welcomeTextWithUserName: TextView
-
-  private lateinit var hamburgerImageButton: ImageButton
-
-  private lateinit var profileCard: CardView
-
-  private lateinit var feelingsRecycler: RecyclerView
-
-  private lateinit var quotesRecycler: RecyclerView
 
   private lateinit var binding: FragmentMainScreenBinding
 
@@ -80,8 +63,6 @@ class MainScreenFragment : Fragment() {
 
     if (savedInstanceState == null) {
 
-      findViewElements()
-
       setHamburgerImageButtonOnclick()
 
       setProfileCardOnclick()
@@ -96,7 +77,7 @@ class MainScreenFragment : Fragment() {
   }
 
   private fun setProfileCardOnclick() {
-    profileCard.setOnClickListener {
+    binding.userImageCard.setOnClickListener {
       parentActivityCallback.setInActivityProfileButtonActive()
 
       parentFragmentManager.commit {
@@ -111,7 +92,7 @@ class MainScreenFragment : Fragment() {
   }
 
   private fun setHamburgerImageButtonOnclick() {
-    hamburgerImageButton.setOnClickListener {
+    binding.hamburgerImage.setOnClickListener {
       this.context?.let { it1 -> IntentHelper.startMenuActivity(it1) }
     }
   }
@@ -121,7 +102,7 @@ class MainScreenFragment : Fragment() {
       .enqueue(object : Callback<QuotesResponse> {
         override fun onResponse(call: Call<QuotesResponse>, response: Response<QuotesResponse>) {
           val processingQuotesList: List<Quote> = response.body()!!.data
-          quotesRecycler.adapter = QuotesAdapter(processingQuotesList)
+          binding.quotesRecycler.adapter = QuotesAdapter(processingQuotesList)
         }
 
         override fun onFailure(call: Call<QuotesResponse>, t: Throwable) {
@@ -146,7 +127,7 @@ class MainScreenFragment : Fragment() {
           val processingFeelingsList: List<Feeling> =
             response.body()!!.data.sortedWith(compareBy { it.position })
 
-          feelingsRecycler.adapter = FeelingsAdapter(processingFeelingsList)
+          binding.feelingsRecycler.adapter = FeelingsAdapter(processingFeelingsList)
         }
 
         override fun onFailure(call: Call<FeelingsResponse>, t: Throwable) {
@@ -161,38 +142,16 @@ class MainScreenFragment : Fragment() {
       })
   }
 
-  private fun findViewElements() {
-    userAvatar = binding.userAvatar
-    welcomeTextWithUserName = binding.welcomeHeaderWithUserName
-    hamburgerImageButton = binding.hamburgerImage
-
-    profileCard = binding.userImageCard
-
-    feelingsRecycler = binding.feelingsRecycler
-    feelingsRecycler.layoutManager = LinearLayoutManager(
-      this.context,
-      LinearLayoutManager.HORIZONTAL,
-      false
-    )
-
-    quotesRecycler = binding.quotesRecycler
-    quotesRecycler.layoutManager = LinearLayoutManager(
-      this.context,
-      LinearLayoutManager.VERTICAL,
-      false
-    )
-  }
-
   private fun displayUserInfo(processingLoginResponse: LoginResponse?) {
     activity?.let {
       Glide.with(it)
         .load(processingLoginResponse?.avatar)
         .transition(DrawableTransitionOptions.withCrossFade())
-        .into(userAvatar)
+        .into(binding.userAvatar)
     }
 
 
-    welcomeTextWithUserName.text =
+    binding.welcomeHeaderWithUserName.text =
       String.format(getString(R.string.welcomeTextText, processingLoginResponse?.nickName))
   }
 

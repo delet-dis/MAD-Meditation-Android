@@ -4,8 +4,6 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
-import android.widget.Button
-import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.delet_dis.madmeditation.databinding.ActivityLoginBinding
@@ -23,12 +21,6 @@ import retrofit2.Response
 class LoginActivity : AppCompatActivity() {
   private lateinit var binding: ActivityLoginBinding
 
-  private lateinit var emailInputField: EditText
-  private lateinit var passwordInputField: EditText
-
-  private lateinit var loginButton: Button
-  private lateinit var registerButton: Button
-
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -36,8 +28,6 @@ class LoginActivity : AppCompatActivity() {
     WindowHelper.setWindowNoLimits(this)
 
     setContentView(createViewBinding())
-
-    findViewElements()
 
     fillEmailFieldIfEmailIsNotNull()
 
@@ -48,7 +38,7 @@ class LoginActivity : AppCompatActivity() {
 
   private fun fillEmailFieldIfEmailIsNotNull() {
     if (SharedPreferencesHelper.getEmail(applicationContext) != null) {
-      emailInputField.setText(SharedPreferencesHelper.getEmail(applicationContext))
+      binding.emailInputField.setText(SharedPreferencesHelper.getEmail(applicationContext))
     }
   }
 
@@ -58,29 +48,21 @@ class LoginActivity : AppCompatActivity() {
   }
 
   private fun registerRegisterButtonOnclick() {
-    registerButton.setOnClickListener {
+    binding.noAccountHintRegistration.setOnClickListener {
       val intent = Intent(this, RegistrationActivity::class.java)
       startActivity(intent)
     }
   }
 
   private fun registerLoginButtonOnclick() {
-    loginButton.setOnClickListener {
+    binding.loginButton.setOnClickListener {
       checkCorrectnessOfFields()
     }
   }
 
-  private fun findViewElements() {
-    emailInputField = binding.emailInputField
-    passwordInputField = binding.passwordInputField
-
-    loginButton = binding.loginButton
-    registerButton = binding.noAccountHintRegistration
-  }
-
   private fun checkCorrectnessOfFields() {
-    if (isEmailCorrect(emailInputField.text.toString()) &&
-      passwordInputField.text.toString().isNotBlank()
+    if (isEmailCorrect(binding.emailInputField.text.toString()) &&
+      binding.passwordInputField.text.toString().isNotBlank()
     ) {
 
       val loginRequest = makeLoginRequest()
@@ -122,8 +104,8 @@ class LoginActivity : AppCompatActivity() {
   }
 
   private fun makeLoginRequest() = LoginRequest(
-    emailInputField.text.toString(),
-    passwordInputField.text.toString()
+    binding.emailInputField.text.toString(),
+    binding.passwordInputField.text.toString()
   )
 
   private fun isEmailCorrect(processingEmail: String): Boolean {
