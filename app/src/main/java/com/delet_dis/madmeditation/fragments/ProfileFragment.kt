@@ -145,22 +145,22 @@ class ProfileFragment : Fragment() {
     }
   }
 
+  private fun clearGalleryImagesAndStartLoginActivity() {
+    val directory = ContextWrapper(requireContext()).getDir(
+      ConstantsHelper.imagesDir,
+      Context.MODE_PRIVATE
+    )
+
+    directory.deleteRecursively()
+
+    IntentHelper.startLoginActivity(requireContext())
+
+    activity?.finish()
+  }
+
   private fun setExitButtonOnclick() {
     binding.exitText.setOnClickListener {
       SharedPreferencesHelper.clearLoginData(requireContext().applicationContext)
-
-      fun clearGalleryImagesAndStartLoginActivity() {
-        val directory = ContextWrapper(requireContext()).getDir(
-          ConstantsHelper.imagesDir,
-          Context.MODE_PRIVATE
-        )
-
-        directory.deleteRecursively()
-
-        IntentHelper.startLoginActivity(requireContext())
-
-        activity?.finish()
-      }
 
       galleryViewModel.clearTables(
         requireContext().applicationContext as Application
