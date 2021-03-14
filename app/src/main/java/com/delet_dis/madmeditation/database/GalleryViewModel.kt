@@ -10,17 +10,17 @@ import kotlinx.coroutines.launch
 
 class GalleryViewModel(application: Application) : AndroidViewModel(application) {
 
-  private val galleryDao: GalleryDAO = GalleryDatabase.getAppDataBase(application)!!.galleryDao()
+  private val galleryDao: GalleryDAO = GalleryDatabase.getAppDataBase(application).galleryDao()
 
   val allImages: LiveData<List<ImageCard>> =
-    GalleryDatabase.getAppDataBase(application)!!.galleryDao().getAll()
+    GalleryDatabase.getAppDataBase(application).galleryDao().getAll()
 
   suspend fun getImageById(application: Application, id: Int): ImageCard {
-    return GalleryDatabase.getAppDataBase(application)!!.galleryDao().getById(id.toLong()).first()
+    return GalleryDatabase.getAppDataBase(application).galleryDao().getById(id.toLong()).first()
   }
 
   fun clearTables(application: Application, afterCallFunction: () -> Unit) = viewModelScope.launch {
-    GalleryDatabase.getAppDataBase(application)!!.galleryDao().nukeTable()
+    GalleryDatabase.getAppDataBase(application).galleryDao().nukeTable()
 
     val sqLiteDatabase: SQLiteDatabase = SQLiteDatabase.openOrCreateDatabase(
       application.applicationContext.getDatabasePath("galleryDB"),
@@ -35,7 +35,7 @@ class GalleryViewModel(application: Application) : AndroidViewModel(application)
 
   fun removeImageById(application: Application, id: Int, afterCallFunction: () -> Unit) =
     viewModelScope.launch {
-      GalleryDatabase.getAppDataBase(application)!!.galleryDao().removeById(id.toLong())
+      GalleryDatabase.getAppDataBase(application).galleryDao().removeById(id.toLong())
 
       afterCallFunction()
     }

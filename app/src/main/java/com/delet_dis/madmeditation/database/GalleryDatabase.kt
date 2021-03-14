@@ -13,7 +13,7 @@ abstract class GalleryDatabase : RoomDatabase() {
   companion object {
     private var INSTANCE: GalleryDatabase? = null
 
-    fun getAppDataBase(context: Context): GalleryDatabase? {
+    fun getAppDataBase(context: Context): GalleryDatabase {
       if (INSTANCE == null) {
         synchronized(GalleryDatabase::class) {
           INSTANCE =
@@ -25,7 +25,7 @@ abstract class GalleryDatabase : RoomDatabase() {
               .build()
         }
       }
-      return INSTANCE
+      return INSTANCE!!
     }
 
     fun destroyDataBase() {
