@@ -83,7 +83,7 @@ class MainActivity : AppCompatActivity(), MainScreenFragment.ActivityCallback {
       replace(
         R.id.screenFragmentContainerView,
         ProfileFragment::class.java,
-        bundleOf(Pair(ConstantsHelper.loginResponseParcelableName, processingLoginResponse))
+        bundleOf(ConstantsHelper.loginResponseParcelableName to processingLoginResponse)
       )
 
     }
@@ -95,7 +95,7 @@ class MainActivity : AppCompatActivity(), MainScreenFragment.ActivityCallback {
       replace(
         R.id.screenFragmentContainerView,
         MainScreenFragment::class.java,
-        bundleOf(Pair(ConstantsHelper.loginResponseParcelableName, processingLoginResponse))
+        bundleOf(ConstantsHelper.loginResponseParcelableName to processingLoginResponse)
       )
     }
   }
@@ -147,7 +147,7 @@ class MainActivity : AppCompatActivity(), MainScreenFragment.ActivityCallback {
       add(
         R.id.screenFragmentContainerView,
         MainScreenFragment::class.java,
-        bundleOf(Pair(ConstantsHelper.loginResponseParcelableName, processingLoginResponse)),
+        bundleOf(ConstantsHelper.loginResponseParcelableName to processingLoginResponse),
         ConstantsHelper.mainFragmentTag
       )
     }
