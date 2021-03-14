@@ -126,7 +126,7 @@ class ProfileFragment : Fragment() {
   }
 
   private fun setGalleryAddCardOnclick() {
-    binding.galleryCardAddButton.setOnClickListener {
+    binding.galleryCardButton.setOnClickListener {
 
       if (ContextCompat.checkSelfPermission(
           requireContext(),

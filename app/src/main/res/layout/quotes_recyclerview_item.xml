@@ -36,7 +36,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/quoteDesctiption"
+                android:id="@+id/quoteDescription"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
@@ -64,7 +64,7 @@
                 android:textSize="15sp"
                 app:cornerRadius="10dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/quoteDesctiption" />
+                app:layout_constraintTop_toBottomOf="@+id/quoteDescription" />
 
             <ImageView
                 android:id="@+id/quoteImage"

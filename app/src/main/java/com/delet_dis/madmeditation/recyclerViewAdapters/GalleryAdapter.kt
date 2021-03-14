@@ -2,6 +2,7 @@ package com.delet_dis.madmeditation.recyclerViewAdapters
 
 import android.content.Context
 import android.content.ContextWrapper
+import android.text.Layout
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -13,51 +14,51 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.delet_dis.madmeditation.R
 import com.delet_dis.madmeditation.database.ImageCard
+import com.delet_dis.madmeditation.databinding.GalleryRecyclerviewItemBinding
 import com.delet_dis.madmeditation.helpers.ConstantsHelper
 
 
 class GalleryAdapter(private val values: List<ImageCard>, val clickListener: (Int) -> Unit) :
   RecyclerView.Adapter<GalleryAdapter.GalleryHolder>() {
+  private lateinit var binding: GalleryRecyclerviewItemBinding
 
   override fun onCreateViewHolder(
     parent: ViewGroup,
     viewType: Int
   ): GalleryHolder {
-    val itemView = LayoutInflater.from(parent.context)
-      .inflate(R.layout.gallery_recyclerview_item, parent, false)
-    return GalleryHolder(itemView)
+
+    binding = GalleryRecyclerviewItemBinding.inflate(
+      LayoutInflater.from(parent.context),
+      parent,
+      false
+    )
+
+    return GalleryHolder(binding)
   }
 
   override fun onBindViewHolder(holder: GalleryHolder, position: Int) {
 
-    val directory = ContextWrapper(holder.itemView.context).getDir(
-      ConstantsHelper.imagesDir,
-      Context.MODE_PRIVATE
-    ).toString()
+    with(values[position]) {
+      val directory = ContextWrapper(holder.itemView.context).getDir(
+        ConstantsHelper.imagesDir,
+        Context.MODE_PRIVATE
+      ).toString()
 
-    Glide.with(ContextWrapper(holder.itemView.context))
-      .load("${directory}/${values[position].imageFilename}")
-      .transition(DrawableTransitionOptions.withCrossFade())
-      .into(holder.galleryImageView!!)
+      Glide.with(ContextWrapper(holder.itemView.context))
+        .load("${directory}/${imageFilename}")
+        .transition(DrawableTransitionOptions.withCrossFade())
+        .into(binding.cardImage)
 
-    holder.galleryImageTime?.text = values[position].time
+      binding.cardTimeText.text = time
 
-    holder.itemView.setOnClickListener {
-      clickListener(values[position].id!!.toInt())
+      holder.itemView.setOnClickListener {
+        clickListener(id!!.toInt())
+      }
     }
   }
 
   override fun getItemCount(): Int = values.size
 
-  inner class GalleryHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    var galleryImageView: ImageView? = null
-    var galleryImageTime: TextView? = null
-
-    init {
-      galleryImageView = itemView.findViewById(R.id.cardImage)
-      galleryImageTime = itemView.findViewById(R.id.cardTimeText)
-    }
-
-  }
-
+  inner class GalleryHolder(binding: GalleryRecyclerviewItemBinding) :
+    RecyclerView.ViewHolder(binding.root)
 }
