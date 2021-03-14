@@ -16,7 +16,7 @@ class SplashscreenActivity : AppCompatActivity() {
 
     val handler = Handler(Looper.getMainLooper())
 
-    lateinit var processingIntent: Intent
+    var processingIntent: Intent
 
     handler.postDelayed({
       processingIntent = if (SharedPreferencesHelper.isLoggedIn(applicationContext)) {
