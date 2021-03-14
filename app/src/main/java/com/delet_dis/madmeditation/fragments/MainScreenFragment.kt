@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.delet_dis.madmeditation.R
@@ -67,6 +68,10 @@ class MainScreenFragment : Fragment() {
 
       setProfileCardOnclick()
 
+      setFeelingsRecyclerLayoutManager()
+
+      setQuotesRecyclerLayoutManager()
+
       displayUserInfo(loginResponse)
 
       getFeelingsData()
@@ -74,6 +79,22 @@ class MainScreenFragment : Fragment() {
       getQuotesData()
     }
 
+  }
+
+  private fun setQuotesRecyclerLayoutManager() {
+    binding.quotesRecycler.layoutManager = LinearLayoutManager(
+      this.context,
+      LinearLayoutManager.VERTICAL,
+      false
+    )
+  }
+
+  private fun setFeelingsRecyclerLayoutManager() {
+    binding.feelingsRecycler.layoutManager = LinearLayoutManager(
+      this.context,
+      LinearLayoutManager.HORIZONTAL,
+      false
+    )
   }
 
   private fun setProfileCardOnclick() {
