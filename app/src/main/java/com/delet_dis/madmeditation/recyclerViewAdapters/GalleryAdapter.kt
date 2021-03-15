@@ -39,7 +39,7 @@ class GalleryAdapter(private val values: List<ImageCard>, val clickListener: (In
       ).toString()
 
       Glide.with(ContextWrapper(holder.itemView.context))
-        .load("${directory}/${imageFilename}")
+        .load(imageFilename)
         .transition(DrawableTransitionOptions.withCrossFade())
         .into(binding.cardImage)
 

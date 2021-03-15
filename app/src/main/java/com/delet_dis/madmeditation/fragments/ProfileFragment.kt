@@ -71,6 +71,11 @@ class ProfileFragment : Fragment() {
   private var getContent: ActivityResultLauncher<String>? =
     registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
 
+      val directory = ContextWrapper(requireContext()).getDir(
+        ConstantsHelper.imagesDir,
+        Context.MODE_PRIVATE
+      ).toString()
+
       if (uri != null) {
         Glide.with(requireContext())
           .asBitmap()
@@ -83,7 +88,7 @@ class ProfileFragment : Fragment() {
                 GalleryDatabase.getAppDataBase(requireContext()).galleryDao().insert(
                   ImageCard(
                     null,
-                    uri.lastPathSegment!!,
+                    "${directory}/${uri.lastPathSegment!!}",
                     SimpleDateFormat("HH:mm", Locale.US).format(Calendar.getInstance().time)
                   )
                 )
