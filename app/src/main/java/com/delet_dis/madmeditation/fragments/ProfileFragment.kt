@@ -17,19 +17,20 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.delet_dis.madmeditation.R
-import com.delet_dis.madmeditation.database.GalleryViewModel
+import com.delet_dis.madmeditation.database.GalleryDatabase
 import com.delet_dis.madmeditation.database.ImageCard
 import com.delet_dis.madmeditation.databinding.FragmentProfileScreenBinding
 import com.delet_dis.madmeditation.helpers.*
 import com.delet_dis.madmeditation.model.LoginResponse
 import com.delet_dis.madmeditation.recyclerViewAdapters.GalleryAdapter
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -39,8 +40,6 @@ class ProfileFragment : Fragment() {
   private lateinit var binding: FragmentProfileScreenBinding
 
   private var loginResponse: LoginResponse? = null
-
-  private lateinit var galleryViewModel: GalleryViewModel
 
   private val requestPermissionLauncher = registerForActivityResult(
     RequestPermission()
@@ -80,13 +79,15 @@ class ProfileFragment : Fragment() {
             override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
               FilesHelper.saveToInternalStorage(requireContext(), resource, uri.lastPathSegment!!)
 
-              galleryViewModel.insert(
-                ImageCard(
-                  null,
-                  uri.lastPathSegment!!,
-                  SimpleDateFormat("HH:mm", Locale.US).format(Calendar.getInstance().time)
+              lifecycleScope.launch {
+                GalleryDatabase.getAppDataBase(requireContext()).galleryDao().insert(
+                  ImageCard(
+                    null,
+                    uri.lastPathSegment!!,
+                    SimpleDateFormat("HH:mm", Locale.US).format(Calendar.getInstance().time)
+                  )
                 )
-              )
+              }
             }
 
             override fun onLoadCleared(placeholder: Drawable?) = Unit
@@ -98,7 +99,6 @@ class ProfileFragment : Fragment() {
     super.onViewCreated(view, savedInstanceState)
 
     if (savedInstanceState == null) {
-      galleryViewModel = ViewModelProvider(this).get(GalleryViewModel::class.java)
 
       setGalleryRecyclerLayoutManager()
 
@@ -162,9 +162,11 @@ class ProfileFragment : Fragment() {
     binding.exitText.setOnClickListener {
       SharedPreferencesHelper.clearLoginData(requireContext().applicationContext)
 
-      galleryViewModel.clearTables(
-        requireContext().applicationContext as Application
-      ) { clearGalleryImagesAndStartLoginActivity() }
+
+      lifecycleScope.launch {
+        GalleryDatabase.getAppDataBase(requireContext()).galleryDao()
+          .clearTables { clearGalleryImagesAndStartLoginActivity() }
+      }
     }
   }
 
@@ -175,13 +177,15 @@ class ProfileFragment : Fragment() {
   }
 
   private fun refreshGalleryRecyclerData() {
-    galleryViewModel.allImages.observe(viewLifecycleOwner, { list ->
-      if (list != null) {
-        binding.galleryRecyclerView.adapter = GalleryAdapter(list) {
-          IntentHelper.startGalleryActivity(requireContext(), it)
+
+    GalleryDatabase.getAppDataBase(requireContext()).galleryDao().getAll()
+      .observe(viewLifecycleOwner, { list ->
+        if (list != null) {
+          binding.galleryRecyclerView.adapter = GalleryAdapter(list) {
+            IntentHelper.startGalleryActivity(requireContext(), it)
+          }
         }
-      }
-    })
+      })
   }
 
 

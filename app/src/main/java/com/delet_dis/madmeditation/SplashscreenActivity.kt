@@ -27,8 +27,5 @@ class SplashscreenActivity : AppCompatActivity() {
       startActivity(processingIntent)
       finish()
     }, 1500)
-
   }
-
-
 }

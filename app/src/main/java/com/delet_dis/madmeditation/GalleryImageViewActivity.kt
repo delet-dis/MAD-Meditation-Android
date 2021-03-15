@@ -4,9 +4,10 @@ import android.content.ContextWrapper
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.delet_dis.madmeditation.database.GalleryViewModel
+import com.delet_dis.madmeditation.database.GalleryDatabase
 import com.delet_dis.madmeditation.databinding.ActivityGalleryImageViewBinding
 import com.delet_dis.madmeditation.helpers.ConstantsHelper
 import kotlinx.coroutines.CoroutineScope
@@ -49,16 +50,23 @@ class GalleryImageViewActivity : AppCompatActivity() {
   private fun registerDeleteButtonOnclick() {
     binding.deleteButton.setOnClickListener {
 
-      GalleryViewModel(application).removeImageById(
-        application,
-        imageId!!
-      ) { finishActivity() }
+      lifecycleScope.launch {
+        imageId?.let { it1 ->
+          GalleryDatabase.getAppDataBase(application).galleryDao().removeImageById(
+            application,
+            it1
+          ) { finishActivity() }
+        }
+      }
     }
   }
 
   private fun loadImageFromDatabase() {
     uiScope.launch {
-      val imageCard = GalleryViewModel(application).getImageById(application, imageId!!)
+      val imageCard = imageId?.let {
+        GalleryDatabase.getAppDataBase(application).galleryDao()
+          .getImageById(application, it)
+      }
 
       val directory = ContextWrapper(applicationContext).getDir(
         ConstantsHelper.imagesDir,
@@ -66,10 +74,12 @@ class GalleryImageViewActivity : AppCompatActivity() {
       ).toString()
 
 
-      Glide.with(ContextWrapper(applicationContext))
-        .load("${directory}/${imageCard.imageFilename}")
-        .transition(DrawableTransitionOptions.withCrossFade())
-        .into(binding.galleryImage)
+      if (imageCard != null) {
+        Glide.with(ContextWrapper(applicationContext))
+          .load("${directory}/${imageCard.imageFilename}")
+          .transition(DrawableTransitionOptions.withCrossFade())
+          .into(binding.galleryImage)
+      }
     }
   }
 

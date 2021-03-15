@@ -77,7 +77,6 @@ class MainActivity : AppCompatActivity(), MainScreenFragment.ActivityCallback {
         ProfileFragment::class.java,
         bundleOf(ConstantsHelper.loginResponseParcelableName to processingLoginResponse)
       )
-
     }
   }
 
@@ -115,7 +114,6 @@ class MainActivity : AppCompatActivity(), MainScreenFragment.ActivityCallback {
         override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
           ToastHelper.createErrorToast(applicationContext, R.string.networkErrorMessage)
         }
-
       })
   }
 
