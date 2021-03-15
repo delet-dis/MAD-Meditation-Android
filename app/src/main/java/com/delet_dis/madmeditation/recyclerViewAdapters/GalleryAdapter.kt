@@ -46,7 +46,7 @@ class GalleryAdapter(private val values: List<ImageCard>, val clickListener: (In
       binding.cardTimeText.text = time
 
       holder.itemView.setOnClickListener {
-        clickListener(id!!.toInt())
+        id?.let { it1 -> clickListener(it1.toInt()) }
       }
     }
   }

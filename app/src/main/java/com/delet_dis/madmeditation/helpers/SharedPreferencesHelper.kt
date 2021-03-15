@@ -10,16 +10,6 @@ class SharedPreferencesHelper(val context: Context) {
     return context.getSharedPreferences(ConstantsHelper.appSettings, Context.MODE_PRIVATE)
   }
 
-  fun getValue(setting: String): String? {
-    return getSharedPreferences().getString(setting, null)
-  }
-
-  fun setValue(setting: String, newValue: String?) {
-    val editor = getSharedPreferences().edit()
-    editor.putString(setting, newValue)
-    editor.apply()
-  }
-
   fun isLoggedIn(): Boolean {
     return getSharedPreferences().getBoolean(ConstantsHelper.loginState, false)
   }

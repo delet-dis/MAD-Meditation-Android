@@ -122,8 +122,8 @@ class MainScreenFragment : Fragment() {
     Common.retrofitService.getQuotesData()
       .enqueue(object : Callback<QuotesResponse> {
         override fun onResponse(call: Call<QuotesResponse>, response: Response<QuotesResponse>) {
-          val processingQuotesList: List<Quote> = response.body()!!.data
-          binding.quotesRecycler.adapter = QuotesAdapter(processingQuotesList)
+          val processingQuotesList: List<Quote>? = response.body()?.data
+          binding.quotesRecycler.adapter = processingQuotesList?.let { QuotesAdapter(it) }
         }
 
         override fun onFailure(call: Call<QuotesResponse>, t: Throwable) {
@@ -145,10 +145,10 @@ class MainScreenFragment : Fragment() {
           call: Call<FeelingsResponse>,
           response: Response<FeelingsResponse>
         ) {
-          val processingFeelingsList: List<Feeling> =
-            response.body()!!.data.sortedWith(compareBy { it.position })
+          val processingFeelingsList: List<Feeling>? =
+            response.body()?.data?.sortedWith(compareBy { it.position })
 
-          binding.feelingsRecycler.adapter = FeelingsAdapter(processingFeelingsList)
+          binding.feelingsRecycler.adapter = processingFeelingsList?.let { FeelingsAdapter(it) }
         }
 
         override fun onFailure(call: Call<FeelingsResponse>, t: Throwable) {

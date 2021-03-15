@@ -81,13 +81,18 @@ class ProfileFragment : Fragment() {
           .load(uri)
           .into(object : CustomTarget<Bitmap>() {
             override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-              FilesHelper.saveToInternalStorage(requireContext(), resource, uri.lastPathSegment!!)
+              uri.lastPathSegment?.let {
+                FilesHelper.saveToInternalStorage(
+                  requireContext(), resource,
+                  it
+                )
+              }
 
               lifecycleScope.launch {
                 GalleryDatabase.getAppDataBase(requireContext()).galleryDao().insert(
                   ImageCard(
                     null,
-                    "${directory}/${uri.lastPathSegment!!}",
+                    "${directory}/${uri.lastPathSegment}",
                     SimpleDateFormat("HH:mm", Locale.US).format(Calendar.getInstance().time)
                   )
                 )
@@ -137,11 +142,11 @@ class ProfileFragment : Fragment() {
           Manifest.permission.READ_EXTERNAL_STORAGE
         ) == PackageManager.PERMISSION_GRANTED
       ) {
-        getContent!!.launch("image/*")
+        getContent?.launch("image/*")
         refreshGalleryRecyclerData()
       } else {
         requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
-        getContent!!.launch("image/*")
+        getContent?.launch("image/*")
       }
 
       refreshGalleryRecyclerData()
