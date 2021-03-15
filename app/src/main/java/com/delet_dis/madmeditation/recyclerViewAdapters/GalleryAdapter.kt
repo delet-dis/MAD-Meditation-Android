@@ -33,7 +33,7 @@ class GalleryAdapter(private val values: List<ImageCard>, val clickListener: (In
   override fun onBindViewHolder(holder: GalleryHolder, position: Int) {
 
     with(values[position]) {
-      val directory = ContextWrapper(holder.itemView.context).getDir(
+      ContextWrapper(holder.itemView.context).getDir(
         ConstantsHelper.imagesDir,
         Context.MODE_PRIVATE
       ).toString()

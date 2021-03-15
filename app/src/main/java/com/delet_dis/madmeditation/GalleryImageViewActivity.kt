@@ -76,7 +76,7 @@ class GalleryImageViewActivity : AppCompatActivity() {
 
       if (imageCard != null) {
         Glide.with(ContextWrapper(applicationContext))
-          .load("${directory}/${imageCard.imageFilename}")
+          .load(imageCard.imageFilename)
           .transition(DrawableTransitionOptions.withCrossFade())
           .into(binding.galleryImage)
       }

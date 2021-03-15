@@ -27,9 +27,5 @@ abstract class GalleryDatabase : RoomDatabase() {
       }
       return INSTANCE!!
     }
-
-    fun destroyDataBase() {
-      INSTANCE = null
-    }
   }
 }
