@@ -68,11 +68,10 @@ class GalleryImageViewActivity : AppCompatActivity() {
           .getImageById(application, it)
       }
 
-      val directory = ContextWrapper(applicationContext).getDir(
+      ContextWrapper(applicationContext).getDir(
         ConstantsHelper.imagesDir,
         MODE_PRIVATE
       ).toString()
-
 
       if (imageCard != null) {
         Glide.with(ContextWrapper(applicationContext))

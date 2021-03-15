@@ -19,7 +19,7 @@ class SplashscreenActivity : AppCompatActivity() {
     var processingIntent: Intent
 
     handler.postDelayed({
-      processingIntent = if (SharedPreferencesHelper.isLoggedIn(applicationContext)) {
+      processingIntent = if (SharedPreferencesHelper(applicationContext).isLoggedIn()) {
         Intent(this, MainActivity::class.java)
       } else {
         Intent(this, OnboardingActivity::class.java)

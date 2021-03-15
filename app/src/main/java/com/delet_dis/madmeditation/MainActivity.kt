@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity(), MainScreenFragment.ActivityCallback {
     val loginResponse = getParceledLoginResponse()
 
     if (loginResponse == null) {
-      val loginRequest = SharedPreferencesHelper.getLoginData(applicationContext)
+      val loginRequest = SharedPreferencesHelper(applicationContext).getLoginData()
       postLoginData(loginRequest)
     } else {
       processingLoginResponse = loginResponse

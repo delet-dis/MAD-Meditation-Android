@@ -1,7 +1,6 @@
 package com.delet_dis.madmeditation.fragments
 
 import android.Manifest
-import android.app.Application
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.pm.PackageManager
@@ -165,7 +164,7 @@ class ProfileFragment : Fragment() {
 
   private fun setExitButtonOnclick() {
     binding.exitText.setOnClickListener {
-      SharedPreferencesHelper.clearLoginData(requireContext().applicationContext)
+      SharedPreferencesHelper(requireContext()).clearLoginData()
 
 
       lifecycleScope.launch {

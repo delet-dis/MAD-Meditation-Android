@@ -4,48 +4,48 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.delet_dis.madmeditation.model.LoginRequest
 
-object SharedPreferencesHelper {
+class SharedPreferencesHelper(val context: Context) {
 
-  private fun getSharedPreferences(context: Context): SharedPreferences {
+  private fun getSharedPreferences(): SharedPreferences {
     return context.getSharedPreferences(ConstantsHelper.appSettings, Context.MODE_PRIVATE)
   }
 
-  fun getValue(context: Context, setting: String): String? {
-    return getSharedPreferences(context).getString(setting, null)
+  fun getValue(setting: String): String? {
+    return getSharedPreferences().getString(setting, null)
   }
 
-  fun setValue(context: Context, setting: String, newValue: String?) {
-    val editor = getSharedPreferences(context).edit()
+  fun setValue(setting: String, newValue: String?) {
+    val editor = getSharedPreferences().edit()
     editor.putString(setting, newValue)
     editor.apply()
   }
 
-  fun isLoggedIn(context: Context): Boolean {
-    return getSharedPreferences(context).getBoolean(ConstantsHelper.loginState, false)
+  fun isLoggedIn(): Boolean {
+    return getSharedPreferences().getBoolean(ConstantsHelper.loginState, false)
   }
 
-  fun setLoginState(context: Context, loggedIn: Boolean) {
-    getSharedPreferences(context).edit().putBoolean(ConstantsHelper.loginState, loggedIn).apply()
+  fun setLoginState(loggedIn: Boolean) {
+    getSharedPreferences().edit().putBoolean(ConstantsHelper.loginState, loggedIn).apply()
   }
 
-  fun setLoginData(context: Context, email: String, password: String) {
-    getSharedPreferences(context).edit().putString(ConstantsHelper.userEmail, email).apply()
-    getSharedPreferences(context).edit().putString(ConstantsHelper.userPassword, password).apply()
+  fun setLoginData(email: String, password: String) {
+    getSharedPreferences().edit().putString(ConstantsHelper.userEmail, email).apply()
+    getSharedPreferences().edit().putString(ConstantsHelper.userPassword, password).apply()
   }
 
-  fun getLoginData(context: Context): LoginRequest {
+  fun getLoginData(): LoginRequest {
     return LoginRequest(
-      getSharedPreferences(context).getString(ConstantsHelper.userEmail, "null") ?: "null",
-      getSharedPreferences(context).getString(ConstantsHelper.userPassword, "null") ?: "null"
+      getSharedPreferences().getString(ConstantsHelper.userEmail, "null") ?: "null",
+      getSharedPreferences().getString(ConstantsHelper.userPassword, "null") ?: "null"
     )
   }
 
-  fun getEmail(context: Context): String? {
-    return getSharedPreferences(context).getString(ConstantsHelper.userEmail, null)
+  fun getEmail(): String? {
+    return getSharedPreferences().getString(ConstantsHelper.userEmail, null)
   }
 
-  fun clearLoginData(context: Context) {
-    setLoginState(context, false)
-    getSharedPreferences(context).edit().remove(ConstantsHelper.userPassword).apply()
+  fun clearLoginData() {
+    setLoginState(false)
+    getSharedPreferences().edit().remove(ConstantsHelper.userPassword).apply()
   }
 }

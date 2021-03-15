@@ -37,8 +37,8 @@ class LoginActivity : AppCompatActivity() {
   }
 
   private fun fillEmailFieldIfEmailIsNotNull() {
-    if (SharedPreferencesHelper.getEmail(applicationContext) != null) {
-      binding.emailInputField.setText(SharedPreferencesHelper.getEmail(applicationContext))
+    if (SharedPreferencesHelper(applicationContext).getEmail() != null) {
+      binding.emailInputField.setText(SharedPreferencesHelper(applicationContext).getEmail())
     }
   }
 
@@ -82,10 +82,9 @@ class LoginActivity : AppCompatActivity() {
           if (response.errorBody() !== null) {
             buildAlertDialog(R.string.alertDialogLoginFailedMessage)
           } else {
-            SharedPreferencesHelper.setLoginState(applicationContext, true)
+            SharedPreferencesHelper(applicationContext).setLoginState(true)
 
-            SharedPreferencesHelper.setLoginData(
-              applicationContext,
+            SharedPreferencesHelper(applicationContext).setLoginData(
               loginRequest.email,
               loginRequest.password
             )
