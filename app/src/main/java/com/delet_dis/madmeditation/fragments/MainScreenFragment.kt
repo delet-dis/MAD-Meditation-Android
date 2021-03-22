@@ -47,8 +47,6 @@ class MainScreenFragment : Fragment() {
     } else {
       view
     }
-
-
   }
 
   override fun onAttach(context: Context) {
@@ -116,44 +114,42 @@ class MainScreenFragment : Fragment() {
     }
   }
 
+  private fun retrofitOnQuotesResponse(response: Response<QuotesResponse>) {
+    val processingQuotesList: List<Quote>? = response.body()?.data
+    binding.quotesRecycler.adapter = processingQuotesList?.let { QuotesAdapter(it) }
+  }
+
+  private fun retrofitOnQuotesFailure() {
+    activity?.let {
+      ToastHelper.createErrorToast(
+        it.applicationContext,
+        R.string.networkErrorMessage
+      )
+    }
+  }
+
   private fun getQuotesData() {
+    RetrofitHelper.getQuotesData(::retrofitOnQuotesResponse) { retrofitOnQuotesFailure() }
+  }
 
-    fun retrofitOnResponse(response: Response<QuotesResponse>) {
-      val processingQuotesList: List<Quote>? = response.body()?.data
-      binding.quotesRecycler.adapter = processingQuotesList?.let { QuotesAdapter(it) }
+  private fun retrofitOnFeelingsResponse(response: Response<FeelingsResponse>) {
+    val processingFeelingsList: List<Feeling>? =
+      response.body()?.data?.sortedWith(compareBy { it.position })
+
+    binding.feelingsRecycler.adapter = processingFeelingsList?.let { FeelingsAdapter(it) }
+  }
+
+  private fun retrofitOnFeelingsFailure() {
+    activity?.let {
+      ToastHelper.createErrorToast(
+        it.applicationContext,
+        R.string.networkErrorMessage
+      )
     }
-
-    fun retrofitOnFailure() {
-      activity?.let {
-        ToastHelper.createErrorToast(
-          it.applicationContext,
-          R.string.networkErrorMessage
-        )
-      }
-    }
-
-    RetrofitHelper.getQuotesData(::retrofitOnResponse) { retrofitOnFailure() }
   }
 
   private fun getFeelingsData() {
-
-    fun retrofitOnResponse(response: Response<FeelingsResponse>) {
-      val processingFeelingsList: List<Feeling>? =
-        response.body()?.data?.sortedWith(compareBy { it.position })
-
-      binding.feelingsRecycler.adapter = processingFeelingsList?.let { FeelingsAdapter(it) }
-    }
-
-    fun retrofitOnFailure() {
-      activity?.let {
-        ToastHelper.createErrorToast(
-          it.applicationContext,
-          R.string.networkErrorMessage
-        )
-      }
-    }
-
-    RetrofitHelper.getFeelingsData(::retrofitOnResponse) { retrofitOnFailure() }
+    RetrofitHelper.getFeelingsData(::retrofitOnFeelingsResponse) { retrofitOnFeelingsFailure() }
   }
 
   private fun displayUserInfo(processingLoginResponse: LoginResponse?) {

@@ -93,18 +93,17 @@ class MainActivity : AppCompatActivity(), MainScreenFragment.ActivityCallback {
     }
   }
 
+  private fun retrofitOnResponse(response: Response<LoginResponse>) {
+    processingLoginResponse = response.body()
+
+    createMainFragment(processingLoginResponse)
+  }
+
+  private fun retrofitOnFailure() {
+    AlertDialogHelper.buildAlertDialog(this, R.string.networkErrorMessage)
+  }
+
   private fun postLoginData(loginRequest: LoginRequest) {
-
-    fun retrofitOnResponse(response: Response<LoginResponse>) {
-      processingLoginResponse = response.body()
-
-      createMainFragment(processingLoginResponse)
-    }
-
-    fun retrofitOnFailure() {
-      AlertDialogHelper.buildAlertDialog(this, R.string.networkErrorMessage)
-    }
-
     RetrofitHelper.postLoginData(loginRequest, ::retrofitOnResponse) { retrofitOnFailure() }
   }
 
