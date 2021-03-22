@@ -98,7 +98,7 @@ class LoginActivity : AppCompatActivity() {
         this, R.string.networkErrorMessage
       )
     }
-    RetrofitHelper.postLoginData(this, loginRequest, ::retrofitOnResponse) { retrofitOnFailure() }
+    RetrofitHelper.postLoginData(loginRequest, ::retrofitOnResponse) { retrofitOnFailure() }
   }
 
   private fun makeLoginRequest() = LoginRequest(

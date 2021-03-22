@@ -10,14 +10,9 @@ import com.delet_dis.madmeditation.databinding.ActivityMainBinding
 import com.delet_dis.madmeditation.fragments.MainScreenFragment
 import com.delet_dis.madmeditation.fragments.PlayerScreenFragment
 import com.delet_dis.madmeditation.fragments.ProfileFragment
-import com.delet_dis.madmeditation.helpers.ConstantsHelper
-import com.delet_dis.madmeditation.helpers.SharedPreferencesHelper
-import com.delet_dis.madmeditation.helpers.ToastHelper
-import com.delet_dis.madmeditation.http.common.Common
+import com.delet_dis.madmeditation.helpers.*
 import com.delet_dis.madmeditation.model.LoginRequest
 import com.delet_dis.madmeditation.model.LoginResponse
-import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.Response
 
 class MainActivity : AppCompatActivity(), MainScreenFragment.ActivityCallback {
@@ -99,22 +94,18 @@ class MainActivity : AppCompatActivity(), MainScreenFragment.ActivityCallback {
   }
 
   private fun postLoginData(loginRequest: LoginRequest) {
-    Common.retrofitService.postLoginData(loginRequest)
-      .enqueue(object : Callback<LoginResponse> {
 
-        override fun onResponse(
-          call: Call<LoginResponse>,
-          response: Response<LoginResponse>
-        ) {
-          processingLoginResponse = response.body()
+    fun retrofitOnResponse(response: Response<LoginResponse>) {
+      processingLoginResponse = response.body()
 
-          createMainFragment(processingLoginResponse)
-        }
+      createMainFragment(processingLoginResponse)
+    }
 
-        override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-          ToastHelper.createErrorToast(applicationContext, R.string.networkErrorMessage)
-        }
-      })
+    fun retrofitOnFailure() {
+      AlertDialogHelper.buildAlertDialog(this, R.string.networkErrorMessage)
+    }
+
+    RetrofitHelper.postLoginData(loginRequest, ::retrofitOnResponse) { retrofitOnFailure() }
   }
 
   private fun getParceledLoginResponse() =
