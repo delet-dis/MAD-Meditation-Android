@@ -13,34 +13,21 @@ import retrofit2.Response
 
 object RetrofitHelper {
 
-  fun postLoginData(activity: Activity, loginRequest: LoginRequest) {
+  fun postLoginData(
+    activity: Activity,
+    loginRequest: LoginRequest,
+    afterCallFunctionOnResponse: (Response<LoginResponse>) -> Unit,
+    afterCallFunctionOnFailure: () -> Unit
+  ) {
     Common.retrofitService.postLoginData(loginRequest)
       .enqueue(object : Callback<LoginResponse> {
 
         override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
-          if (response.errorBody() !== null) {
-            AlertDialogHelper.buildAlertDialog(
-              activity, R.string.alertDialogLoginFailedMessage
-            )
-          } else {
-            SharedPreferencesHelper(activity.applicationContext).setLoginState(true)
-
-            SharedPreferencesHelper(activity.applicationContext).setLoginData(
-              loginRequest.email,
-              loginRequest.password
-            )
-
-            val processingIntent = Intent(activity, MainActivity::class.java)
-            processingIntent.putExtra(ConstantsHelper.loginResponseParcelableName, response.body())
-            activity.startActivity(processingIntent)
-            activity.finish()
-          }
+          afterCallFunctionOnResponse(response)
         }
 
         override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-          AlertDialogHelper.buildAlertDialog(
-            activity, R.string.networkErrorMessage
-          )
+          afterCallFunctionOnFailure()
         }
       })
   }

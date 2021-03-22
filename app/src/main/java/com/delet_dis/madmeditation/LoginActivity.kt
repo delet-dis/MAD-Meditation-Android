@@ -6,11 +6,10 @@ import android.text.TextUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.delet_dis.madmeditation.databinding.ActivityLoginBinding
-import com.delet_dis.madmeditation.helpers.AlertDialogHelper
-import com.delet_dis.madmeditation.helpers.RetrofitHelper
-import com.delet_dis.madmeditation.helpers.SharedPreferencesHelper
-import com.delet_dis.madmeditation.helpers.WindowHelper
+import com.delet_dis.madmeditation.helpers.*
 import com.delet_dis.madmeditation.model.LoginRequest
+import com.delet_dis.madmeditation.model.LoginResponse
+import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
   private lateinit var binding: ActivityLoginBinding
@@ -72,7 +71,34 @@ class LoginActivity : AppCompatActivity() {
   }
 
   private fun postLoginData(loginRequest: LoginRequest) {
-    RetrofitHelper.postLoginData(this, loginRequest)
+
+
+    fun retrofitOnResponse(response: Response<LoginResponse>) {
+      if (response.errorBody() !== null) {
+        AlertDialogHelper.buildAlertDialog(
+          this, R.string.alertDialogLoginFailedMessage
+        )
+      } else {
+        SharedPreferencesHelper(applicationContext).setLoginState(true)
+
+        SharedPreferencesHelper(applicationContext).setLoginData(
+          loginRequest.email,
+          loginRequest.password
+        )
+
+        val processingIntent = Intent(this, MainActivity::class.java)
+        processingIntent.putExtra(ConstantsHelper.loginResponseParcelableName, response.body())
+        startActivity(processingIntent)
+        finish()
+      }
+    }
+
+    fun retrofitOnFailure() {
+      AlertDialogHelper.buildAlertDialog(
+        this, R.string.networkErrorMessage
+      )
+    }
+    RetrofitHelper.postLoginData(this, loginRequest, ::retrofitOnResponse) { retrofitOnFailure() }
   }
 
   private fun makeLoginRequest() = LoginRequest(
