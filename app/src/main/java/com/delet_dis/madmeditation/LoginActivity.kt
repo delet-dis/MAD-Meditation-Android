@@ -7,6 +7,7 @@ import android.text.TextUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.delet_dis.madmeditation.databinding.ActivityLoginBinding
+import com.delet_dis.madmeditation.helpers.AlertDialogHelper
 import com.delet_dis.madmeditation.helpers.ConstantsHelper
 import com.delet_dis.madmeditation.helpers.SharedPreferencesHelper
 import com.delet_dis.madmeditation.helpers.WindowHelper
@@ -70,7 +71,10 @@ class LoginActivity : AppCompatActivity() {
       postLoginData(loginRequest)
 
     } else {
-      buildAlertDialog(R.string.alertDialogDataIncorrectMessage)
+      AlertDialogHelper.buildAlertDialog(
+        this,
+        R.string.alertDialogDataIncorrectMessage
+      )
     }
   }
 
@@ -80,7 +84,9 @@ class LoginActivity : AppCompatActivity() {
 
         override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
           if (response.errorBody() !== null) {
-            buildAlertDialog(R.string.alertDialogLoginFailedMessage)
+            AlertDialogHelper.buildAlertDialog(
+              this@LoginActivity, R.string.alertDialogLoginFailedMessage
+            )
           } else {
             SharedPreferencesHelper(applicationContext).setLoginState(true)
 
@@ -97,7 +103,9 @@ class LoginActivity : AppCompatActivity() {
         }
 
         override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-          buildAlertDialog(R.string.networkErrorMessage)
+          AlertDialogHelper.buildAlertDialog(
+            this@LoginActivity, R.string.networkErrorMessage
+          )
         }
       })
   }
@@ -120,4 +128,5 @@ class LoginActivity : AppCompatActivity() {
       .setPositiveButton("OK") { dialog: DialogInterface, _: Int -> dialog.dismiss() }
       .show()
   }
+
 }
