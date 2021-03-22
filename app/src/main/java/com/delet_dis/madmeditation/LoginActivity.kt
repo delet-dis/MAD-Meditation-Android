@@ -1,6 +1,5 @@
 package com.delet_dis.madmeditation
 
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
@@ -8,16 +7,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.delet_dis.madmeditation.databinding.ActivityLoginBinding
 import com.delet_dis.madmeditation.helpers.AlertDialogHelper
-import com.delet_dis.madmeditation.helpers.ConstantsHelper
+import com.delet_dis.madmeditation.helpers.RetrofitHelper
 import com.delet_dis.madmeditation.helpers.SharedPreferencesHelper
 import com.delet_dis.madmeditation.helpers.WindowHelper
-import com.delet_dis.madmeditation.http.common.Common
 import com.delet_dis.madmeditation.model.LoginRequest
-import com.delet_dis.madmeditation.model.LoginResponse
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
   private lateinit var binding: ActivityLoginBinding
@@ -79,35 +72,7 @@ class LoginActivity : AppCompatActivity() {
   }
 
   private fun postLoginData(loginRequest: LoginRequest) {
-    Common.retrofitService.postLoginData(loginRequest)
-      .enqueue(object : Callback<LoginResponse> {
-
-        override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
-          if (response.errorBody() !== null) {
-            AlertDialogHelper.buildAlertDialog(
-              this@LoginActivity, R.string.alertDialogLoginFailedMessage
-            )
-          } else {
-            SharedPreferencesHelper(applicationContext).setLoginState(true)
-
-            SharedPreferencesHelper(applicationContext).setLoginData(
-              loginRequest.email,
-              loginRequest.password
-            )
-
-            val processingIntent = Intent(this@LoginActivity, MainActivity::class.java)
-            processingIntent.putExtra(ConstantsHelper.loginResponseParcelableName, response.body())
-            startActivity(processingIntent)
-            finish()
-          }
-        }
-
-        override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-          AlertDialogHelper.buildAlertDialog(
-            this@LoginActivity, R.string.networkErrorMessage
-          )
-        }
-      })
+    RetrofitHelper.postLoginData(this, loginRequest)
   }
 
   private fun makeLoginRequest() = LoginRequest(
@@ -120,13 +85,4 @@ class LoginActivity : AppCompatActivity() {
       processingEmail
     ).matches()
   }
-
-  private fun buildAlertDialog(stringResourceId: Int) {
-    MaterialAlertDialogBuilder(this)
-      .setTitle(getString(R.string.alertDialogLoginFailedTitle))
-      .setMessage(getString(stringResourceId))
-      .setPositiveButton("OK") { dialog: DialogInterface, _: Int -> dialog.dismiss() }
-      .show()
-  }
-
 }
