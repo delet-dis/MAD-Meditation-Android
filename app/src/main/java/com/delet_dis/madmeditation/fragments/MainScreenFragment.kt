@@ -15,13 +15,11 @@ import com.delet_dis.madmeditation.R
 import com.delet_dis.madmeditation.databinding.FragmentMainScreenBinding
 import com.delet_dis.madmeditation.helpers.ConstantsHelper
 import com.delet_dis.madmeditation.helpers.IntentHelper
+import com.delet_dis.madmeditation.helpers.RetrofitHelper
 import com.delet_dis.madmeditation.helpers.ToastHelper
-import com.delet_dis.madmeditation.http.common.Common
 import com.delet_dis.madmeditation.model.*
 import com.delet_dis.madmeditation.recyclerViewAdapters.FeelingsAdapter
 import com.delet_dis.madmeditation.recyclerViewAdapters.QuotesAdapter
-import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.Response
 
 
@@ -119,48 +117,43 @@ class MainScreenFragment : Fragment() {
   }
 
   private fun getQuotesData() {
-    Common.retrofitService.getQuotesData()
-      .enqueue(object : Callback<QuotesResponse> {
-        override fun onResponse(call: Call<QuotesResponse>, response: Response<QuotesResponse>) {
-          val processingQuotesList: List<Quote>? = response.body()?.data
-          binding.quotesRecycler.adapter = processingQuotesList?.let { QuotesAdapter(it) }
-        }
 
-        override fun onFailure(call: Call<QuotesResponse>, t: Throwable) {
-          activity?.let {
-            ToastHelper.createErrorToast(
-              it.applicationContext,
-              R.string.networkErrorMessage
-            )
-          }
-        }
+    fun retrofitOnResponse(response: Response<QuotesResponse>) {
+      val processingQuotesList: List<Quote>? = response.body()?.data
+      binding.quotesRecycler.adapter = processingQuotesList?.let { QuotesAdapter(it) }
+    }
 
-      })
+    fun retrofitOnFailure() {
+      activity?.let {
+        ToastHelper.createErrorToast(
+          it.applicationContext,
+          R.string.networkErrorMessage
+        )
+      }
+    }
+
+    RetrofitHelper.getQuotesData(::retrofitOnResponse) { retrofitOnFailure() }
   }
 
   private fun getFeelingsData() {
-    Common.retrofitService.getFeelingsData()
-      .enqueue(object : Callback<FeelingsResponse> {
-        override fun onResponse(
-          call: Call<FeelingsResponse>,
-          response: Response<FeelingsResponse>
-        ) {
-          val processingFeelingsList: List<Feeling>? =
-            response.body()?.data?.sortedWith(compareBy { it.position })
 
-          binding.feelingsRecycler.adapter = processingFeelingsList?.let { FeelingsAdapter(it) }
-        }
+    fun retrofitOnResponse(response: Response<FeelingsResponse>) {
+      val processingFeelingsList: List<Feeling>? =
+        response.body()?.data?.sortedWith(compareBy { it.position })
 
-        override fun onFailure(call: Call<FeelingsResponse>, t: Throwable) {
-          activity?.let {
-            ToastHelper.createErrorToast(
-              it.applicationContext,
-              R.string.networkErrorMessage
-            )
-          }
-        }
+      binding.feelingsRecycler.adapter = processingFeelingsList?.let { FeelingsAdapter(it) }
+    }
 
-      })
+    fun retrofitOnFailure() {
+      activity?.let {
+        ToastHelper.createErrorToast(
+          it.applicationContext,
+          R.string.networkErrorMessage
+        )
+      }
+    }
+
+    RetrofitHelper.getFeelingsData(::retrofitOnResponse) { retrofitOnFailure() }
   }
 
   private fun displayUserInfo(processingLoginResponse: LoginResponse?) {
