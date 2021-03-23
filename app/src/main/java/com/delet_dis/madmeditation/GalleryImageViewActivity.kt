@@ -7,7 +7,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.delet_dis.madmeditation.database.GalleryDatabase
+import com.delet_dis.madmeditation.database.GalleryRepository
 import com.delet_dis.madmeditation.databinding.ActivityGalleryImageViewBinding
 import com.delet_dis.madmeditation.helpers.ConstantsHelper
 import kotlinx.coroutines.CoroutineScope
@@ -52,8 +52,7 @@ class GalleryImageViewActivity : AppCompatActivity() {
 
       lifecycleScope.launch {
         imageId?.let { it1 ->
-          GalleryDatabase.getAppDataBase(application).galleryDao().removeImageById(
-            application,
+          GalleryRepository(applicationContext).removeImageById(
             it1
           ) { finishActivity() }
         }
@@ -64,8 +63,7 @@ class GalleryImageViewActivity : AppCompatActivity() {
   private fun loadImageFromDatabase() {
     uiScope.launch {
       val imageCard = imageId?.let {
-        GalleryDatabase.getAppDataBase(application).galleryDao()
-          .getImageById(application, it)
+        GalleryRepository(applicationContext).getImageById(it)
       }
 
       ContextWrapper(applicationContext).getDir(

@@ -1,13 +1,8 @@
 package com.delet_dis.madmeditation.database
 
-import android.app.Application
-import android.database.sqlite.SQLiteDatabase
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.viewModelScope
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
 
 
 @Dao
@@ -33,23 +28,4 @@ interface GalleryDAO {
 
   @Delete
   suspend fun delete(imageCard: ImageCard)
-
-  suspend fun getImageById(application: Application, id: Int): ImageCard {
-    return getById(id.toLong()).first()
-  }
-
-  suspend fun clearTables(afterCallFunction: () -> Unit) =
-    run {
-      nukeTable()
-
-      afterCallFunction()
-    }
-
-  suspend fun removeImageById(application: Application, id: Int, afterCallFunction: () -> Unit) =
-    run {
-      removeById(id.toLong())
-
-      afterCallFunction()
-    }
-
 }

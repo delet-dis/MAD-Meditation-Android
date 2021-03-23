@@ -23,6 +23,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.delet_dis.madmeditation.R
+import com.delet_dis.madmeditation.database.GalleryRepository
 import com.delet_dis.madmeditation.database.GalleryDatabase
 import com.delet_dis.madmeditation.database.ImageCard
 import com.delet_dis.madmeditation.databinding.FragmentProfileScreenBinding
@@ -60,7 +61,6 @@ class ProfileFragment : Fragment() {
       loginResponse = requireArguments()
         .getParcelable(ConstantsHelper.loginResponseParcelableName)
 
-
       binding.root
     } else {
       view
@@ -83,13 +83,14 @@ class ProfileFragment : Fragment() {
             override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
               uri.lastPathSegment?.let {
                 FilesHelper.saveToInternalStorage(
-                  requireContext(), resource,
+                  requireContext(),
+                  resource,
                   it
                 )
               }
 
               lifecycleScope.launch {
-                GalleryDatabase.getAppDataBase(requireContext()).galleryDao().insert(
+                GalleryRepository(requireContext()).insert(
                   ImageCard(
                     null,
                     "${directory}/${uri.lastPathSegment}",
@@ -173,7 +174,7 @@ class ProfileFragment : Fragment() {
 
 
       lifecycleScope.launch {
-        GalleryDatabase.getAppDataBase(requireContext()).galleryDao()
+        GalleryRepository(requireContext())
           .clearTables { clearGalleryImagesAndStartLoginActivity() }
       }
     }
@@ -209,6 +210,4 @@ class ProfileFragment : Fragment() {
     binding.userNameText.text =
       processingLoginResponse?.nickName
   }
-
-
 }
