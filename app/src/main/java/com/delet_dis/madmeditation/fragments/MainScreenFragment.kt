@@ -129,7 +129,7 @@ class MainScreenFragment : Fragment() {
   }
 
   private fun getQuotesData() {
-    RetrofitHelper.getQuotesData(::retrofitOnQuotesResponse) { retrofitOnQuotesFailure() }
+    RetrofitHelper.getQuotesData(::retrofitOnQuotesResponse, ::retrofitOnQuotesFailure)
   }
 
   private fun retrofitOnFeelingsResponse(response: Response<FeelingsResponse>) {
@@ -149,7 +149,7 @@ class MainScreenFragment : Fragment() {
   }
 
   private fun getFeelingsData() {
-    RetrofitHelper.getFeelingsData(::retrofitOnFeelingsResponse) { retrofitOnFeelingsFailure() }
+    RetrofitHelper.getFeelingsData(::retrofitOnFeelingsResponse, ::retrofitOnFeelingsFailure)
   }
 
   private fun displayUserInfo(processingLoginResponse: LoginResponse?) {

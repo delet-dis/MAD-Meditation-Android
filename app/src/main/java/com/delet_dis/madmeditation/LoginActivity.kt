@@ -70,35 +70,34 @@ class LoginActivity : AppCompatActivity() {
     }
   }
 
-  private fun postLoginData(loginRequest: LoginRequest) {
-
-
-    fun retrofitOnResponse(response: Response<LoginResponse>) {
-      if (response.errorBody() !== null) {
-        AlertDialogHelper.buildAlertDialog(
-          this, R.string.alertDialogLoginFailedMessage
-        )
-      } else {
-        SharedPreferencesHelper(applicationContext).setLoginState(true)
-
-        SharedPreferencesHelper(applicationContext).setLoginData(
-          loginRequest.email,
-          loginRequest.password
-        )
-
-        val processingIntent = Intent(this, MainActivity::class.java)
-        processingIntent.putExtra(ConstantsHelper.loginResponseParcelableName, response.body())
-        startActivity(processingIntent)
-        finish()
-      }
-    }
-
-    fun retrofitOnFailure() {
+  private fun retrofitOnResponse(loginRequest: LoginRequest, response: Response<LoginResponse>) {
+    if (response.errorBody() !== null) {
       AlertDialogHelper.buildAlertDialog(
-        this, R.string.networkErrorMessage
+        this, R.string.alertDialogLoginFailedMessage
       )
+    } else {
+      SharedPreferencesHelper(applicationContext).setLoginState(true)
+
+      SharedPreferencesHelper(applicationContext).setLoginData(
+        loginRequest.email,
+        loginRequest.password
+      )
+
+      val processingIntent = Intent(this, MainActivity::class.java)
+      processingIntent.putExtra(ConstantsHelper.loginResponseParcelableName, response.body())
+      startActivity(processingIntent)
+      finish()
     }
-    RetrofitHelper.postLoginData(loginRequest, ::retrofitOnResponse) { retrofitOnFailure() }
+  }
+
+  private fun retrofitOnFailure() {
+    AlertDialogHelper.buildAlertDialog(
+      this, R.string.networkErrorMessage
+    )
+  }
+
+  private fun postLoginData(loginRequest: LoginRequest) {
+    RetrofitHelper.postLoginData(loginRequest, ::retrofitOnResponse, ::retrofitOnFailure)
   }
 
   private fun makeLoginRequest() = LoginRequest(
