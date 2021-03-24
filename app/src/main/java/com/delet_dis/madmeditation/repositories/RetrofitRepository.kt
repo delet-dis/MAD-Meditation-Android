@@ -9,20 +9,19 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import kotlin.reflect.KFunction1
-import kotlin.reflect.KFunction2
 
 object RetrofitRepository {
 
   fun postLoginData(
     loginRequest: LoginRequest,
-    afterCallFunctionOnResponse: KFunction2<LoginRequest, Response<LoginResponse>, Unit>,
+    afterCallFunctionOnResponse: KFunction1<Response<LoginResponse>, Unit>,
     afterCallFunctionOnFailure: () -> Unit
   ) {
     Common.retrofitService.postLoginData(loginRequest)
       .enqueue(object : Callback<LoginResponse> {
 
         override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
-          afterCallFunctionOnResponse(loginRequest, response)
+          afterCallFunctionOnResponse(response)
         }
 
         override fun onFailure(call: Call<LoginResponse>, t: Throwable) {

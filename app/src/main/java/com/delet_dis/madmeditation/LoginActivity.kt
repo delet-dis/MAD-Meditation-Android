@@ -5,12 +5,13 @@ import android.os.Bundle
 import android.text.TextUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.delet_dis.madmeditation.repositories.RetrofitRepository
 import com.delet_dis.madmeditation.databinding.ActivityLoginBinding
-import com.delet_dis.madmeditation.helpers.*
+import com.delet_dis.madmeditation.helpers.AlertDialogHelper
+import com.delet_dis.madmeditation.helpers.WindowHelper
 import com.delet_dis.madmeditation.model.LoginRequest
 import com.delet_dis.madmeditation.model.LoginResponse
 import com.delet_dis.madmeditation.repositories.ConstantsRepository
+import com.delet_dis.madmeditation.repositories.RetrofitRepository
 import com.delet_dis.madmeditation.repositories.SharedPreferencesRepository
 import retrofit2.Response
 
@@ -73,7 +74,10 @@ class LoginActivity : AppCompatActivity() {
     }
   }
 
-  private fun retrofitOnResponse(loginRequest: LoginRequest, response: Response<LoginResponse>) {
+  private fun retrofitOnResponse(response: Response<LoginResponse>) {
+
+    val loginRequest = makeLoginRequest();
+
     if (response.errorBody() !== null) {
       AlertDialogHelper.buildAlertDialog(
         this, R.string.alertDialogLoginFailedMessage
