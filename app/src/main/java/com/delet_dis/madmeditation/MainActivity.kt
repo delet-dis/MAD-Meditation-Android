@@ -6,6 +6,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.os.bundleOf
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import com.delet_dis.madmeditation.repositories.RetrofitRepository
 import com.delet_dis.madmeditation.databinding.ActivityMainBinding
 import com.delet_dis.madmeditation.fragments.MainScreenFragment
 import com.delet_dis.madmeditation.fragments.PlayerScreenFragment
@@ -13,6 +14,8 @@ import com.delet_dis.madmeditation.fragments.ProfileFragment
 import com.delet_dis.madmeditation.helpers.*
 import com.delet_dis.madmeditation.model.LoginRequest
 import com.delet_dis.madmeditation.model.LoginResponse
+import com.delet_dis.madmeditation.repositories.ConstantsRepository
+import com.delet_dis.madmeditation.repositories.SharedPreferencesRepository
 import retrofit2.Response
 
 class MainActivity : AppCompatActivity(), MainScreenFragment.ActivityCallback {
@@ -29,7 +32,7 @@ class MainActivity : AppCompatActivity(), MainScreenFragment.ActivityCallback {
     val loginResponse = getParceledLoginResponse()
 
     if (loginResponse == null) {
-      val loginRequest = SharedPreferencesHelper(applicationContext).getLoginData()
+      val loginRequest = SharedPreferencesRepository(applicationContext).getLoginData()
       postLoginData(loginRequest)
     } else {
       processingLoginResponse = loginResponse
@@ -70,7 +73,7 @@ class MainActivity : AppCompatActivity(), MainScreenFragment.ActivityCallback {
       replace(
         R.id.screenFragmentContainerView,
         ProfileFragment::class.java,
-        bundleOf(ConstantsHelper.loginResponseParcelableName to processingLoginResponse)
+        bundleOf(ConstantsRepository.loginResponseParcelableName to processingLoginResponse)
       )
     }
   }
@@ -81,7 +84,7 @@ class MainActivity : AppCompatActivity(), MainScreenFragment.ActivityCallback {
       replace(
         R.id.screenFragmentContainerView,
         MainScreenFragment::class.java,
-        bundleOf(ConstantsHelper.loginResponseParcelableName to processingLoginResponse)
+        bundleOf(ConstantsRepository.loginResponseParcelableName to processingLoginResponse)
       )
     }
   }
@@ -104,11 +107,11 @@ class MainActivity : AppCompatActivity(), MainScreenFragment.ActivityCallback {
   }
 
   private fun postLoginData(loginRequest: LoginRequest) {
-    RetrofitHelper.postLoginData(loginRequest, ::retrofitOnResponse) { retrofitOnFailure() }
+    RetrofitRepository.postLoginData(loginRequest, ::retrofitOnResponse) { retrofitOnFailure() }
   }
 
   private fun getParceledLoginResponse() =
-    intent.extras?.getParcelable<LoginResponse>(ConstantsHelper.loginResponseParcelableName)
+    intent.extras?.getParcelable<LoginResponse>(ConstantsRepository.loginResponseParcelableName)
 
   private fun createViewBinding(): ConstraintLayout {
     binding = ActivityMainBinding.inflate(layoutInflater)
@@ -121,8 +124,8 @@ class MainActivity : AppCompatActivity(), MainScreenFragment.ActivityCallback {
       add(
         R.id.screenFragmentContainerView,
         MainScreenFragment::class.java,
-        bundleOf(ConstantsHelper.loginResponseParcelableName to processingLoginResponse),
-        ConstantsHelper.mainFragmentTag
+        bundleOf(ConstantsRepository.loginResponseParcelableName to processingLoginResponse),
+        ConstantsRepository.mainFragmentTag
       )
     }
   }

@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.delet_dis.madmeditation.database.ImageCard
 import com.delet_dis.madmeditation.databinding.GalleryRecyclerviewItemBinding
-import com.delet_dis.madmeditation.helpers.ConstantsHelper
+import com.delet_dis.madmeditation.repositories.ConstantsRepository
 
 
 class GalleryAdapter(private val values: List<ImageCard>, val clickListener: (Int) -> Unit) :
@@ -34,7 +34,7 @@ class GalleryAdapter(private val values: List<ImageCard>, val clickListener: (In
 
     with(values[position]) {
       ContextWrapper(holder.itemView.context).getDir(
-        ConstantsHelper.imagesDir,
+        ConstantsRepository.imagesDir,
         Context.MODE_PRIVATE
       ).toString()
 

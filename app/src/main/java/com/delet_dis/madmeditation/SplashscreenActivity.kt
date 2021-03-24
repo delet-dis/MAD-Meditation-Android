@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
-import com.delet_dis.madmeditation.helpers.SharedPreferencesHelper
+import com.delet_dis.madmeditation.repositories.SharedPreferencesRepository
 
 class SplashscreenActivity : AppCompatActivity() {
 
@@ -19,7 +19,7 @@ class SplashscreenActivity : AppCompatActivity() {
     var processingIntent: Intent
 
     handler.postDelayed({
-      processingIntent = if (SharedPreferencesHelper(applicationContext).isLoggedIn()) {
+      processingIntent = if (SharedPreferencesRepository(applicationContext).isLoggedIn()) {
         Intent(this, MainActivity::class.java)
       } else {
         Intent(this, OnboardingActivity::class.java)

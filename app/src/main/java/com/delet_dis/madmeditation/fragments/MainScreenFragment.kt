@@ -13,9 +13,9 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.delet_dis.madmeditation.R
 import com.delet_dis.madmeditation.databinding.FragmentMainScreenBinding
-import com.delet_dis.madmeditation.helpers.ConstantsHelper
+import com.delet_dis.madmeditation.repositories.ConstantsRepository
 import com.delet_dis.madmeditation.helpers.IntentHelper
-import com.delet_dis.madmeditation.helpers.RetrofitHelper
+import com.delet_dis.madmeditation.repositories.RetrofitRepository
 import com.delet_dis.madmeditation.helpers.ToastHelper
 import com.delet_dis.madmeditation.model.*
 import com.delet_dis.madmeditation.recyclerViewAdapters.FeelingsAdapter
@@ -41,7 +41,7 @@ class MainScreenFragment : Fragment() {
       binding = FragmentMainScreenBinding.inflate(layoutInflater)
 
       loginResponse = requireArguments()
-        .getParcelable(ConstantsHelper.loginResponseParcelableName)
+        .getParcelable(ConstantsRepository.loginResponseParcelableName)
 
       binding.root
     } else {
@@ -102,7 +102,7 @@ class MainScreenFragment : Fragment() {
         replace(
           R.id.screenFragmentContainerView,
           ProfileFragment::class.java,
-          bundleOf(Pair(ConstantsHelper.loginResponseParcelableName, loginResponse))
+          bundleOf(Pair(ConstantsRepository.loginResponseParcelableName, loginResponse))
         )
       }
     }
@@ -129,7 +129,7 @@ class MainScreenFragment : Fragment() {
   }
 
   private fun getQuotesData() {
-    RetrofitHelper.getQuotesData(::retrofitOnQuotesResponse, ::retrofitOnQuotesFailure)
+    RetrofitRepository.getQuotesData(::retrofitOnQuotesResponse, ::retrofitOnQuotesFailure)
   }
 
   private fun retrofitOnFeelingsResponse(response: Response<FeelingsResponse>) {
@@ -149,7 +149,7 @@ class MainScreenFragment : Fragment() {
   }
 
   private fun getFeelingsData() {
-    RetrofitHelper.getFeelingsData(::retrofitOnFeelingsResponse, ::retrofitOnFeelingsFailure)
+    RetrofitRepository.getFeelingsData(::retrofitOnFeelingsResponse, ::retrofitOnFeelingsFailure)
   }
 
   private fun displayUserInfo(processingLoginResponse: LoginResponse?) {

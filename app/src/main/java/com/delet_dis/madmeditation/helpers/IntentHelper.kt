@@ -5,6 +5,7 @@ import android.content.Intent
 import com.delet_dis.madmeditation.GalleryImageViewActivity
 import com.delet_dis.madmeditation.LoginActivity
 import com.delet_dis.madmeditation.MenuActivity
+import com.delet_dis.madmeditation.repositories.ConstantsRepository
 
 object IntentHelper {
 
@@ -20,7 +21,7 @@ object IntentHelper {
 
   fun startGalleryActivity(context: Context, imageId: Int) {
     val intent = Intent(context, GalleryImageViewActivity::class.java)
-    intent.putExtra(ConstantsHelper.idOfParceledImage, imageId)
+    intent.putExtra(ConstantsRepository.idOfParceledImage, imageId)
     context.startActivity(intent)
   }
 

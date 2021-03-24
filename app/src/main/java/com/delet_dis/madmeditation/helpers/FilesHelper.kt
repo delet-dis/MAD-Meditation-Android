@@ -2,6 +2,7 @@ package com.delet_dis.madmeditation.helpers
 
 import android.content.Context
 import android.graphics.Bitmap
+import com.delet_dis.madmeditation.repositories.ConstantsRepository
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -14,7 +15,7 @@ object FilesHelper {
     bitmapImage: Bitmap,
     filename: String
   ): String? {
-    val directory: File = context.getDir(ConstantsHelper.imagesDir, Context.MODE_PRIVATE)
+    val directory: File = context.getDir(ConstantsRepository.imagesDir, Context.MODE_PRIVATE)
 
     val imagePath = File(directory, filename)
     var fileOutputStream: FileOutputStream? = null

@@ -1,6 +1,6 @@
-package com.delet_dis.madmeditation.helpers
+package com.delet_dis.madmeditation.repositories
 
-object ConstantsHelper {
+object ConstantsRepository {
   const val appSettings = "APP_SETTINGS"
   const val loginState = "LOGIN_STATE"
   const val userEmail = "USER_EMAIL"

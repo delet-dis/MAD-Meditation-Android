@@ -1,4 +1,4 @@
-package com.delet_dis.madmeditation.helpers
+package com.delet_dis.madmeditation.repositories
 
 import com.delet_dis.madmeditation.http.common.Common
 import com.delet_dis.madmeditation.model.FeelingsResponse
@@ -11,7 +11,7 @@ import retrofit2.Response
 import kotlin.reflect.KFunction1
 import kotlin.reflect.KFunction2
 
-object RetrofitHelper {
+object RetrofitRepository {
 
   fun postLoginData(
     loginRequest: LoginRequest,

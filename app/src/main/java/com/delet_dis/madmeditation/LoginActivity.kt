@@ -5,10 +5,13 @@ import android.os.Bundle
 import android.text.TextUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.delet_dis.madmeditation.repositories.RetrofitRepository
 import com.delet_dis.madmeditation.databinding.ActivityLoginBinding
 import com.delet_dis.madmeditation.helpers.*
 import com.delet_dis.madmeditation.model.LoginRequest
 import com.delet_dis.madmeditation.model.LoginResponse
+import com.delet_dis.madmeditation.repositories.ConstantsRepository
+import com.delet_dis.madmeditation.repositories.SharedPreferencesRepository
 import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
@@ -30,8 +33,8 @@ class LoginActivity : AppCompatActivity() {
   }
 
   private fun fillEmailFieldIfEmailIsNotNull() {
-    if (SharedPreferencesHelper(applicationContext).getEmail() != null) {
-      binding.emailInputField.setText(SharedPreferencesHelper(applicationContext).getEmail())
+    if (SharedPreferencesRepository(applicationContext).getEmail() != null) {
+      binding.emailInputField.setText(SharedPreferencesRepository(applicationContext).getEmail())
     }
   }
 
@@ -76,15 +79,15 @@ class LoginActivity : AppCompatActivity() {
         this, R.string.alertDialogLoginFailedMessage
       )
     } else {
-      SharedPreferencesHelper(applicationContext).setLoginState(true)
+      SharedPreferencesRepository(applicationContext).setLoginState(true)
 
-      SharedPreferencesHelper(applicationContext).setLoginData(
+      SharedPreferencesRepository(applicationContext).setLoginData(
         loginRequest.email,
         loginRequest.password
       )
 
       val processingIntent = Intent(this, MainActivity::class.java)
-      processingIntent.putExtra(ConstantsHelper.loginResponseParcelableName, response.body())
+      processingIntent.putExtra(ConstantsRepository.loginResponseParcelableName, response.body())
       startActivity(processingIntent)
       finish()
     }
@@ -97,7 +100,7 @@ class LoginActivity : AppCompatActivity() {
   }
 
   private fun postLoginData(loginRequest: LoginRequest) {
-    RetrofitHelper.postLoginData(loginRequest, ::retrofitOnResponse, ::retrofitOnFailure)
+    RetrofitRepository.postLoginData(loginRequest, ::retrofitOnResponse, ::retrofitOnFailure)
   }
 
   private fun makeLoginRequest() = LoginRequest(

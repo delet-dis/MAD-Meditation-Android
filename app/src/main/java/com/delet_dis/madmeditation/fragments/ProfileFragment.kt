@@ -24,12 +24,14 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.delet_dis.madmeditation.R
 import com.delet_dis.madmeditation.database.GalleryDatabase
-import com.delet_dis.madmeditation.database.GalleryRepository
+import com.delet_dis.madmeditation.repositories.GalleryDatabaseRepository
 import com.delet_dis.madmeditation.database.ImageCard
 import com.delet_dis.madmeditation.databinding.FragmentProfileScreenBinding
 import com.delet_dis.madmeditation.helpers.*
 import com.delet_dis.madmeditation.model.LoginResponse
 import com.delet_dis.madmeditation.recyclerViewAdapters.GalleryAdapter
+import com.delet_dis.madmeditation.repositories.ConstantsRepository
+import com.delet_dis.madmeditation.repositories.SharedPreferencesRepository
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
@@ -59,7 +61,7 @@ class ProfileFragment : Fragment() {
       binding = FragmentProfileScreenBinding.inflate(layoutInflater)
 
       loginResponse = requireArguments()
-        .getParcelable(ConstantsHelper.loginResponseParcelableName)
+        .getParcelable(ConstantsRepository.loginResponseParcelableName)
 
       binding.root
     } else {
@@ -71,7 +73,7 @@ class ProfileFragment : Fragment() {
     registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
 
       val directory = ContextWrapper(requireContext()).getDir(
-        ConstantsHelper.imagesDir,
+        ConstantsRepository.imagesDir,
         Context.MODE_PRIVATE
       ).toString()
 
@@ -90,7 +92,7 @@ class ProfileFragment : Fragment() {
               }
 
               lifecycleScope.launch {
-                GalleryRepository(requireContext()).insert(
+                GalleryDatabaseRepository(requireContext()).insert(
                   ImageCard(
                     null,
                     "${directory}/${uri.lastPathSegment}",
@@ -157,7 +159,7 @@ class ProfileFragment : Fragment() {
 
   private fun clearGalleryImagesAndStartLoginActivity() {
     val directory = ContextWrapper(requireContext()).getDir(
-      ConstantsHelper.imagesDir,
+      ConstantsRepository.imagesDir,
       Context.MODE_PRIVATE
     )
 
@@ -170,11 +172,11 @@ class ProfileFragment : Fragment() {
 
   private fun setExitButtonOnclick() {
     binding.exitText.setOnClickListener {
-      SharedPreferencesHelper(requireContext()).clearLoginData()
+      SharedPreferencesRepository(requireContext()).clearLoginData()
 
 
       lifecycleScope.launch {
-        GalleryRepository(requireContext())
+        GalleryDatabaseRepository(requireContext())
           .clearTables { clearGalleryImagesAndStartLoginActivity() }
       }
     }

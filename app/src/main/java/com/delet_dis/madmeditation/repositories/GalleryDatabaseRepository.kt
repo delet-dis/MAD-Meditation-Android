@@ -1,9 +1,11 @@
-package com.delet_dis.madmeditation.database
+package com.delet_dis.madmeditation.repositories
 
 import android.content.Context
+import com.delet_dis.madmeditation.database.GalleryDatabase
+import com.delet_dis.madmeditation.database.ImageCard
 import kotlinx.coroutines.flow.first
 
-class GalleryRepository(val context: Context) {
+class GalleryDatabaseRepository(val context: Context) {
   suspend fun getImageById(id: Int): ImageCard {
     return GalleryDatabase.getAppDataBase(context).galleryDao().getById(id.toLong()).first()
   }
