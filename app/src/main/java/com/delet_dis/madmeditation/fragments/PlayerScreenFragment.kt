@@ -16,7 +16,6 @@ class PlayerScreenFragment : Fragment() {
     container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View? {
-
     return if (savedInstanceState == null) {
       binding = FragmentPlayerScreenBinding.inflate(layoutInflater)
 
@@ -24,6 +23,5 @@ class PlayerScreenFragment : Fragment() {
     } else {
       view
     }
-
   }
 }

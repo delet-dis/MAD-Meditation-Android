@@ -23,8 +23,8 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.delet_dis.madmeditation.R
-import com.delet_dis.madmeditation.database.GalleryRepository
 import com.delet_dis.madmeditation.database.GalleryDatabase
+import com.delet_dis.madmeditation.database.GalleryRepository
 import com.delet_dis.madmeditation.database.ImageCard
 import com.delet_dis.madmeditation.databinding.FragmentProfileScreenBinding
 import com.delet_dis.madmeditation.helpers.*

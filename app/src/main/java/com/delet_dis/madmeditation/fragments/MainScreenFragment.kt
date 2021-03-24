@@ -160,7 +160,6 @@ class MainScreenFragment : Fragment() {
         .into(binding.userAvatar)
     }
 
-
     binding.welcomeHeaderWithUserName.text =
       String.format(getString(R.string.welcomeTextText, processingLoginResponse?.nickName))
   }
@@ -168,5 +167,4 @@ class MainScreenFragment : Fragment() {
   interface ActivityCallback {
     fun setInActivityProfileButtonActive()
   }
-
 }
