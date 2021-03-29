@@ -18,56 +18,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-<!--    <ImageButton-->
-<!--        android:id="@+id/footerLogoImageButton"-->
-<!--        android:layout_width="28.78dp"-->
-<!--        android:layout_height="30dp"-->
-<!--        android:layout_marginStart="74dp"-->
-<!--        android:layout_marginBottom="16dp"-->
-<!--        android:background="@android:color/transparent"-->
-<!--        android:letterSpacing="0"-->
-<!--        android:minWidth="0dp"-->
-<!--        android:minHeight="0dp"-->
-<!--        android:padding="0dp"-->
-<!--        android:scaleType="centerInside"-->
-<!--        android:scaleX="2"-->
-<!--        android:scaleY="2"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:srcCompat="@drawable/footer_menu_non_active" />-->
-
-<!--    <ImageButton-->
-<!--        android:id="@+id/footerPlayerImageButton"-->
-<!--        android:layout_width="28.78dp"-->
-<!--        android:layout_height="30dp"-->
-<!--        android:layout_marginBottom="16dp"-->
-<!--        android:background="@android:color/transparent"-->
-<!--        android:letterSpacing="0"-->
-<!--        android:minWidth="0dp"-->
-<!--        android:minHeight="0dp"-->
-<!--        android:padding="0dp"-->
-<!--        android:scaleType="fitCenter"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:srcCompat="@drawable/footer_player_non_active" />-->
-
-<!--    <ImageButton-->
-<!--        android:id="@+id/footerProfileImageButton"-->
-<!--        android:layout_width="28.78dp"-->
-<!--        android:layout_height="30dp"-->
-<!--        android:layout_marginEnd="74dp"-->
-<!--        android:layout_marginBottom="16dp"-->
-<!--        android:background="@android:color/transparent"-->
-<!--        android:letterSpacing="0"-->
-<!--        android:minWidth="0dp"-->
-<!--        android:minHeight="0dp"-->
-<!--        android:padding="0dp"-->
-<!--        android:scaleType="fitCenter"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:srcCompat="@drawable/footer_profile_non_active" />-->
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
