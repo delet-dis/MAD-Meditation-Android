@@ -10,7 +10,7 @@ import com.delet_dis.madmeditation.repositories.RetrofitRepository
 import com.delet_dis.madmeditation.databinding.ActivityMainBinding
 import com.delet_dis.madmeditation.fragments.MainScreenFragment
 import com.delet_dis.madmeditation.fragments.PlayerScreenFragment
-import com.delet_dis.madmeditation.fragments.ProfileFragment
+import com.delet_dis.madmeditation.fragments.ProfileScreenFragment
 import com.delet_dis.madmeditation.helpers.*
 import com.delet_dis.madmeditation.model.LoginRequest
 import com.delet_dis.madmeditation.model.LoginResponse
@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity(), MainScreenFragment.ActivityCallback {
       setReorderingAllowed(true)
       replace(
         R.id.screenFragmentContainerView,
-        ProfileFragment::class.java,
+        ProfileScreenFragment::class.java,
         bundleOf(ConstantsRepository.loginResponseParcelableName to processingLoginResponse)
       )
     }

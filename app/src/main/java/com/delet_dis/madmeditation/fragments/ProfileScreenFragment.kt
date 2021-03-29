@@ -37,7 +37,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class ProfileFragment : Fragment() {
+class ProfileScreenFragment : Fragment() {
 
   private lateinit var binding: FragmentProfileScreenBinding
 

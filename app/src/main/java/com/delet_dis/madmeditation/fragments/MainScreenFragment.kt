@@ -101,7 +101,7 @@ class MainScreenFragment : Fragment() {
         setReorderingAllowed(true)
         replace(
           R.id.screenFragmentContainerView,
-          ProfileFragment::class.java,
+          ProfileScreenFragment::class.java,
           bundleOf(Pair(ConstantsRepository.loginResponseParcelableName, loginResponse))
         )
       }
